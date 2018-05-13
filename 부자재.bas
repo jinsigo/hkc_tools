@@ -1,9 +1,9 @@
-Attribute VB_Name = "ºÎÀÚÀç"
+Attribute VB_Name = "ë¶€ìì¬"
 '
 '======================================================================
-' °í°´»çº° ºÎÀÚÀç Àç°í ÇöÈ² ½ÃÆ® ÀÛ¼º
+' ê³ ê°ì‚¬ë³„ ë¶€ìì¬ ì¬ê³  í˜„í™© ì‹œíŠ¸ ì‘ì„±
 '======================================================================
-' 2016.6.8 ÀÌÁø¼º
+' 2016.6.8 ì´ì§„ì„±
 '
 Sub SplitTableIntoMultiSheets()
 '
@@ -23,19 +23,19 @@ Sub SplitTableIntoMultiSheets()
         Set rngOrign = Selection
     Else
     End If
-    
+
     Set shtOrigin = ActiveSheet
     Set rngTitle = rngOrign.Rows(1)
     Set rngData = Range(rngOrign.Rows(2), rngOrign.Rows(rngOrign.Rows.Count))
     Set rngClient = rngOrign.Columns(6)
 
-    '½ÃÆ® ÃÊ±âÈ­
+    'ì‹œíŠ¸ ì´ˆê¸°í™”
     If CheckUser = 0 Then Exit Sub
     sName = ActiveSheet.Name
-    msg1 = "'" & sName & "' ½ÃÆ®¸¦ Á¦¿ÜÇÑ ¸ğµç ½ÃÆ®¸¦ »èÁ¦ÇÕ´Ï´Ù."
+    msg1 = "'" & sName & "' ì‹œíŠ¸ë¥¼ ì œì™¸í•œ ëª¨ë“  ì‹œíŠ¸ë¥¼ ì‚­ì œí•©ë‹ˆë‹¤."
     init = MsgBox(msg1, 3, cMenu)
     chk = 0
-    
+
     If init = 6 And Worksheets.Count > 1 Then
          For Each s In Worksheets
             If s.Name <> sName Then s.Delete
@@ -43,15 +43,15 @@ Sub SplitTableIntoMultiSheets()
     ElseIf init = 2 Then
         Exit Sub
     Else
-    
+
     End If
-    
-    '±âÁØ¿­ ÀÔ·Â
-    msg2 = "»ı¼ºÇÒ ½ÃÆ®ÀÇ ±âÁØ¼¿(¿­)À» ¼±ÅÃÇØ ÁÖ¼¼¿ä" & Chr(10) & "°ø¹éÀº _ Ã³¸®µË´Ï´Ù."
+
+    'ê¸°ì¤€ì—´ ì…ë ¥
+    msg2 = "ìƒì„±í•  ì‹œíŠ¸ì˜ ê¸°ì¤€ì…€(ì—´)ì„ ì„ íƒí•´ ì£¼ì„¸ìš”" & Chr(10) & "ê³µë°±ì€ _ ì²˜ë¦¬ë©ë‹ˆë‹¤."
     Set ss = Application.InputBox(msg2, cMenu, Type:=8)
     cKey = ss.Column
-    
-    '·çÇÁ
+
+    'ë£¨í”„
     For Each r In rngData.Rows
         strSplitter = r.Cells(1, cKey)
         If strSplitter = "" Then
@@ -61,14 +61,14 @@ Sub SplitTableIntoMultiSheets()
             strSplitter = RemoveSpecialChars(strSplitter)
             strSplitter = Left(strSplitter, 30)
         End If
-        
+
         If IsSheet(strSplitter) Then
-            '½ÃÆ® ±âÁ¸
+            'ì‹œíŠ¸ ê¸°ì¡´
             Sheets(strSplitter).Activate
             r.Rows(1).Copy
             ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).Select
         Else
-            '½ÃÆ® ½Å±Ô Á¦¸ñ¿­ º¹»ç
+            'ì‹œíŠ¸ ì‹ ê·œ ì œëª©ì—´ ë³µì‚¬
             ActiveWorkbook.Worksheets.Add After:=Worksheets(Worksheets.Count)
             With ActiveSheet
                 .Name = strSplitter
@@ -79,18 +79,16 @@ Sub SplitTableIntoMultiSheets()
                 .Cells(1, 1).PasteSpecial Paste:=xlPasteAll, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
             End With
         End If
-        
+
         r.Rows(1).Copy
         ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Offset(1, 0).Select
         ActiveSheet.Paste
         ActiveSheet.Cells(1, 1).Select
     Next r
-    
+
     Application.DisplayAlerts = True
     shtOrigin.Activate
     rngOrign.Select
-    msg = MsgBox(shtCount & " °³ÀÇ ½ÃÆ®°¡ ¸¸µé¾îÁ³½À´Ï´Ù", 0, "½ÃÆ® »ı¼º ¿Ï·á")
+    msg = MsgBox(shtCount & " ê°œì˜ ì‹œíŠ¸ê°€ ë§Œë“¤ì–´ì¡ŒìŠµë‹ˆë‹¤", 0, "ì‹œíŠ¸ ìƒì„± ì™„ë£Œ")
 
 End Sub
-
-

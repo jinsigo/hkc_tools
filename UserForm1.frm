@@ -1,12 +1,12 @@
 VERSION 5.00
-Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} UserForm1 
+Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} UserForm1
    Caption         =   "Database"
    ClientHeight    =   3015
    ClientLeft      =   120
    ClientTop       =   465
    ClientWidth     =   4560
    OleObjectBlob   =   "UserForm1.frx":0000
-   StartUpPosition =   1  '¼ÒÀ¯ÀÚ °¡¿îµ¥
+   StartUpPosition =   1  'ì†Œìœ ì ê°€ìš´ë°
 End
 Attribute VB_Name = "UserForm1"
 Attribute VB_GlobalNameSpace = False
@@ -24,23 +24,23 @@ Private Sub UserForm1_Initialize()
     Dim i, cn As Integer
     Dim rngDB As Range
 
-'Ãâ·Â¿µ¿ª
-    Set rngDB = ThisWorkbook.Sheets("S").Range("setup")   'µ¥ÀÌÅ¸º£ÀÌ½º ¿µ¿ª
-    
-'    Label1.Caption = "¶óº§1"
-'    Label2.Caption = "¶óº§2"
+'ì¶œë ¥ì˜ì—­
+    Set rngDB = ThisWorkbook.Sheets("S").Range("setup")   'ë°ì´íƒ€ë² ì´ìŠ¤ ì˜ì—­
+
+'    Label1.Caption = "ë¼ë²¨1"
+'    Label2.Caption = "ë¼ë²¨2"
 '
     cn = rngDB.Rows.Count
     MsgBox rngDB.Address
-    
+
     For i = 0 To cn
         With ListBox1
             .ColumnCount = 3
             .ColumnWidths = "150;120;100"
             .ColumnHeads = True
             .AddItem
-            .List(i, 0) = rngDB.Cells(i, 1)    'DB ¸íÄª
-            .List(i, 1) = rngDB.Cells(i, 2)    '°æ·Î
+            .List(i, 0) = rngDB.Cells(i, 1)    'DB ëª…ì¹­
+            .List(i, 1) = rngDB.Cells(i, 2)    'ê²½ë¡œ
             .List(i, 2) = rngDB.Cells(i, 3)    'cas
         End With
     Next i

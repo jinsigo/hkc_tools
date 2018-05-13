@@ -1,7 +1,7 @@
 Attribute VB_Name = "fqryUsrSys"
 '
 '======================================================================
-' Module Name: »ç¿ëÀÚ ½Ã½ºÅÛ Á¤º¸ È®ÀÎ ÇÔ¼ö
+' Module Name: ì‚¬ìš©ì ì‹œìŠ¤í…œ ì •ë³´ í™•ì¸ í•¨ìˆ˜
 '======================================================================
 '
 '
@@ -10,9 +10,9 @@ Attribute VB_Name = "fqryUsrSys"
 ' 16/06/20 published by Jinsi
 '
 ' >>Function
-' OS_ComputerName   'ÀÌÁø¼º
-' OS_ComputerInfo   '¿¬±¸¼Ò
-' OS_UserName       'ÀÌÁø¼º
+' OS_ComputerName   'ì´ì§„ì„±
+' OS_ComputerInfo   'ì—°êµ¬ì†Œ
+' OS_UserName       'ì´ì§„ì„±
 ' OS_Information
 ' MAC_Address       'a0:ff:ff:ff
 ' IP_Address        '133.9.176
@@ -20,14 +20,14 @@ Attribute VB_Name = "fqryUsrSys"
 
 Option Explicit
 
-Public Const mName As String = "½ÃÆ® ³ª´©±â ¸ÅÅ©·Î by Áø¼º"
-Public Const cMenu As String = "½ÃÆ® ³ª´©±â" 'µµ±¸ ¸ğÀ½ÀÇ ÀÌ¸§
-Public Const cUser As String = "ÀÌÁø¼º"
+Public Const mName As String = "ì‹œíŠ¸ ë‚˜ëˆ„ê¸° ë§¤í¬ë¡œ by ì§„ì„±"
+Public Const cMenu As String = "ì‹œíŠ¸ ë‚˜ëˆ„ê¸°" 'ë„êµ¬ ëª¨ìŒì˜ ì´ë¦„
+Public Const cUser As String = "ì´ì§„ì„±"
 Public Const cExp  As String = "2017-06-21"
-Public Const vbcPath1 As String = "D:\RND.ºĞ¿ø\½ÃÀÛÇ°Á¦Á¶\" '·çÆ® °æ·Î1
-Public Const vbcKey1 As String = "Á¦Ç°ÄÚµå"
-Public Const vbcWRLST As String = "¿ø·áLIST.xls"
-Public Const hkc_DB1 As String = "C:\Users\jinsigo\OneDrive\HKC\¿ø·áLIST.xls"
+Public Const vbcPath1 As String = "D:\RND.ë¶„ì›\ì‹œì‘í’ˆì œì¡°\" 'ë£¨íŠ¸ ê²½ë¡œ1
+Public Const vbcKey1 As String = "ì œí’ˆì½”ë“œ"
+Public Const vbcWRLST As String = "ì›ë£ŒLIST.xls"
+Public Const hkc_DB1 As String = "C:\Users\jinsigo\OneDrive\HKC\ì›ë£ŒLIST.xls"
 
 
 
@@ -39,12 +39,12 @@ End Sub
 
 
 '======================================================================
-' ½Ã½ºÅÛ Á¤º¸ ÇÔ¼ö
+' ì‹œìŠ¤í…œ ì •ë³´ í•¨ìˆ˜
 '======================================================================
 Public Function OS_Information() As Variant
   Dim arrOS_Information(1 To 3)   As String
   Dim curWMI As Object, curObj As Object, Itm
-    
+
   Set curWMI = GetObject("winmgmts:\\.\root\cimv2")
   Set curObj = curWMI.ExecQuery("Select * from Win32_OperatingSystem", , 48)
   For Each Itm In curObj
@@ -63,7 +63,7 @@ End Function
 Public Function OS_ComputerInfo() As Variant
   Dim arrOS_ComputerInfo(1 To 3)   As String
   Dim curWMI As Object, curObj As Object, Itm
-    
+
   Set curWMI = GetObject("winmgmts:\\.\root\cimv2")
   Set curObj = curWMI.ExecQuery("Select * from Win32_ComputerSystem", , 48)
   For Each Itm In curObj
@@ -83,11 +83,11 @@ Function CheckUser() As Integer
     If OS_ComputerName = cUser And Date < DateValue(cExp) Then
         CheckUser = 1
     Else
-        msg4 = "°³¹ßÀÚ¿¡°Ô ¹®ÀÇ¹Ù¶ø´Ï´Ù." & Chr(10) & "°³¹ßÀÚ: ÀÌÁø¼º Tel.010-5382-4086 "
+        msg4 = "ê°œë°œìì—ê²Œ ë¬¸ì˜ë°”ëë‹ˆë‹¤." & Chr(10) & "ê°œë°œì: ì´ì§„ì„± Tel.010-5382-4086 "
         msg = MsgBox(msg4, 0, cMenu)
         CheckUser = 0
     End If
-    
+
 End Function
 
 Function CheckComputer()
@@ -103,7 +103,7 @@ End Function
 
 Function CheckIP(chk) As Integer
     ln = Len(chk)
-    
+
     If Left(IP_Address, ln) = chk Then
        CheckUser = 1
        Exit Function
@@ -112,15 +112,15 @@ Function CheckIP(chk) As Integer
       End If
     Next
     If CheckUser = 0 Then
-        MsgBox "°³¹ßÀÚ¿¡°Ô ¹®ÀÇ¹Ù¶ø´Ï´Ù." & Chr(10) & "Tel.010-5382-4086 ÀÌÁø¼º"
+        MsgBox "ê°œë°œìì—ê²Œ ë¬¸ì˜ë°”ëë‹ˆë‹¤." & Chr(10) & "Tel.010-5382-4086 ì´ì§„ì„±"
         Stop
     End If
 End Function
 
 Public Function IP_Address()
-' ÇöÀç IP Address
+' í˜„ì¬ IP Address
     Dim curWMI As Object, curObj As Object, Itm
-    
+
     Set curWMI = GetObject("winmgmts:\\.\root\cimv2")
     Set curObj = curWMI.ExecQuery("SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = True")
     For Each Itm In curObj
@@ -131,7 +131,7 @@ End Function
 
 Public Function MAC_Address() As String
     Dim curWMI As Object, curObj As Object, Itm
-    
+
     Set curWMI = GetObject("winmgmts:\\.\root\cimv2")
     Set curObj = curWMI.ExecQuery("SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = True")
     For Each Itm In curObj
@@ -146,7 +146,7 @@ End Function
 
 
 '======================================================================
-' À§Å©½ÃÆ® Á¤º¸ ÇÔ¼ö
+' ìœ„í¬ì‹œíŠ¸ ì •ë³´ í•¨ìˆ˜
 '======================================================================
 '
 Function UseAddIns(fn)
@@ -156,7 +156,7 @@ Function UseAddIns(fn)
 End Function
 
 Public Function IsSheet(inp) As Integer
-'½ÃÆ® Á¸Àç ¿©ºÎ
+'ì‹œíŠ¸ ì¡´ì¬ ì—¬ë¶€
     Dim ws As Worksheet
     IsSheet = 0
     For Each ws In ActiveWorkbook.Sheets
@@ -165,11 +165,11 @@ Public Function IsSheet(inp) As Integer
 End Function
 
 '======================================================================
-' Æ¯¼ö¹®ÀÚ Áö¿ì±â
+' íŠ¹ìˆ˜ë¬¸ì ì§€ìš°ê¸°
 '======================================================================
 ' 160624 jinsigo@naver.com
 Function RemoveSpecialChars(strOLD)
-    Const SpecialCharacters As String = "!,@,#,$,%,^,/,&,*,(,),{,[,],}"  'Áö¿ï ¹®ÀÚµé
+    Const SpecialCharacters As String = "!,@,#,$,%,^,/,&,*,(,),{,[,],}"  'ì§€ìš¸ ë¬¸ìë“¤
     Dim strNEW As String
     Dim c As Variant
     strNEW = strOLD

@@ -1,7 +1,7 @@
-Attribute VB_Name = "Àü¼ººĞÀÛ¼º"
+Attribute VB_Name = "ì „ì„±ë¶„ì‘ì„±"
 '
 '======================================================================
-' Àü¼ººĞ ÀÛ¼º ¸ÅÅ©·Î ver 5.0 130330
+' ì „ì„±ë¶„ ì‘ì„± ë§¤í¬ë¡œ ver 5.0 130330
 '======================================================================
 '
 '
@@ -9,64 +9,64 @@ Attribute VB_Name = "Àü¼ººĞÀÛ¼º"
 '
 Option Explicit
 
-Public rs As Range ' ¼±ÅÃ¿µ¿ª (Á¦¸ñ Æ÷ÇÔ)
-Public ra As Range ' ¼±ÅÃ¿µ¿ª (µ¥ÀÌÅ¸ ¿µ¿ª¸¸)
-Public rb As Range ' Base.xls Âü°í¿µ¿ª
-Public rm As Range ' ¿ø·áLIST.xls Âü°í¿µ¿ª
-Public st As String ' »óÅÂ°ª
-Public c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 As Integer '¿­¹øÈ£°ª
+Public rs As Range ' ì„ íƒì˜ì—­ (ì œëª© í¬í•¨)
+Public ra As Range ' ì„ íƒì˜ì—­ (ë°ì´íƒ€ ì˜ì—­ë§Œ)
+Public rb As Range ' Base.xls ì°¸ê³ ì˜ì—­
+Public rm As Range ' ì›ë£ŒLIST.xls ì°¸ê³ ì˜ì—­
+Public st As String ' ìƒíƒœê°’
+Public c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 As Integer 'ì—´ë²ˆí˜¸ê°’
 Dim i, j, nk_cn, nc_cn, ni_cn, rb_cn, next_row, opt As Integer
-Dim bc, bbc As String 'ÄÚµå°ª
+Dim bc, bbc As String 'ì½”ë“œê°’
 Dim nk() As String
 Dim ni() As String
 Dim nc() As String
-Dim bv, tmp, temr As Variant 'ÇÔ·®°ª
+Dim bv, tmp, temr As Variant 'í•¨ëŸ‰ê°’
 Dim temp, temc As String
-Dim dir1, dir2, temq As String '°æ·Î
+Dim dir1, dir2, temq As String 'ê²½ë¡œ
 
 
 Sub ingInit()
-' º¯¼ö°ª Á¤ÀÇ
+' ë³€ìˆ˜ê°’ ì •ì˜
 
 'On Error GoTo ErrorHandler
     Dim c(100) As Integer
     Dim t() As Variant
-    
-    'Set rs = ActiveSheet.Range("list") ' ¼±ÅÃ¿µ¿ª
-    Set rb = Workbooks("Base.xls").Sheets("BASE").Range("$A1:$IV20000") '¿ø·á¿µ¿ª
-    Set rm = Workbooks("¿ø·áLIST.xls").Sheets("¿ø·áLIST").Range("database") '¿ø·á¿µ¿ª
-    
-    c(1) = 1  ' ÄÚµå
-    c(2) = 1  ' ÇÔ·®
-    c(3) = 1  ' ±¸ºĞ(»óÅÂÇ¥½Ã)
-    c(4) = 2  ' ¿ø·á¸í
-    c(5) = 3  ' Àü¼ººĞÇ¥ÁØÈ­¸í
-    c(6) = 18  ' Á¶¼ººñ
-    c(7) = 5  ' INCI¸í
-    c(8) = 4  ' ±Ô°İ
-    c(9) = 0  ' ¹èÇÕÇÑµµ
+
+    'Set rs = ActiveSheet.Range("list") ' ì„ íƒì˜ì—­
+    Set rb = Workbooks("Base.xls").Sheets("BASE").Range("$A1:$IV20000") 'ì›ë£Œì˜ì—­
+    Set rm = Workbooks("ì›ë£ŒLIST.xls").Sheets("ì›ë£ŒLIST").Range("database") 'ì›ë£Œì˜ì—­
+
+    c(1) = 1  ' ì½”ë“œ
+    c(2) = 1  ' í•¨ëŸ‰
+    c(3) = 1  ' êµ¬ë¶„(ìƒíƒœí‘œì‹œ)
+    c(4) = 2  ' ì›ë£Œëª…
+    c(5) = 3  ' ì „ì„±ë¶„í‘œì¤€í™”ëª…
+    c(6) = 18  ' ì¡°ì„±ë¹„
+    c(7) = 5  ' INCIëª…
+    c(8) = 4  ' ê·œê²©
+    c(9) = 0  ' ë°°í•©í•œë„
     c(10) = 10
-    c(11) = 5 '±â´É1
-    c(12) = 7 '±â´É2
-    
-    't = Array("¿ø·áÄÚµå", "ÇÔ·®", "±¸ºĞ", "¿ø·á¸í", "Àü¼ººĞ", "Á¶¼ººñ", "INCI", "±Ô°İ", "¹èÇÕÇÑµµ", "CAS No.", "HSÄÚµå")
+    c(11) = 5 'ê¸°ëŠ¥1
+    c(12) = 7 'ê¸°ëŠ¥2
+
+    't = Array("ì›ë£Œì½”ë“œ", "í•¨ëŸ‰", "êµ¬ë¶„", "ì›ë£Œëª…", "ì „ì„±ë¶„", "ì¡°ì„±ë¹„", "INCI", "ê·œê²©", "ë°°í•©í•œë„", "CAS No.", "HSì½”ë“œ")
     i = 2
-    
+
 '    If Mid(rs.Cells(i, 1).Value, 3, 1) <> "-" Then rs.Columns(1).Replace what:="JU", Replacement:="JU-", SearchOrder:=xlByColumns, MatchCase:=True
-    
-    
+
+
 ErrorHandler:
     'MsgBox Err.Number
-    Select Case Err.Number    ' ¿À·ù ¹øÈ£¸¦ °è»êÇÕ´Ï´Ù.
-    
-        Case 1004    ' "ÆÄÀÏÀÌ ÀÌ¹Ì ¿­·Á ÀÖ½À´Ï´Ù" ¿À·ùÀÔ´Ï´Ù.
-            rs.Cells(i, c5) = "ÇØ´ç ÄÚµå°¡ ¾ø½À´Ï´Ù."
-            ' ¿­¸° ÆÄÀÏÀ» ´İ½À´Ï´Ù.
+    Select Case Err.Number    ' ì˜¤ë¥˜ ë²ˆí˜¸ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤.
+
+        Case 1004    ' "íŒŒì¼ì´ ì´ë¯¸ ì—´ë ¤ ìˆìŠµë‹ˆë‹¤" ì˜¤ë¥˜ì…ë‹ˆë‹¤.
+            rs.Cells(i, c5) = "í•´ë‹¹ ì½”ë“œê°€ ì—†ìŠµë‹ˆë‹¤."
+            ' ì—´ë¦° íŒŒì¼ì„ ë‹«ìŠµë‹ˆë‹¤.
         Case Else
-            ' ¿©±â¼­ ´Ù¸¥ »óÈ²À» ´Ù·ì´Ï´Ù.
+            ' ì—¬ê¸°ì„œ ë‹¤ë¥¸ ìƒí™©ì„ ë‹¤ë£¹ë‹ˆë‹¤.
     End Select
 '    Resume Next
-    
+
 End Sub
 
 
@@ -87,69 +87,69 @@ Sub ingClearData()
     ingInit
     rs.Offset(1, 0).Resize(rs.Rows.Count - 1, rs.Columns.Count).Clear
     rs.Offset(1, 0).Resize(rs.Rows.Count - 1, rs.Columns.Count).RowHeight = 12
-    
+
 End Sub
 Sub ingMakeSheet()
-' ¼±ÅÃ¿µ¿ª¿¡¼­ ½ÃÆ® »ı¼ºÇÏ°í ÄÚµå°ª °¡Á®¿À±â
+' ì„ íƒì˜ì—­ì—ì„œ ì‹œíŠ¸ ìƒì„±í•˜ê³  ì½”ë“œê°’ ê°€ì ¸ì˜¤ê¸°
 '2016-06-24
     Dim rs, ro, r, t As Range
     Dim dc As String
     Dim dv As Variant
     Dim cs As Integer
     Dim ti As Variant
-    
-    ti = Array("¿ø·áÄÚµå", "¿ø·á¸í", "±¸ºĞ", "¿ø·á¸í", "Àü¼ººĞ", "Á¶¼ººñ", "INCI", "±Ô°İ", "¹èÇÕÇÑµµ", "CAS No.", "HSÄÚµå")
-    
+
+    ti = Array("ì›ë£Œì½”ë“œ", "ì›ë£Œëª…", "êµ¬ë¶„", "ì›ë£Œëª…", "ì „ì„±ë¶„", "ì¡°ì„±ë¹„", "INCI", "ê·œê²©", "ë°°í•©í•œë„", "CAS No.", "HSì½”ë“œ")
+
     Set rs = Selection
     cs = rs.Columns.Count
-    
-' ½ÃÆ® ¸¸µé±â
-    shAddSht ("Àü¼ººĞ")
-    Worksheets("Àü¼ººĞ").Activate
-    Set ro = Worksheets("Àü¼ººĞ").Range("A6")
-    
-' Á¦¸ñ ³Ö±â
+
+' ì‹œíŠ¸ ë§Œë“¤ê¸°
+    shAddSht ("ì „ì„±ë¶„")
+    Worksheets("ì „ì„±ë¶„").Activate
+    Set ro = Worksheets("ì „ì„±ë¶„").Range("A6")
+
+' ì œëª© ë„£ê¸°
 '    Call LoadArray(ro, ti)
-                ro.Offset(0, 0) = "¿ø·áÄÚµå"
-                ro.Offset(0, 1) = "¿ø·á¸í"
+                ro.Offset(0, 0) = "ì›ë£Œì½”ë“œ"
+                ro.Offset(0, 1) = "ì›ë£Œëª…"
                 ro.Offset(0, 2) = "INCI"
                 ro.Offset(0, 3) = "CAS No."
-                ro.Offset(0, 4) = "ÇÔ·®(w/w%)"
-                ro.Offset(0, 5) = "Á¶¼ººñ"
-                ro.Offset(0, 6) = "½ÇÇÔ·®(w/w%)"
-                ro.Offset(0, 7) = "±Ô°İ"
+                ro.Offset(0, 4) = "í•¨ëŸ‰(w/w%)"
+                ro.Offset(0, 5) = "ì¡°ì„±ë¹„"
+                ro.Offset(0, 6) = "ì‹¤í•¨ëŸ‰(w/w%)"
+                ro.Offset(0, 7) = "ê·œê²©"
                 ro.Offset(0, 8) = "Function"
-                
- 'µ¥ÀÌÅ¸ ³Ö±â
+
+ 'ë°ì´íƒ€ ë„£ê¸°
     i = 1
     For Each r In rs.Rows
             dc = r.Cells(1, 1)
             dv = r.Cells(1, cs).Value
             If IsNumeric(dv) And (dv > 0) Then
                 ro.Offset(i, 0) = dc
-                ro.Offset(i, 1) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",¿ø·áLIST,2,0)"
-                ro.Offset(i, 2) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",¿ø·áLIST,5,0)"
-                ro.Offset(i, 3) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",¿ø·áLIST,16,0)"
+                ro.Offset(i, 1) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",ì›ë£ŒLIST,2,0)"
+                ro.Offset(i, 2) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",ì›ë£ŒLIST,5,0)"
+                ro.Offset(i, 3) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",ì›ë£ŒLIST,16,0)"
                 ro.Offset(i, 4) = Format(dv, "#,##0.000")
-                ro.Offset(i, 5) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",¿ø·áLIST,18,0)"
+                ro.Offset(i, 5) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",ì›ë£ŒLIST,18,0)"
                 ro.Offset(i, 6) = ""
-                ro.Offset(i, 7) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",¿ø·áLIST,4,0)"
-                ro.Offset(i, 8) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",¿ø·áLIST,8,0)"
+                ro.Offset(i, 7) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",ì›ë£ŒLIST,4,0)"
+                ro.Offset(i, 8) = "=VLOOKUP(" & ro.Offset(i, 0).Address & ",ì›ë£ŒLIST,8,0)"
                 i = i + 1
             Else
-                
+
             End If
     Next r
     'Set ro = ro.Resize(i, 8)
-'¼­½Ä º¯°æ
+'ì„œì‹ ë³€ê²½
     ro.Select
     ActiveCell.CurrentRegion.Select
-    ActiveSheet.ListObjects.Add(xlSrcRange, Selection, , xlYes).Name = "Ç¥4"
-    ActiveSheet.ListObjects("Ç¥4").TableStyle = "jss1"
-    Range("Ç¥4[#All]").Select
+    ActiveSheet.ListObjects.Add(xlSrcRange, Selection, , xlYes).Name = "í‘œ4"
+    ActiveSheet.ListObjects("í‘œ4").TableStyle = "jss1"
+    Range("í‘œ4[#All]").Select
     Range("I20").Activate
     With Selection.Font
-        .Name = "¸¼Àº °íµñ"
+        .Name = "ë§‘ì€ ê³ ë”•"
         .Size = 10
         .Strikethrough = False
         .Superscript = False
@@ -166,57 +166,57 @@ Sub ingMakeSheet()
     'MsgBox ro.Address
 End Sub
 Sub ingOpenDB()
-' ¿ø·áLIST & Base ÀĞ¾î¿À±â
-' 2013-5-14 / ÀÌÁø¼º
+' ì›ë£ŒLIST & Base ì½ì–´ì˜¤ê¸°
+' 2013-5-14 / ì´ì§„ì„±
 
     dir1 = Range("C2").Value
     dir2 = Range("C3").Value
-    
+
     Workbooks.Open FileName:=dir1, UpdateLinks:=0, ReadOnly:=1
     Workbooks.Open FileName:=dir2, UpdateLinks:=0, ReadOnly:=1
-    
-    Windows("¼ººĞÇ¥±âÀÛ¼º4.1.xls").Activate
+
+    Windows("ì„±ë¶„í‘œê¸°ì‘ì„±4.1.xls").Activate
 
 End Sub
 
 
 Sub ingSplitBase()
-' JU-BASEÄÚµå Ç®¾îÁÖ±â ver2.0 by ÀÌÁø¼º
-' 2011-11-03 ÀÌÁø¼º
-' 2012-12-13 Çö ½ÃÆ®¿¡¼­ ¸ğµç ÀÛ¾÷(ÄÚµåÇ®±â,Áı°è)ÀÌ ÁøÇàµÇµµ·Ï ¼öÁ¤
-' 2015-06-17 ¼±ÅÃ¿µ¿ª¿¡¼­ º£ÀÌ½º Ç®±â(¹ü¿ë)
+' JU-BASEì½”ë“œ í’€ì–´ì£¼ê¸° ver2.0 by ì´ì§„ì„±
+' 2011-11-03 ì´ì§„ì„±
+' 2012-12-13 í˜„ ì‹œíŠ¸ì—ì„œ ëª¨ë“  ì‘ì—…(ì½”ë“œí’€ê¸°,ì§‘ê³„)ì´ ì§„í–‰ë˜ë„ë¡ ìˆ˜ì •
+' 2015-06-17 ì„ íƒì˜ì—­ì—ì„œ ë² ì´ìŠ¤ í’€ê¸°(ë²”ìš©)
 '
     Dim rs, r As Range
     Dim i, j, k As Integer
     Dim tmp As Variant
-    
-    
+
+
     Set rs = Selection
     i = 1
-'- º£ÀÌ½º Ç®±â ----------------------------------------------------------------------
-        
+'- ë² ì´ìŠ¤ í’€ê¸° ----------------------------------------------------------------------
+
     For Each r In rs.Rows
     With r
-        bc = .Cells(1, 1).Value 'º£ÀÌ½º ÄÚµå°ª
-        bv = .Cells(1, 5).Value 'º£ÀÌ½º ÇÔ·®°ª
-        
+        bc = .Cells(1, 1).Value 'ë² ì´ìŠ¤ ì½”ë“œê°’
+        bv = .Cells(1, 5).Value 'ë² ì´ìŠ¤ í•¨ëŸ‰ê°’
+
         If Left(bc, 5) = "JU-BS" And Mid(bc, 6, 4) <> "9999" Then
-        ' BSÄÚµåÀÌ¸é
+        ' BSì½”ë“œì´ë©´
             bbc = Replace(bc, "-", "_")
             Set rb = Workbooks("Base.xls").Sheets("BASE").Range(bbc)
             For j = (rb.Rows.Count - 1) To 1 Step -1
                 .Rows(2).Insert
                 .Rows(2).Interior.ColorIndex = Null
                 'Set rs = .Resize(.Rows.Count + 1, .Columns.Count)
-                .Cells(2, 1).Value = rb.Offset(j, 0).Value 'µ¥ÀÌÅ¸ ÄÚµå°ª
-                tmp = rb.Offset(j, 1).Value  'Âü°í¿µ¿ª ÇÔ·®ºñ
-                .Cells(2, 5).Value = bv * tmp(1, 1) 'º£ÀÌ½º ÇÔ·®°ª * Âü°í¿µ¿ª ÇÔ·®ºñ
-                
-                
+                .Cells(2, 1).Value = rb.Offset(j, 0).Value 'ë°ì´íƒ€ ì½”ë“œê°’
+                tmp = rb.Offset(j, 1).Value  'ì°¸ê³ ì˜ì—­ í•¨ëŸ‰ë¹„
+                .Cells(2, 5).Value = bv * tmp(1, 1) 'ë² ì´ìŠ¤ í•¨ëŸ‰ê°’ * ì°¸ê³ ì˜ì—­ í•¨ëŸ‰ë¹„
+
+
 '                For k = 3 To .Columns.Count
 '                    .Cells(2, k).Formula = .Cells(1, k).Formula
 '                Next k
-               
+
             Next j
             .Rows(1).Interior.Color = RGB(0, 255, 0)
         End If
@@ -231,59 +231,59 @@ End Sub
 Sub ingSplitBase2()
 Attribute ingSplitBase2.VB_ProcData.VB_Invoke_Func = "g\n14"
 '
-    Dim c As Range 'Á¦¸ñ
-    Dim rsai As Integer '±âÁØ¹üÀ§ ½ÃÀÛ ¿­¹øÈ£
-    Dim rsax As Integer '±âÁØ¹üÀ§ a ¿­¹øÈ£
-    Dim rsbx As Integer '±âÁØ¹üÀ§ b ¿­¹øÈ£
-    Dim rbax As Integer 'ÂüÁ¶¹üÀ§ a ¿­¹øÈ£
-    Dim rbbx As Integer 'ÂüÁ¶¹üÀ§ b ¿­¹øÈ£
-    Dim rsas As String '±âÁØ¹üÀ§ a Å°°ª(ÄÚµå)
-    Dim rsbs As String '±âÁØ¹üÀ§ b Å°°ª(ÇÔ·®)
-    Dim rbcc As Integer 'ÂüÁ¶¹üÀ§ Çà¼ö
-    
-    
-    ' ÃÊ±â°ª ¼³Á¤
+    Dim c As Range 'ì œëª©
+    Dim rsai As Integer 'ê¸°ì¤€ë²”ìœ„ ì‹œì‘ ì—´ë²ˆí˜¸
+    Dim rsax As Integer 'ê¸°ì¤€ë²”ìœ„ a ì—´ë²ˆí˜¸
+    Dim rsbx As Integer 'ê¸°ì¤€ë²”ìœ„ b ì—´ë²ˆí˜¸
+    Dim rbax As Integer 'ì°¸ì¡°ë²”ìœ„ a ì—´ë²ˆí˜¸
+    Dim rbbx As Integer 'ì°¸ì¡°ë²”ìœ„ b ì—´ë²ˆí˜¸
+    Dim rsas As String 'ê¸°ì¤€ë²”ìœ„ a í‚¤ê°’(ì½”ë“œ)
+    Dim rsbs As String 'ê¸°ì¤€ë²”ìœ„ b í‚¤ê°’(í•¨ëŸ‰)
+    Dim rbcc As Integer 'ì°¸ì¡°ë²”ìœ„ í–‰ìˆ˜
+
+
+    ' ì´ˆê¸°ê°’ ì„¤ì •
 '    On Error GoTo ErrorHandler
     Set rs = Selection
-    '¸Ó¸®±Û Çà Ã¼Å©
+    'ë¨¸ë¦¬ê¸€ í–‰ ì²´í¬
     i = 1
     rsai = rs.Cells(1, 1).Column
     For Each c In rs.Rows(1).Cells
-        If c.Cells(1, 1).Value = "ÇÔ·®" Then rsbx = c.Column - rsai + 1
-        If c.Cells(1, 1).Value = "ÄÚµå" Then rsax = c.Column - rsai + 1
+        If c.Cells(1, 1).Value = "í•¨ëŸ‰" Then rsbx = c.Column - rsai + 1
+        If c.Cells(1, 1).Value = "ì½”ë“œ" Then rsax = c.Column - rsai + 1
         If rsbx + rsax Then i = 2
     Next
     '
     ioOpendFile ("Base")
     'MsgBox "rsai:rsax:rsbx = " & rsai & "," & rsax & "," & rsbx
-    
+
     Do While rs.Cells(i, 1) <> ""
-    
+
         rs.Rows(i).Select
-        '±âÁØ°ª
+        'ê¸°ì¤€ê°’
         rsas = rs.Cells(i, rsax).Value
         rsbs = rs.Cells(i, rsbx).Value
-        
+
         'MsgBox rsas & "," & rsbs
-        
+
         If rsas = "" Then Exit Do
         If Left(rsas, 5) = "JU-BS" And Mid(rsas, 6, 4) <> "9999" Then
-            'ÂüÁ¶ ¿µ¿ª ¼³Á¤
+            'ì°¸ì¡° ì˜ì—­ ì„¤ì •
             Set rb = rBase(rsas)
             rbcc = rb.Rows.Count
-            'ÂüÁ¶ ¿µ¿ª °¡Á®¿À±â
+            'ì°¸ì¡° ì˜ì—­ ê°€ì ¸ì˜¤ê¸°
             rs.Offset(i, rsax - 1).Resize(rbcc, rs.Columns.Count).Insert Shift:=xlShiftDown, CopyOrigin:=xlFormatFromLeftOrAbove
             rs.Cells(i, 1).Resize(1, rs.Columns.Count).Copy
             rs.Cells(i + 1, 1).PasteSpecial Paste:=xlPasteFormulas
-            
+
             rb.Offset(0, 0).Resize(rbcc, 1).Copy
             rs.Cells(i + 1, rsax).PasteSpecial Paste:=xlPasteValues
-            
+
             rb.Offset(0, 1).Resize(rbcc, 1).Copy
             rs.Cells(i + 1, rsbx).PasteSpecial Paste:=xlPasteValues
             rs.Select
-            
-            'ÇÔ·® °è»ê
+
+            'í•¨ëŸ‰ ê³„ì‚°
             For j = i + 1 To i + rbcc
                 rs.Cells(j, rsbx) = rs.Cells(j, rsbx) * rs.Cells(i, rsbx)
             Next j
@@ -296,106 +296,106 @@ Attribute ingSplitBase2.VB_ProcData.VB_Invoke_Func = "g\n14"
 Exit Sub
 ErrorHandler:
     'MsgBox Err.Number
-    Select Case Err.Number    ' ¿À·ù ¹øÈ£¸¦ °è»êÇÕ´Ï´Ù.
-    
-        Case 91    ' "ÆÄÀÏÀÌ ÀÌ¹Ì ¿­·Á ÀÖ½À´Ï´Ù" ¿À·ùÀÔ´Ï´Ù.
-            MsgBox "¿¡·¯:" & Err.Number
-            ' ¿­¸° ÆÄÀÏÀ» ´İ½À´Ï´Ù.
+    Select Case Err.Number    ' ì˜¤ë¥˜ ë²ˆí˜¸ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤.
+
+        Case 91    ' "íŒŒì¼ì´ ì´ë¯¸ ì—´ë ¤ ìˆìŠµë‹ˆë‹¤" ì˜¤ë¥˜ì…ë‹ˆë‹¤.
+            MsgBox "ì—ëŸ¬:" & Err.Number
+            ' ì—´ë¦° íŒŒì¼ì„ ë‹«ìŠµë‹ˆë‹¤.
         Case Else
-            ' ¿©±â¼­ ´Ù¸¥ »óÈ²À» ´Ù·ì´Ï´Ù.
+            ' ì—¬ê¸°ì„œ ë‹¤ë¥¸ ìƒí™©ì„ ë‹¤ë£¹ë‹ˆë‹¤.
     End Select
     Resume Next
-    
+
 End Sub
 Function rBase(st As String) As Range
-' Ã£´Â BASEÄÚµå ¿µ¿ª °¡Á®¿À±â
+' ì°¾ëŠ” BASEì½”ë“œ ì˜ì—­ ê°€ì ¸ì˜¤ê¸°
 ' 150401
 '
     Dim cc As Range
     Dim rb As Range
-    Set rb = Workbooks("Base.xls").Sheets("BASE").Cells 'Âü°í ¿µ¿ª
-    
+    Set rb = Workbooks("Base.xls").Sheets("BASE").Cells 'ì°¸ê³  ì˜ì—­
+
     For Each cc In rb
-     'Set cc = rb.Find(st) 'À§Ä¡ Ã£±â
+     'Set cc = rb.Find(st) 'ìœ„ì¹˜ ì°¾ê¸°
         If cc = st And cc.Interior.ColorIndex <> -4142 Then
-            MsgBox "baseÀ§Ä¡: " & cc.Address & " »ö¹øÈ£:" & cc.Interior.ColorIndex
+            MsgBox "baseìœ„ì¹˜: " & cc.Address & " ìƒ‰ë²ˆí˜¸:" & cc.Interior.ColorIndex
             Exit For
         End If
     Next
-    Set rBase = Range(cc.Cells(2, 1), cc.End(xlDown)) 'Ã£´Â BaseÄÚµå ¿µ¿ª
+    Set rBase = Range(cc.Cells(2, 1), cc.End(xlDown)) 'ì°¾ëŠ” Baseì½”ë“œ ì˜ì—­
 End Function
 
-Sub ingQueryDB() ' Àü¼ººĞ Á¶È¸
+Sub ingQueryDB() ' ì „ì„±ë¶„ ì¡°íšŒ
 
 '    On Error GoTo ErrorHandler
     ingInit
 
-    
+
     For j = 2 To rs.Columns.Count
         tn = rs.Cells(1, j).Value
         tt(j) = WorksheetFunction.Match(tn, rm.Rows(1), 0)
         MsgBox tt(j)
     Next
-    
-    
+
+
     Set ra = Range(rs.Rows(2), rs.End(xlDown))
-    
+
     For Each i In ra.Rows
-    
+
         i.Rows(1).Select
         i.Interior.ColorIndex = 2
-        bc = i.Cells(1, c1).Value 'º£ÀÌ½º ÄÚµå°ª
-              
+        bc = i.Cells(1, c1).Value 'ë² ì´ìŠ¤ ì½”ë“œê°’
+
         For j = 1 To i.Columns.Count
             If i.i.Cells(1, 1).Interior.ColorIndex = -4142 Then
                 i.Cells(1, j).Value = WorksheetFunction.VLookup(bc, rm, c(j), 0)
             End If
         Next j
-        
 
-    
-        
+
+
+
 
     Next
-    
+
 ErrorHandler:
     'MsgBox Err.Number
-    Select Case Err.Number    ' ¿À·ù ¹øÈ£¸¦ °è»êÇÕ´Ï´Ù.
-    
-        Case 1004    ' "ÆÄÀÏÀÌ ÀÌ¹Ì ¿­·Á ÀÖ½À´Ï´Ù" ¿À·ùÀÔ´Ï´Ù.
-            i.Cells(1, c5) = "ÇØ´ç ÄÚµå°¡ ¾ø½À´Ï´Ù."
-            ' ¿­¸° ÆÄÀÏÀ» ´İ½À´Ï´Ù.
+    Select Case Err.Number    ' ì˜¤ë¥˜ ë²ˆí˜¸ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤.
+
+        Case 1004    ' "íŒŒì¼ì´ ì´ë¯¸ ì—´ë ¤ ìˆìŠµë‹ˆë‹¤" ì˜¤ë¥˜ì…ë‹ˆë‹¤.
+            i.Cells(1, c5) = "í•´ë‹¹ ì½”ë“œê°€ ì—†ìŠµë‹ˆë‹¤."
+            ' ì—´ë¦° íŒŒì¼ì„ ë‹«ìŠµë‹ˆë‹¤.
         Case Else
-            ' ¿©±â¼­ ´Ù¸¥ »óÈ²À» ´Ù·ì´Ï´Ù.
+            ' ì—¬ê¸°ì„œ ë‹¤ë¥¸ ìƒí™©ì„ ë‹¤ë£¹ë‹ˆë‹¤.
 '            Resume Next
     End Select
-    
+
 End Sub
-        
-Sub ingQueryDbName() ' DB ÀÌ¸§ À§Ä¡ È®ÀÎ 150330 ¹Ì¿Ï¼º
-' Å×ÀÌºí Ã¹ÇàÀÇ Å¸ÀÌÆ²°ª ÀĞ¾î¿À±â ±â
+
+Sub ingQueryDbName() ' DB ì´ë¦„ ìœ„ì¹˜ í™•ì¸ 150330 ë¯¸ì™„ì„±
+' í…Œì´ë¸” ì²«í–‰ì˜ íƒ€ì´í‹€ê°’ ì½ì–´ì˜¤ê¸° ê¸°
     Dim se, db As Range
     Dim ti(100) As Integer
     Set se = Selection.Rows(1)
-    Set db = "¿ø·áLIST.xls!database"
+    Set db = "ì›ë£ŒLIST.xls!database"
     'tit = Selection.Rows(1)
     For i = 1 To db.Columns.Count
         MsgBox i
     Next i
 End Sub
 Sub ingCheckSum()
-' Á¶¼ººñ ÇÕ=1 ¿©ºÎ È®ÀÎ 160310
+' ì¡°ì„±ë¹„ í•©=1 ì—¬ë¶€ í™•ì¸ 160310
     Dim c As Range
     Dim ck, cl As Variant
     Dim iSeek As Long
     Dim iStart, iLen As Integer
-    
-    Set rs = Selection ' ¼±ÅÃ¿µ¿ª
-    Set rb = Workbooks("¿ø·á¼ººĞ.xlsx").Sheets("¼ººĞ»çÀü").Range("INCI") '¿ø·á¿µ¿ª
-    Set rm = Workbooks("¿ø·áLIST.xls").Sheets("¿ø·áLIST").Range("database") '¿ø·á¿µ¿ª
-    
+
+    Set rs = Selection ' ì„ íƒì˜ì—­
+    Set rb = Workbooks("ì›ë£Œì„±ë¶„.xlsx").Sheets("ì„±ë¶„ì‚¬ì „").Range("INCI") 'ì›ë£Œì˜ì—­
+    Set rm = Workbooks("ì›ë£ŒLIST.xls").Sheets("ì›ë£ŒLIST").Range("database") 'ì›ë£Œì˜ì—­
+
     For Each c In Selection
-' ¹®ÀÚ Æ®¸²
+' ë¬¸ì íŠ¸ë¦¼
         If c.Value = "" Then GoTo Blank
         ni = Split(c.Value, "(and)")
         ni_cn = UBound(ni, 1)
@@ -404,10 +404,10 @@ Sub ingCheckSum()
             c.Value = c.Value + WorksheetFunction.Proper(Trim(ni(i))) & " (and) "
         Next i
         c.Value = c.Value & WorksheetFunction.Proper(Trim(ni(ni_cn)))
-        
+
         c.Value = WorksheetFunction.Substitute(c.Text, "(Ci", "(CI")
-        
- '¿ÀÀÚ °Ë»ö
+
+ 'ì˜¤ì ê²€ìƒ‰
         ni = Split(c.Value, "(and)")
         ni_cn = UBound(ni, 1)
         tmp = ""
@@ -419,14 +419,14 @@ Sub ingCheckSum()
             cl = Application.VLookup(tmp, rb, 14, 0)
             iSeek = InStr(iStart, c.Value, tmp)
             iLen = Len(tmp)
-            
+
             With c.Characters(iSeek, iLen).Font
             If IsError(ck) Then
                ' MsgBox "Err: " & iSeek & ":" & iLen & " -- " & c.Value & ":" & tmp
-                
+
                     .Bold = False
                     .Color = RGB(255, 0, 0)
-                    .Name = "¸¼Àº °íµñ"
+                    .Name = "ë§‘ì€ ê³ ë”•"
                     .Size = 10
   '                  .Strikethrough = False
   '                  .Superscript = False
@@ -438,40 +438,40 @@ Sub ingCheckSum()
   '                  .ThemeFont = xlThemeFontMinor
 
                 iStart = iStart + iLen
-                 
+
             Else
                ' MsgBox "ok: " & iSeek & ":" & iLen & " -- " & c.Value & ":" & tmp
                     .Bold = False
                     .Color = RGB(0, 0, 0)
-                    .Name = "¸¼Àº °íµñ"
+                    .Name = "ë§‘ì€ ê³ ë”•"
                     .Size = 10
 
                 iStart = iStart + iLen
             End If
             End With
             'if c.characters(iSeek+iLen+1,4,"(and)") then c.Characters(iSeek, iLen).Text = tmp
- 
+
         Next j
-    
+
 End Sub
 Sub ingCheckSpell()
 Attribute ingCheckSpell.VB_ProcData.VB_Invoke_Func = " \n14"
-' ¼ººĞ ¿ÀÀÚ °ËÁ¤ 150528
-' Proper->¹®ÀÚ Æ®¸²->CIÆ÷¸ä
-' 160310 CI ¹øÈ£ ¼öÁ¤
+' ì„±ë¶„ ì˜¤ì ê²€ì • 150528
+' Proper->ë¬¸ì íŠ¸ë¦¼->CIí¬ë©§
+' 160310 CI ë²ˆí˜¸ ìˆ˜ì •
 
 
     Dim c As Range
     Dim ck, cl As Variant
     Dim iSeek As Long
     Dim iStart, iLen As Integer
-    
-    Set rs = Selection ' ¼±ÅÃ¿µ¿ª
-    Set rb = Workbooks("¿ø·á¼ººĞ.xlsx").Sheets("¼ººĞ»çÀü").Range("INCI") '¿ø·á¿µ¿ª
-    Set rm = Workbooks("¿ø·áLIST.xls").Sheets("¿ø·áLIST").Range("database") '¿ø·á¿µ¿ª
-    
+
+    Set rs = Selection ' ì„ íƒì˜ì—­
+    Set rb = Workbooks("ì›ë£Œì„±ë¶„.xlsx").Sheets("ì„±ë¶„ì‚¬ì „").Range("INCI") 'ì›ë£Œì˜ì—­
+    Set rm = Workbooks("ì›ë£ŒLIST.xls").Sheets("ì›ë£ŒLIST").Range("database") 'ì›ë£Œì˜ì—­
+
     For Each c In Selection
-' ¹®ÀÚ Æ®¸²
+' ë¬¸ì íŠ¸ë¦¼
         If c.Value = "" Then GoTo Blank
         ni = Split(c.Value, "(and)")
         ni_cn = UBound(ni, 1)
@@ -480,10 +480,10 @@ Attribute ingCheckSpell.VB_ProcData.VB_Invoke_Func = " \n14"
             c.Value = c.Value + WorksheetFunction.Proper(Trim(ni(i))) & " (and) "
         Next i
         c.Value = c.Value & WorksheetFunction.Proper(Trim(ni(ni_cn)))
-        
+
         c.Value = WorksheetFunction.Substitute(c.Text, "(Ci", "(CI")
-        
- '¿ÀÀÚ °Ë»ö
+
+ 'ì˜¤ì ê²€ìƒ‰
         ni = Split(c.Value, "(and)")
         ni_cn = UBound(ni, 1)
         tmp = ""
@@ -495,14 +495,14 @@ Attribute ingCheckSpell.VB_ProcData.VB_Invoke_Func = " \n14"
             cl = Application.VLookup(tmp, rb, 14, 0)
             iSeek = InStr(iStart, c.Value, tmp)
             iLen = Len(tmp)
-            
+
             With c.Characters(iSeek, iLen).Font
             If IsError(ck) Then
                ' MsgBox "Err: " & iSeek & ":" & iLen & " -- " & c.Value & ":" & tmp
-                
+
                     .Bold = False
                     .Color = RGB(255, 0, 0)
-                    .Name = "¸¼Àº °íµñ"
+                    .Name = "ë§‘ì€ ê³ ë”•"
                     .Size = 10
   '                  .Strikethrough = False
   '                  .Superscript = False
@@ -514,30 +514,30 @@ Attribute ingCheckSpell.VB_ProcData.VB_Invoke_Func = " \n14"
   '                  .ThemeFont = xlThemeFontMinor
 
                 iStart = iStart + iLen
-                 
+
             Else
                ' MsgBox "ok: " & iSeek & ":" & iLen & " -- " & c.Value & ":" & tmp
                     .Bold = False
                     .Color = RGB(0, 0, 0)
-                    .Name = "¸¼Àº °íµñ"
+                    .Name = "ë§‘ì€ ê³ ë”•"
                     .Size = 10
 
                 iStart = iStart + iLen
             End If
             End With
             'if c.characters(iSeek+iLen+1,4,"(and)") then c.Characters(iSeek, iLen).Text = tmp
- 
+
         Next j
-        
+
 Blank:
     Next c
 
 End Sub
 
 Sub ingSplitIng()
-'¼ººĞ³ª´©±â
-'150617 ¼±ÅÃ¿µ¿ª
- 
+'ì„±ë¶„ë‚˜ëˆ„ê¸°
+'150617 ì„ íƒì˜ì—­
+
 '-----------------------------------------------------------------------
     Dim i, j, k As Integer
     Dim r, w, ws As Range
@@ -547,96 +547,96 @@ Sub ingSplitIng()
     Dim bc As String
     Dim bv As Variant
     Dim ai_cn, ak_cn, ac_cn, cn As Integer
-        
+
     Set rs = Selection
     Set ws = Sheets("B").Range("A2")
     i = 1
-  
-    For Each r In rs.Rows
-        
-        
-        bc = r.Cells(1, 1).Value 'ÄÚµå°ª
-        bv = r.Cells(1, 2).Value 'ÇÔ·®°ª
-        ak = Split(r.Cells(1, 4).Value, "¡¤")   'Àü¼ººĞ¸í
-        ai = Split(r.Cells(1, 5).Value, "(and)")  'INCI¸í
-        ac = Split(r.Cells(1, 6), "/")    'Á¶¼ººñ
-        
-        cn = 0
-        ak_cn = UBound(ak, 1)  'Àü¼ººĞ¸í ¼ö
-        ai_cn = UBound(ai, 1)  'INCI¸í ¼ö
-        ac_cn = UBound(ac, 1)  'Á¶¼ººñ ¼ö
-         
-        If ai_cn >= ak_cn Then cn = ai_cn
-        
-       
-        Set w = ws.Rows(i)
-        w.Cells(1, 2).Value = r.Cells(1, 3).Value '¿ø·á¸í
-        w.Cells(1, 5).Value = r.Cells(1, 2).Value 'ÇÔ·®
-       
-        If cn >= 1 Then  '´ÙÁß ¼ººĞÀÎ °æ¿ì
-                For j = 0 To cn
-                    w.Cells(1 + j, 1).Value = r.Cells(1, 1).Value & "." & j 'ÄÚµå¸í
-                    w.Cells(1 + j, 3).Value = Trim(ak(j)) 'Àü¼ººĞ¸í
-                    w.Cells(1 + j, 4).Value = Trim(ai(j)) 'inci¸í
 
-                    
+    For Each r In rs.Rows
+
+
+        bc = r.Cells(1, 1).Value 'ì½”ë“œê°’
+        bv = r.Cells(1, 2).Value 'í•¨ëŸ‰ê°’
+        ak = Split(r.Cells(1, 4).Value, "Â·")   'ì „ì„±ë¶„ëª…
+        ai = Split(r.Cells(1, 5).Value, "(and)")  'INCIëª…
+        ac = Split(r.Cells(1, 6), "/")    'ì¡°ì„±ë¹„
+
+        cn = 0
+        ak_cn = UBound(ak, 1)  'ì „ì„±ë¶„ëª… ìˆ˜
+        ai_cn = UBound(ai, 1)  'INCIëª… ìˆ˜
+        ac_cn = UBound(ac, 1)  'ì¡°ì„±ë¹„ ìˆ˜
+
+        If ai_cn >= ak_cn Then cn = ai_cn
+
+
+        Set w = ws.Rows(i)
+        w.Cells(1, 2).Value = r.Cells(1, 3).Value 'ì›ë£Œëª…
+        w.Cells(1, 5).Value = r.Cells(1, 2).Value 'í•¨ëŸ‰
+
+        If cn >= 1 Then  'ë‹¤ì¤‘ ì„±ë¶„ì¸ ê²½ìš°
+                For j = 0 To cn
+                    w.Cells(1 + j, 1).Value = r.Cells(1, 1).Value & "." & j 'ì½”ë“œëª…
+                    w.Cells(1 + j, 3).Value = Trim(ak(j)) 'ì „ì„±ë¶„ëª…
+                    w.Cells(1 + j, 4).Value = Trim(ai(j)) 'inciëª…
+
+
                     If ac_cn = cn Then
-                        w.Cells(1 + j, 6).Value = Trim(ac(j)) 'Á¶¼ººñ
-                    
+                        w.Cells(1 + j, 6).Value = Trim(ac(j)) 'ì¡°ì„±ë¹„
+
 '                        If WorksheetFunction.IsNumber(r.Cells(2, 5)) Then r.Cells(2, 5).Font.Color = RGB(255, 0, 0)
 '                        If WorksheetFunction.IsNumber(r.Cells(2, 6)) Then r.Cells(2, 5).Font.Color = RGB(255, 0, 0)
 '
 '                        If WorksheetFunction.IsNumber(r.Cells(1, ac(i))) Then
-'                            r.Cells(2, 7).Value = r.Cells(2, 5).Value * r.Cells(2, 6).Value '½ÇÇÔ·® °è»ê
-                        
+'                            r.Cells(2, 7).Value = r.Cells(2, 5).Value * r.Cells(2, 6).Value 'ì‹¤í•¨ëŸ‰ ê³„ì‚°
+
                     Else
-'                        r.Cells(1, 10).Value = "¡ØÁ¶¼ººñ:" & r.Cells(i, c6).Value
+'                        r.Cells(1, 10).Value = "â€»ì¡°ì„±ë¹„:" & r.Cells(i, c6).Value
                         w.Cells(1 + j, 6).Font.Color = RGB(255, 0, 0)
                         tmp = Format(1 / (cn + 1), "#0.000")
                         w.Cells(1 + j, 6).Value = tmp
 '                        r.Cells(1, c2).Value = r.Cells(i, c2).Value * tmp
-'                        r.Cells(1, c4).Value = r.Cells(i, c4) & "(?)" '¿ø·á¸í(ÇÔ·®ºñ)
+'                        r.Cells(1, c4).Value = r.Cells(i, c4) & "(?)" 'ì›ë£Œëª…(í•¨ëŸ‰ë¹„)
 '                        r.Cells(1, c6).Font.Color = RGB(255, 0, 0)
                     End If
-                        
-                        'r.Cells(1, c3).Value = r.Cells(1, opt) & "(" & r.Cells(1, c2) & ")." & r.Cells(i, c3) '±¸ºĞ
+
+                        'r.Cells(1, c3).Value = r.Cells(1, opt) & "(" & r.Cells(1, c2) & ")." & r.Cells(i, c3) 'êµ¬ë¶„
                     w.Cells(1 + j, 7).Formula = "=" & w.Cells(1, 5).Address & "*" & w.Cells(1 + j, 6).Address
-                    
+
                 Next j
                 w.Cells(1 + j, 10) = cn & ":" & ak_cn & ":" & ai_cn & ":" & ac_cn
                 i = i + cn + 1
             'r.Rows(1).Interior.Color = RGB(100, 100, 100)
-        
+
         Else
-                    w.Cells(1, 1).Value = r.Cells(1, 1).Value & "." & "00" 'ÄÚµå¸í
-                    w.Cells(1, 3).Value = Trim(ak(0)) 'Àü¼ººĞ¸í
-                    w.Cells(1, 4).Value = Trim(ai(0)) 'inci¸í
-                    w.Cells(1, 6).Value = 1 'Á¶¼ººñ
+                    w.Cells(1, 1).Value = r.Cells(1, 1).Value & "." & "00" 'ì½”ë“œëª…
+                    w.Cells(1, 3).Value = Trim(ak(0)) 'ì „ì„±ë¶„ëª…
+                    w.Cells(1, 4).Value = Trim(ai(0)) 'inciëª…
+                    w.Cells(1, 6).Value = 1 'ì¡°ì„±ë¹„
                     w.Cells(1, 7).Formula = "=" & w.Cells(1, 5).Address & "*" & w.Cells(1, 6).Address
                     i = i + 1
         End If
-        
- 
+
+
         'r.Rows(1).Interior.Color = RGB(255, 255, 0)
         'MsgBox "row =" & i
 
     Next r
-    
+
 
 End Sub
 
 Sub ingSplitIng3()
-'¼ººĞ³ª´©±â
-'150617 ¼±ÅÃ¿µ¿ª
- '   c1 = 1  ' ÄÚµå
- '   c2 = 2  ' ÇÔ·®
- '   c3 = 4  ' ±¸ºĞ(»óÅÂÇ¥½Ã)
- '   c4 = 3  ' ¿ø·á¸í
- '   c5 = 5  ' Àü¼ººĞÇ¥ÁØÈ­¸í
- '   c6 = 6  ' Á¶¼ººñ
- '   c7 = 7  ' INCI¸í
- '   c8 = 8  ' ±Ô°İ
- '   c9 = 9  ' ¹èÇÕÇÑµµ
+'ì„±ë¶„ë‚˜ëˆ„ê¸°
+'150617 ì„ íƒì˜ì—­
+ '   c1 = 1  ' ì½”ë“œ
+ '   c2 = 2  ' í•¨ëŸ‰
+ '   c3 = 4  ' êµ¬ë¶„(ìƒíƒœí‘œì‹œ)
+ '   c4 = 3  ' ì›ë£Œëª…
+ '   c5 = 5  ' ì „ì„±ë¶„í‘œì¤€í™”ëª…
+ '   c6 = 6  ' ì¡°ì„±ë¹„
+ '   c7 = 7  ' INCIëª…
+ '   c8 = 8  ' ê·œê²©
+ '   c9 = 9  ' ë°°í•©í•œë„
 
 '-----------------------------------------------------------------------
     Dim i, j, k As Integer
@@ -647,141 +647,141 @@ Sub ingSplitIng3()
     Dim bc As String
     Dim bv As Variant
     Dim ai_cn, ak_cn, ac_cn As Integer
-        
+
     Set rs = Selection
 
     For Each r In rs.Rows
-        
-        
-        bc = r.Cells(1, 1).Value 'ÄÚµå°ª
-        bv = r.Cells(1, 5).Value 'ÇÔ·®°ª
-        ai = Split(r.Cells(1, 3).Value, "(and)")  'INCI¸í
+
+
+        bc = r.Cells(1, 1).Value 'ì½”ë“œê°’
+        bv = r.Cells(1, 5).Value 'í•¨ëŸ‰ê°’
+        ai = Split(r.Cells(1, 3).Value, "(and)")  'INCIëª…
         ak = Split(r.Cells(1, 4), "/")   'CAS
-        ac = Split(r.Cells(1, 6), "/")    'Á¶¼ººñ
-        
-        ai_cn = UBound(ai, 1)   'INCI¼ö
+        ac = Split(r.Cells(1, 6), "/")    'ì¡°ì„±ë¹„
+
+        ai_cn = UBound(ai, 1)   'INCIìˆ˜
         ak_cn = UBound(ak, 1)   'CAS
-        ac_cn = UBound(ac, 1)   'Á¶¼ººñ¼ö
-        
-               
-        If ai_cn > 1 Then  '´ÙÁß ¼ººĞÀÎ °æ¿ì
-        
+        ac_cn = UBound(ac, 1)   'ì¡°ì„±ë¹„ìˆ˜
+
+
+        If ai_cn > 1 Then  'ë‹¤ì¤‘ ì„±ë¶„ì¸ ê²½ìš°
+
             For j = ai_cn To 0 Step -1
-                
+
                     r.Rows(2).Insert
                     r.Cells(2, 3).Value = Trim(ai(j)) 'inci
                     If ak_cn = ai_cn Then r.Cells(2, 4).Value = Trim(ak(j)) 'cas
-                    If ac_cn = ai_cn Then r.Cells(2, 6).Value = Trim(ac(j)) 'Á¶¼ººñ
+                    If ac_cn = ai_cn Then r.Cells(2, 6).Value = Trim(ac(j)) 'ì¡°ì„±ë¹„
                     'r.Cells(2, 7).Formula = r.Cells(2, 5).Address * r.Cells(2.6).Address
                     If WorksheetFunction.IsNumber(r.Cells(2, 5)) Then r.Cells(2, 5).Font.Color = RGB(255, 0, 0)
                     If WorksheetFunction.IsNumber(r.Cells(2, 6)) Then r.Cells(2, 5).Font.Color = RGB(255, 0, 0)
-                    
+
                     If WorksheetFunction.IsNumber(r.Cells(1, ac(i))) Then
-                        r.Cells(2, 7).Value = r.Cells(2, 5).Value * r.Cells(2, 6).Value '½ÇÇÔ·® °è»ê
-                        
+                        r.Cells(2, 7).Value = r.Cells(2, 5).Value * r.Cells(2, 6).Value 'ì‹¤í•¨ëŸ‰ ê³„ì‚°
+
                     Else
-'                        r.Cells(1, 10).Value = "¡ØÁ¶¼ººñ:" & r.Cells(i, c6).Value
+'                        r.Cells(1, 10).Value = "â€»ì¡°ì„±ë¹„:" & r.Cells(i, c6).Value
 '                        r.Cells(1, 10).Font.Color = RGB(255, 0, 0)
 '                        tmp = Format(1 / (ak_cn + 1), "#0.000")
 '                        r.Cells(1, c6).Value = tmp
 '                        r.Cells(1, c2).Value = r.Cells(i, c2).Value * tmp
-'                        r.Cells(1, c4).Value = r.Cells(i, c4) & "(?)" '¿ø·á¸í(ÇÔ·®ºñ)
+'                        r.Cells(1, c4).Value = r.Cells(i, c4) & "(?)" 'ì›ë£Œëª…(í•¨ëŸ‰ë¹„)
 '                        r.Cells(1, c6).Font.Color = RGB(255, 0, 0)
                     End If
-                        
-                        'r.Cells(1, c3).Value = r.Cells(1, opt) & "(" & r.Cells(1, c2) & ")." & r.Cells(i, c3) '±¸ºĞ
-    
+
+                        'r.Cells(1, c3).Value = r.Cells(1, opt) & "(" & r.Cells(1, c2) & ")." & r.Cells(i, c3) 'êµ¬ë¶„
+
             Next j
             r.Rows(1).Interior.Color = RGB(100, 100, 100)
-        
+
         End If
         r.Rows(1).Interior.Color = RGB(255, 255, 0)
         'MsgBox "row =" & i
 
     Next r
-    
+
 
 End Sub
 
 Sub ingSplitIng2()
-' ¼ººĞ³ª´©±â
- '   c1 = 1  ' ÄÚµå
- '   c2 = 2  ' ÇÔ·®
- '   c3 = 4  ' ±¸ºĞ(»óÅÂÇ¥½Ã)
- '   c4 = 3  ' ¿ø·á¸í
- '   c5 = 5  ' Àü¼ººĞÇ¥ÁØÈ­¸í
- '   c6 = 6  ' Á¶¼ººñ
- '   c7 = 7  ' INCI¸í
- '   c8 = 8  ' ±Ô°İ
- '   c9 = 9  ' ¹èÇÕÇÑµµ
+' ì„±ë¶„ë‚˜ëˆ„ê¸°
+ '   c1 = 1  ' ì½”ë“œ
+ '   c2 = 2  ' í•¨ëŸ‰
+ '   c3 = 4  ' êµ¬ë¶„(ìƒíƒœí‘œì‹œ)
+ '   c4 = 3  ' ì›ë£Œëª…
+ '   c5 = 5  ' ì „ì„±ë¶„í‘œì¤€í™”ëª…
+ '   c6 = 6  ' ì¡°ì„±ë¹„
+ '   c7 = 7  ' INCIëª…
+ '   c8 = 8  ' ê·œê²©
+ '   c9 = 9  ' ë°°í•©í•œë„
     ingInit
 '-----------------------------------------------------------------------
     i = 2
-        
+
     opt = Range("D2").Value
-    
+
     Do While rs.Cells(i, c1) <> ""
-        
+
         rs.Rows(i).Select
-        bc = rs.Cells(i, c1).Value 'ÄÚµå°ª
-        bv = rs.Cells(i, c2).Value 'ÇÔ·®°ª
-        
-        nk = Split(rs.Cells(i, c5), "¡¤")   'Àü¼ººĞ¸í
-        nc = Split(rs.Cells(i, c6), "/")    'Á¶¼ººñ
-        ni = Split(rs.Cells(i, c7).Value, "(and)")  'INCI¸í
-        nk_cn = UBound(nk, 1)   'Àü¼ººĞ¼ö
-        nc_cn = UBound(nc, 1)   'Á¶¼ººñ¼ö
-        ni_cn = UBound(ni, 1)   'INCI¼ö
-        
+        bc = rs.Cells(i, c1).Value 'ì½”ë“œê°’
+        bv = rs.Cells(i, c2).Value 'í•¨ëŸ‰ê°’
+
+        nk = Split(rs.Cells(i, c5), "Â·")   'ì „ì„±ë¶„ëª…
+        nc = Split(rs.Cells(i, c6), "/")    'ì¡°ì„±ë¹„
+        ni = Split(rs.Cells(i, c7).Value, "(and)")  'INCIëª…
+        nk_cn = UBound(nk, 1)   'ì „ì„±ë¶„ìˆ˜
+        nc_cn = UBound(nc, 1)   'ì¡°ì„±ë¹„ìˆ˜
+        ni_cn = UBound(ni, 1)   'INCIìˆ˜
+
         If nk_cn >= 1 Then
 
             For j = nk_cn To 0 Step -1
-            
+
                 rs.Cells.Rows(i + 1).Insert
                 rs.Cells(i + 1, c5).Value = Trim(nk(j))
                 If nk_cn = UBound(nc, 1) Then rs.Cells(i + 1, c6).Value = Trim(nc(j))
                 If nk_cn = UBound(ni, 1) Then rs.Cells(i + 1, c7).Value = Trim(ni(j))
                 rs.Cells(i + 1, c1).Value = rs.Cells(i + 1, opt)
-                
+
                 If WorksheetFunction.IsNumber(rs.Cells(i + 1, c6)) Then
                     rs.Cells(i + 1, c2).Value = rs.Cells(i, c2).Value * rs.Cells(i + 1, c6).Value
-                    rs.Cells(i + 1, c4).Value = rs.Cells(i, c4) & "(" & Format(nc(j), "#0.0%") & ")"  '¿ø·á¸í(ÇÔ·®ºñ)
+                    rs.Cells(i + 1, c4).Value = rs.Cells(i, c4) & "(" & Format(nc(j), "#0.0%") & ")"  'ì›ë£Œëª…(í•¨ëŸ‰ë¹„)
                 Else
-                    rs.Cells(i + 1, 10).Value = "¡ØÁ¶¼ººñ:" & rs.Cells(i, c6).Value
+                    rs.Cells(i + 1, 10).Value = "â€»ì¡°ì„±ë¹„:" & rs.Cells(i, c6).Value
                     rs.Cells(i + 1, 10).Font.Color = RGB(255, 0, 0)
                     tmp = Format(1 / (nk_cn + 1), "#0.000")
                     rs.Cells(i + 1, c6).Value = tmp
                     rs.Cells(i + 1, c2).Value = rs.Cells(i, c2).Value * tmp
-                    rs.Cells(i + 1, c4).Value = rs.Cells(i, c4) & "(?)" '¿ø·á¸í(ÇÔ·®ºñ)
+                    rs.Cells(i + 1, c4).Value = rs.Cells(i, c4) & "(?)" 'ì›ë£Œëª…(í•¨ëŸ‰ë¹„)
                     rs.Cells(i + 1, c6).Font.Color = RGB(255, 0, 0)
                 End If
-                    
-                    rs.Cells(i + 1, c3).Value = rs.Cells(i + 1, opt) & "(" & rs.Cells(i + 1, c2) & ")." & rs.Cells(i, c3) '±¸ºĞ
+
+                    rs.Cells(i + 1, c3).Value = rs.Cells(i + 1, opt) & "(" & rs.Cells(i + 1, c2) & ")." & rs.Cells(i, c3) 'êµ¬ë¶„
 
             Next j
-                
+
                 rs.Rows(i).Delete
         Else
                 rs.Cells(i, c1).Value = rs.Cells(i, opt)
-                rs.Cells(i, c3).Value = rs.Cells(i, opt) & "(" & rs.Cells(i, c2) & ")." & rs.Cells(i, c3)    '±¸ºĞ
-                rs.Cells(i, c4).Value = rs.Cells(i, c4) & "(100%)"  '¿ø·á¸í(ÇÔ·®ºñ)
-                
+                rs.Cells(i, c3).Value = rs.Cells(i, opt) & "(" & rs.Cells(i, c2) & ")." & rs.Cells(i, c3)    'êµ¬ë¶„
+                rs.Cells(i, c4).Value = rs.Cells(i, c4) & "(100%)"  'ì›ë£Œëª…(í•¨ëŸ‰ë¹„)
+
         End If
-        
+
         i = i + nk_cn + 1
         'MsgBox "row =" & i
 
     Loop
-    
+
 
 End Sub
 
 Sub ingSortByIng()
 '
-' ¸ÅÅ©·Î1 ¸ÅÅ©·Î
+' ë§¤í¬ë¡œ1 ë§¤í¬ë¡œ
 '
 
-        
+
     With ActiveWorkbook.ActiveSheet.Sort
         .SortFields.Clear
         .SortFields.Add Key:=Range("A6:A6"), _
@@ -789,7 +789,7 @@ Sub ingSortByIng()
         .SortFields.Add Key:=Range("B6:B6"), _
             SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
 
-        .SetRange Range("¼ººĞÄÚµå")
+        .SetRange Range("ì„±ë¶„ì½”ë“œ")
         .Header = xlYes
         .MatchCase = False
         .Orientation = xlTopToBottom
@@ -801,13 +801,13 @@ End Sub
 
 Sub ingSortByVol()
 '
-' ¸ÅÅ©·Î1 ¸ÅÅ©·Î
+' ë§¤í¬ë¡œ1 ë§¤í¬ë¡œ
 '
     With ActiveWorkbook.ActiveSheet.Sort
         .SortFields.Clear
         .SortFields.Add Key:=Range("B6:B6"), _
             SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
-        .SetRange Range("¼ººĞÄÚµå")
+        .SetRange Range("ì„±ë¶„ì½”ë“œ")
         .Header = xlYes
         .MatchCase = False
         .Orientation = xlTopToBottom
@@ -819,66 +819,66 @@ End Sub
 
 Sub ingMergeIng()
 
-' Àü¼ººĞ ÇÕÄ¡±â  by ÀÌÁø¼º
+' ì „ì„±ë¶„ í•©ì¹˜ê¸°  by ì´ì§„ì„±
 ' 2012-12-17
 
 '
     init
-    Set rs = ActiveSheet.Range("¼ººĞÄÚµå")
-    
-    
- '   c1 = 1  ' ÄÚµå
- '   c2 = 2  ' ÇÔ·®
- '   c3 = 4  ' ±¸ºĞ(»óÅÂÇ¥½Ã)
- '   c4 = 3  ' ¿ø·á¸í
- '   c5 = 5  ' Àü¼ººĞÇ¥ÁØÈ­¸í
- '   c6 = 6  ' Á¶¼ººñ
- '   c7 = 7  ' INCI¸í
- '   c8 = 8  ' ±Ô°İ
- '   c9 = 9  ' ¹èÇÕÇÑµµ
-    
-'- Àü¼ººĞ º´ÇÕ ----------------------------------------------------------------------
+    Set rs = ActiveSheet.Range("ì„±ë¶„ì½”ë“œ")
+
+
+ '   c1 = 1  ' ì½”ë“œ
+ '   c2 = 2  ' í•¨ëŸ‰
+ '   c3 = 4  ' êµ¬ë¶„(ìƒíƒœí‘œì‹œ)
+ '   c4 = 3  ' ì›ë£Œëª…
+ '   c5 = 5  ' ì „ì„±ë¶„í‘œì¤€í™”ëª…
+ '   c6 = 6  ' ì¡°ì„±ë¹„
+ '   c7 = 7  ' INCIëª…
+ '   c8 = 8  ' ê·œê²©
+ '   c9 = 9  ' ë°°í•©í•œë„
+
+'- ì „ì„±ë¶„ ë³‘í•© ----------------------------------------------------------------------
     i = 2
 
     'bc = rs.Cells(1, c1).Value
-    
+
     Do While rs.Cells(i, c1) <> ""
 
         rs.Rows(i).Select
-        st = rs.Cells(i, c3).Value '»óÅÂ ±¸ºĞ
-              
+        st = rs.Cells(i, c3).Value 'ìƒíƒœ êµ¬ë¶„
+
         If rs.Cells(i, c1) = rs.Cells(i + 1, c1) Then
-        
+
             'rs.Cells(i, c1) = rs.Cells(i, c1) & Chr(10) & rs.Cells(i + 1, c1)
-            rs.Cells(i, c2) = rs.Cells(i, c2) + rs.Cells(i + 1, c2) 'temr ÇÔ·®°ª
+            rs.Cells(i, c2) = rs.Cells(i, c2) + rs.Cells(i + 1, c2) 'temr í•¨ëŸ‰ê°’
             rs.Cells(i, c3) = rs.Cells(i, c3) & Chr(10) & rs.Cells(i + 1, c3)
             rs.Cells(i, c4) = rs.Cells(i, c4) & Chr(10) & rs.Cells(i + 1, c4)
             rs.Cells(i, c5) = rs.Cells(i, c5)
             rs.Cells(i, c7) = rs.Cells(i, c7)
-            
+
             rs.Cells.Rows(i + 1).Delete
-            
+
 
         Else
-            
+
             i = i + 1
 
         End If
-        
-        
-        
+
+
+
     Loop
 End Sub
 
 Sub ingOpenAll()
-' ¿ø·á¸®½ºÆ® ¸ğµÎ ¿­±â 150402
-    Workbooks.Open rPreset("¿ø·áLIST")
-    'Workbooks.Open rPreset("¿ø·áBase")
+' ì›ë£Œë¦¬ìŠ¤íŠ¸ ëª¨ë‘ ì—´ê¸° 150402
+    Workbooks.Open rPreset("ì›ë£ŒLIST")
+    'Workbooks.Open rPreset("ì›ë£ŒBase")
 End Sub
 
 Sub edMergeTbl1()
 '
-' ¸ÅÅ©·Î2 ¸ÅÅ©·Î
+' ë§¤í¬ë¡œ2 ë§¤í¬ë¡œ
 '
 
 '
@@ -888,7 +888,7 @@ Sub edMergeTbl1()
     'Selection.ClearContents
     Set ro = Range("K5")
     ro.Consolidate Sources:=rs, Function:=xlSum, TopRow:=False, LeftColumn:=True, CreateLinks:=False
-    
+
     ro.CurrentRegion.Select
     ActiveWorkbook.Worksheets("Sheet1").Sort.SortFields.Add Key:=Range("K5:K27") _
         , SortOn:=xlSortOnValues, Order:=xlDescending, DataOption:=xlSortNormal
@@ -900,8 +900,6 @@ Sub edMergeTbl1()
         .SortMethod = xlPinYin
         .Apply
     End With
-    
-    
+
+
 End Sub
-
-

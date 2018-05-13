@@ -1,36 +1,36 @@
 Attribute VB_Name = "MMenu"
 '
 '======================================================================
-' ¸®º»¸Ş´º ¸¸µé±â
+' ë¦¬ë³¸ë©”ë‰´ ë§Œë“¤ê¸°
 '======================================================================
 '
-'****** esMenu¿¡¼­ °¡Á®¿È 15.6.26
-' µµ±¸¸ğÀ½ Á¤ÀÇ
+'****** esMenuì—ì„œ ê°€ì ¸ì˜´ 15.6.26
+' ë„êµ¬ëª¨ìŒ ì •ì˜
 
 Option Explicit
-Const cName As String = "HKC" 'µµ±¸¸ğÀ½ÀÇ ÀÌ¸§ Commandbar Name
+Const cName As String = "HKC" 'ë„êµ¬ëª¨ìŒì˜ ì´ë¦„ Commandbar Name
 
 Sub MakeMenu(cName As String)
-'¸Ş´º ¸¸µé±â
+'ë©”ë‰´ ë§Œë“¤ê¸°
 Dim c As CommandBar
 Dim strCur As String
     strCur = ThisWorkbook.Name & "!"
     DeleteMenu (cName)
     Set c = Application.CommandBars.Add(Name:=cName, Position:=msoBarTop, MenuBar:=False, Temporary:=False)
-    
-    'MakeSubMenu c, msoControlPopup, False, strCur & "SplitTableIntoMultiSheets", "ÀÚÁÖ¾²´Â", "ÀÚÁÖ¾²´Â2", 2090
-    
-    MakeSubMenu c, msoControlButton, False, strCur & "SplitTableIntoMultiSheets", "±¸ºĞº° ½ÃÆ®»ı¼º", "±¸ºĞº°½ÃÆ®»ı¼º", 2090
-    MakeSubMenu c, msoControlButton, False, strCur & "DeleteMenu", "½ÃÆ®»ı¼º¸ÅÅ©·ÎÁ¾·á", "½ÃÆ®»ı¼º¸ÅÅ©·ÎÁ¾·á", 2087
-    MakeSubMenu c, msoControlButton, False, strCur & "CDO_Mail_Small_Text", "¸ŞÀÏº¸³»±â", "¸ŞÀÏº¸³»±â", 24
-    MakeSubMenu c, msoControlButton, False, strCur & "exSameBColor_HideColumns", "µ¿ÀÏÄÃ·³ °¨Ãß±â", "", 352
-    MakeSubMenu c, msoControlButton, False, strCur & "exSameBColor_ShowColumns", "µ¿ÀÏÄÃ·³ º¸ÀÌ±â", "", 351
-    
-    MakeSubMenu c, msoControlButton, False, strCur & "openFile", "ÆÄÀÏ¿­±â", "ÆÄÀÏ¿­±â2", 23
-    MakeSubMenu c, msoControlButton, False, strCur & "edMergeTXT2Cell", "¼¿º´ÇÕ", "ÆÄÀÏ¿­±â2", 24
-    MakeSubMenu c, msoControlButton, False, strCur & "edMergeTXT2Cell2", "¼¿º´ÇÕ2", "ÆÄÀÏ¿­±â2", 24
-    MakeSubMenu c, msoControlButton, False, strCur & "edMergeRange", "¹üÀ§º´ÇÕ", "ÆÄÀÏ¿­±â2", 25
-        
+
+    'MakeSubMenu c, msoControlPopup, False, strCur & "SplitTableIntoMultiSheets", "ìì£¼ì“°ëŠ”", "ìì£¼ì“°ëŠ”2", 2090
+
+    MakeSubMenu c, msoControlButton, False, strCur & "SplitTableIntoMultiSheets", "êµ¬ë¶„ë³„ ì‹œíŠ¸ìƒì„±", "êµ¬ë¶„ë³„ì‹œíŠ¸ìƒì„±", 2090
+    MakeSubMenu c, msoControlButton, False, strCur & "DeleteMenu", "ì‹œíŠ¸ìƒì„±ë§¤í¬ë¡œì¢…ë£Œ", "ì‹œíŠ¸ìƒì„±ë§¤í¬ë¡œì¢…ë£Œ", 2087
+    MakeSubMenu c, msoControlButton, False, strCur & "CDO_Mail_Small_Text", "ë©”ì¼ë³´ë‚´ê¸°", "ë©”ì¼ë³´ë‚´ê¸°", 24
+    MakeSubMenu c, msoControlButton, False, strCur & "exSameBColor_HideColumns", "ë™ì¼ì»¬ëŸ¼ ê°ì¶”ê¸°", "", 352
+    MakeSubMenu c, msoControlButton, False, strCur & "exSameBColor_ShowColumns", "ë™ì¼ì»¬ëŸ¼ ë³´ì´ê¸°", "", 351
+
+    MakeSubMenu c, msoControlButton, False, strCur & "openFile", "íŒŒì¼ì—´ê¸°", "íŒŒì¼ì—´ê¸°2", 23
+    MakeSubMenu c, msoControlButton, False, strCur & "edMergeTXT2Cell", "ì…€ë³‘í•©", "íŒŒì¼ì—´ê¸°2", 24
+    MakeSubMenu c, msoControlButton, False, strCur & "edMergeTXT2Cell2", "ì…€ë³‘í•©2", "íŒŒì¼ì—´ê¸°2", 24
+    MakeSubMenu c, msoControlButton, False, strCur & "edMergeRange", "ë²”ìœ„ë³‘í•©", "íŒŒì¼ì—´ê¸°2", 25
+
     c.Visible = True
     c.Name = cName
     Set c = Nothing
@@ -43,7 +43,7 @@ Sub MakeSubMenu(c As CommandBar, lngType As Long, blnBar As Boolean, strOnAction
         .TooltipText = strTip
         .Caption = strCaption
         .FaceId = lngFaceId
-        
+
     End With
 End Sub
 
@@ -61,7 +61,7 @@ End Sub
 
 Sub DeleteMenu(cName As String)
 On Error Resume Next
-    Application.CommandBars(cName).Delete '¸Ş´º »èÁ¦ÇÏ±â
+    Application.CommandBars(cName).Delete 'ë©”ë‰´ ì‚­ì œí•˜ê¸°
     AddIns(cName).Installed = False
 On Error GoTo 0
 End Sub
@@ -72,7 +72,7 @@ Sub delMenu2()
 End Sub
 '
 '======================================================================
-' ¸®º»¸Ş´º ¸¸µé±â 2
+' ë¦¬ë³¸ë©”ë‰´ ë§Œë“¤ê¸° 2
 '======================================================================
 '
 Sub QryMenu()
@@ -107,8 +107,8 @@ Sub AddMenu()
   Dim toolsMenu As CommandBarControl
   Dim myMenu As CommandBarPopup
   Dim subMenu As CommandBarControl
-  
-      
+
+
 ' Point to the Worksheet Menu Bar
   Set cmdbar = Application.CommandBars("HKC")
 
@@ -116,11 +116,11 @@ Sub AddMenu()
 '  Set toolsMenu = cmdbar.Controls("AddMenu")
 
 ' Create My Menu
-  Set myMenu = cmdbar.Controls("A±×·ì").Add(Type:=msoControlPopup)
-  
+  Set myMenu = cmdbar.Controls("Aê·¸ë£¹").Add(Type:=msoControlPopup)
+
 ' Create the sub Menu(s)
   Set subMenu = myMenu.Controls.Add
-  
+
   With myMenu
     .Caption = "My Menu"
     .BeginGroup = True
@@ -147,12 +147,12 @@ End Sub
 
 Private Sub rbAddRibbon()
     Dim ribbonXml As String
-    
+
     ribbonXml = "<mso:customUI xmlns:mso=""http://schemas.microsoft.com/office/2009/07/customui"">"
     ribbonXml = ribbonXml + "  <mso:ribbon>"
     ribbonXml = ribbonXml + "    <mso:qat/>"
     ribbonXml = ribbonXml + "    <mso:tabs>"
-    ribbonXml = ribbonXml + "      <mso:tab id=""tool1"" label=""µµ±¸1"" insertBeforeQ=""mso:TabFormat"">"
+    ribbonXml = ribbonXml + "      <mso:tab id=""tool1"" label=""ë„êµ¬1"" insertBeforeQ=""mso:TabFormat"">"
     ribbonXml = ribbonXml + "        <mso:group id=""testGroup"" label=""Test"" autoScale=""true"">"
     ribbonXml = ribbonXml + "          <mso:button id=""highlightManualTasks"" label=""Toggle Manual Task Color"" "
     ribbonXml = ribbonXml + "imageMso=""DiagramTargetInsertClassic"" onAction=""ToggleManualTasksColor""/>"
@@ -161,22 +161,22 @@ Private Sub rbAddRibbon()
     ribbonXml = ribbonXml + "    </mso:tabs>"
     ribbonXml = ribbonXml + "  </mso:ribbon>"
     ribbonXml = ribbonXml + "</mso:customUI>"
-    
+
     ActiveProject.SetCustomUI (ribbonXml)
 End Sub
 
 
 
 '======================================================================
-' ±âÅ¸
+' ê¸°íƒ€
 '======================================================================
 '
 
 Sub hello()
     MsgBox "Hello!!"
 End Sub
-Sub DB¿­±â()
-  '»ç¿ëÀÚÁ¤ÀÇ.ÀÌ¸§¿µ¿ª(»ö»ó ºÎºĞ) ÆÄÀÏ¿­±â 150406
+Sub DBì—´ê¸°()
+  'ì‚¬ìš©ìì •ì˜.ì´ë¦„ì˜ì—­(ìƒ‰ìƒ ë¶€ë¶„) íŒŒì¼ì—´ê¸° 150406
     Dim rs As Range
     Dim wbk As Worksheet
     Dim i As Range
@@ -187,7 +187,7 @@ Sub DB¿­±â()
  End Sub
 
 Sub DB_Open_by_Activecell()
-  '»ç¿ëÀÚÁ¤ÀÇ.ÀÌ¸§¿µ¿ª(»ö»ó ºÎºĞ) ÆÄÀÏ¿­±â 150406
+  'ì‚¬ìš©ìì •ì˜.ì´ë¦„ì˜ì—­(ìƒ‰ìƒ ë¶€ë¶„) íŒŒì¼ì—´ê¸° 150406
     Dim rs As Range
     Dim wbk As Worksheet
     Dim i As Range
@@ -207,7 +207,7 @@ End Sub
 Sub Addin_Open_MyAddin(Optional x As Boolean)
 Dim cmdCont As CommandBarControl
     On Error Resume Next
-    Set xclass.App = Application 'Å¬·¡½º¸ğµâ »ç¿ë
+    Set xclass.App = Application 'í´ë˜ìŠ¤ëª¨ë“ˆ ì‚¬ìš©
     Call ImmSetConversionStatus(ImmGetContext(FindWindow("XLMAIN", _
       Application.Caption)), &H1, &H0) 'IME_CMODE_HANGEUL, IME_SMODE_NONE
     With Application
@@ -218,47 +218,47 @@ Dim cmdCont As CommandBarControl
           .Caption = "HKC"
           .Tag = "HKC Excel Macro"
           .OnAction = "menu_enable"
-          
+
           With .Controls.Add(Type:=msoControlPopup)
-            .Caption = "ÀÚÁÖ¾²´Â ´ÜÃàÅ°"
-            .Tag = "ÀÚÁÖ¾²´Â ´ÜÃàÅ°"
+            .Caption = "ìì£¼ì“°ëŠ” ë‹¨ì¶•í‚¤"
+            .Tag = "ìì£¼ì“°ëŠ” ë‹¨ì¶•í‚¤"
             With .Controls.Add(Type:=msoControlButton)
               .FaceId = 40
-              .Caption = "¾Æ·¡ÂÊ ¹üÀ§¼±ÅÃ"
+              .Caption = "ì•„ë˜ìª½ ë²”ìœ„ì„ íƒ"
               .ShortcutText = "Alt+PageDown"
               .OnAction = "End1_Cell"
             End With
             With .Controls.Add(msoControlButton)
               .FaceId = 39
-              .Caption = "¿À¸¥ÂÊ ¹üÀ§¼±ÅÃ"
+              .Caption = "ì˜¤ë¥¸ìª½ ë²”ìœ„ì„ íƒ"
               .ShortcutText = "Alt+PageUp"
               .OnAction = "End2_Cell"
             End With
             With .Controls.Add(msoControlButton)
-              .Caption = "¸¶Áö¸·¼¿ Àç¼³Á¤"
+              .Caption = "ë§ˆì§€ë§‰ì…€ ì¬ì„¤ì •"
               .ShortcutText = "Ctrl+Alt+End"
               .OnAction = "Sheet_Refresh"
             End With
           End With
-          
+
           With .Controls.Add(Type:=msoControlButton)
             .BeginGroup = True
-            .Caption = "¾ç³¡°ø¹é Áö¿ì±â"
+            .Caption = "ì–‘ëê³µë°± ì§€ìš°ê¸°"
             .ShortcutText = "Ctrl+Shift+T"
             .OnAction = "Trim_Text"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .BeginGroup = True
             .FaceId = 160
-            .Caption = "¼±ÅÃÆäÀÌÁö ÀÎ¼â"
+            .Caption = "ì„ íƒí˜ì´ì§€ ì¸ì‡„"
             .ShortcutText = "Ctrl+Shift+P"
             .OnAction = "Print_SelectPage"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .BeginGroup = True
-            .Caption = "Addin2015 µµ¿ò¸»"
+            .Caption = "Addin2015 ë„ì›€ë§"
             .OnAction = "Help_Text"
-            .FaceId = 273 'Á¾¸ğ¾ç
+            .FaceId = 273 'ì¢…ëª¨ì–‘
           End With
         End With
       End With
@@ -266,4 +266,3 @@ Dim cmdCont As CommandBarControl
     Onkey_Make
     Randomize
 End Sub
-

@@ -1,14 +1,14 @@
 Attribute VB_Name = "MmainSub"
 '
 '======================================================================
-' Ã£±â ÇÔ¼ö
+' ì°¾ê¸° í•¨ìˆ˜
 '======================================================================
 '
 Sub Go2Database()
-'go2Cell() '160701 ÇöÀç¼¿ °ªÀ¸·Î µ¥ÀÌÅ¸º£ÀÌ½º Ã£¾Æ°¡±â
+'go2Cell() '160701 í˜„ì¬ì…€ ê°’ìœ¼ë¡œ ë°ì´íƒ€ë² ì´ìŠ¤ ì°¾ì•„ê°€ê¸°
     Dim ws, sv As String
-    sv = Selection.Value  'Ã£°íÀÚ ÇÏ´Â °ª
-    
+    sv = Selection.Value  'ì°¾ê³ ì í•˜ëŠ” ê°’
+
     Dim lngItem As Long
     Dim msg As String
  '
@@ -16,32 +16,32 @@ Sub Go2Database()
     Dim i, cn As Integer
     Dim rngDB As Range
 
-'Ãâ·Â¿µ¿ª
-    Set rngDB = ThisWorkbook.Sheets("S").Range("setup")   'µ¥ÀÌÅ¸º£ÀÌ½º ¿µ¿ª
-    
-'    Label1.Caption = "¶óº§1"
-'    Label2.Caption = "¶óº§2"
+'ì¶œë ¥ì˜ì—­
+    Set rngDB = ThisWorkbook.Sheets("S").Range("setup")   'ë°ì´íƒ€ë² ì´ìŠ¤ ì˜ì—­
+
+'    Label1.Caption = "ë¼ë²¨1"
+'    Label2.Caption = "ë¼ë²¨2"
 '
     cn = rngDB.Rows.Count
     MsgBox rngDB.Address
-    
+
     For i = 0 To cn
         With UserForm1.ListBox1
             .ColumnCount = 3
             .ColumnWidths = "150;120;100"
             .ColumnHeads = True
             .AddItem
-            .List(i, 0) = rngDB.Cells(i, 1)    'DB ¸íÄª
-            .List(i, 1) = rngDB.Cells(i, 2)    '°æ·Î
+            .List(i, 0) = rngDB.Cells(i, 1)    'DB ëª…ì¹­
+            .List(i, 1) = rngDB.Cells(i, 2)    'ê²½ë¡œ
             .List(i, 2) = rngDB.Cells(i, 3)    'cas
         End With
     Next i
- 
- 
+
+
     UserForm1.show
     Stop
-    
-    tmp = isOpenWrk(vbcWRLST) '¿ø·á¸®½ºÆ® È°¼ºÈ­ ¿©ºÎ
+
+    tmp = isOpenWrk(vbcWRLST) 'ì›ë£Œë¦¬ìŠ¤íŠ¸ í™œì„±í™” ì—¬ë¶€
     If tmp = 0 Then
         wf = Application.GetOpenFilename("Excel Files,*.xls")
         Workbooks.Open FileName:=wf, UpdateLinks:=0
@@ -51,25 +51,25 @@ Sub Go2Database()
 End Sub
 
 Sub ingQueryDBInfo()
-'¼±ÅÃ¼¿·Î DBÁ¤º¸ °¡Á®¿À±â
+'ì„ íƒì…€ë¡œ DBì •ë³´ ê°€ì ¸ì˜¤ê¸°
     Dim wb, sv, r, smg As String
     Dim t, i, m As Integer
     Dim w As Workbooks
     Dim rs As Range
-    
-    sv = Selection.Value  'Ã£°íÀÚ ÇÏ´Â °ª
+
+    sv = Selection.Value  'ì°¾ê³ ì í•˜ëŠ” ê°’
     owb = ActiveWorkbook.Name
-   
+
     fn = edTrimPath(hkc_DB1, "\")
     wb = edTrimExtension(fn, ".")
-   
-     '¿ø·á¸®½ºÆ® È°¼ºÈ­ ¿©ºÎ
+
+     'ì›ë£Œë¦¬ìŠ¤íŠ¸ í™œì„±í™” ì—¬ë¶€
     If isOpenWrk(fn) = 0 Then
-        MsgBox (fn & " ÆÄÀÏÀ» ¿­°Ú½À´Ï´Ù.")
+        MsgBox (fn & " íŒŒì¼ì„ ì—´ê² ìŠµë‹ˆë‹¤.")
         Workbooks.Open FileName:=hkc_DB1
     Else
     End If
-    
+
     Set rs = Range(Workbooks(fn).Names("Database"))
     With rs
         r = .Find(What:=sv, LookIn:=xlValues).Row
@@ -77,7 +77,7 @@ Sub ingQueryDBInfo()
         msg = msg & Chr(10) & .Cells(r, i).Value
         Next i
     End With
-    
+
     Workbooks(owb).Activate
     m = MsgBox(msg, vbOKCancel, sv)
     If m = 1 Then
@@ -101,7 +101,7 @@ Sub skWordinCell()
     Dim rCell As Range, sToFind As String, iSeek As Long
     sToFind = InputBox("Enter Word / Phrase To Mark", "Criteria Request")
     If sToFind = "" Then MsgBox "Word / Phrase Required But Not Entered", , "Invalid Entry"
-    
+
     For Each rCell In Selection 'can be any range or explicit (i.e. Range("A1:G6") instead of Selection)
     iSeek = InStr(1, rCell.Value, sToFind)
     Do While iSeek > 0
@@ -121,15 +121,15 @@ Sub Go2Today()
 '
     Dim Today
     Dim c As Range
-    
+
     Set c = Range("M:M").Find(What:=Date)
     c.Activate
-        
+
 End Sub
 
 '
 '======================================================================
-' º¸±â(Show) º¯°æ ÇÔ¼ö
+' ë³´ê¸°(Show) ë³€ê²½ í•¨ìˆ˜
 '======================================================================
 '
 Sub shGoNextSht() '150330
@@ -148,8 +148,8 @@ Sub shPrintPreview() '150330
     ActiveSheet.PrintPreview
 End Sub
 
-Sub shAddSht(inp As String) '120824/½ÃÆ® Ãß°¡
-    
+Sub shAddSht(inp As String) '120824/ì‹œíŠ¸ ì¶”ê°€
+
     Dim ws As Worksheet
     Dim chk As Integer
     chk = 0
@@ -163,7 +163,7 @@ Sub shAddSht(inp As String) '120824/½ÃÆ® Ãß°¡
 
 End Sub
 
-Sub shLockSht() '131108/jinsigo ½ÃÆ® Àá±×±â
+Sub shLockSht() '131108/jinsigo ì‹œíŠ¸ ì ê·¸ê¸°
 '
     Cells.Locked = False
     Selection.End(xlToLeft).Select
@@ -178,7 +178,7 @@ Sub shLockSht() '131108/jinsigo ½ÃÆ® Àá±×±â
 
 End Sub
 
-Sub shUnLockSht() '131108/jinsigo ½ÃÆ® Ç®±â
+Sub shUnLockSht() '131108/jinsigo ì‹œíŠ¸ í’€ê¸°
 '
     ActiveSheet.Unprotect Password:="1"
     Selection.End(xlToLeft).Select
@@ -187,10 +187,10 @@ Sub shUnLockSht() '131108/jinsigo ½ÃÆ® Ç®±â
     Range(Selection, Selection.End(xlToRight)).Select
     Selection.Locked = False
     Selection.End(xlDown).Select
-    
+
 End Sub
 
-Public Sub Clr_Sheet(inp As String) '120824/½ÃÆ® ³»¿ë Áö¿ì±â
+Public Sub Clr_Sheet(inp As String) '120824/ì‹œíŠ¸ ë‚´ìš© ì§€ìš°ê¸°
     Dim ws As Worksheet
     For Each ws In ActiveWorkbook.Sheets
         If ws.Name = inp Then
@@ -200,7 +200,7 @@ Public Sub Clr_Sheet(inp As String) '120824/½ÃÆ® ³»¿ë Áö¿ì±â
 End Sub
 
 Sub Del_Sheet(RefName As String)
-'120825/½ÃÆ® »èÁ¦
+'120825/ì‹œíŠ¸ ì‚­ì œ
     Set wkb = ActiveWorkbook
     For Each ws In wkb.Names
         If ws = RefName Then wkb.Sheets(RefName).Delete
@@ -214,12 +214,12 @@ End Sub
 
 Sub shRmList()
 '
-' ¸ÅÅ©·Î2 ¸ÅÅ©·Î
+' ë§¤í¬ë¡œ2 ë§¤í¬ë¡œ
 '
 
 '
 
-    Windows("¿ø·áLIST.xls").Activate
+    Windows("ì›ë£ŒLIST.xls").Activate
     With ActiveWindow
         .Width = 1450
         .Height = 470.25
@@ -231,21 +231,21 @@ Sub shRmList()
 End Sub
 
 Sub arrange()
-        
+
     ActiveWorksheet.Windows.arrange ArrangeStyle:=xlArrangeStyleVertical, _
         ActiveWorkbook:=False, SyncVertical:=False
-        
-    Workbooks("¿ø·áLIST.xls").Windows.arrange ArrangeStyle:=xlArrangeStyleVertical, _
+
+    Workbooks("ì›ë£ŒLIST.xls").Windows.arrange ArrangeStyle:=xlArrangeStyleVertical, _
         ActiveWorkbook:=False, SyncVertical:=False
 
     ActiveWindow.WindowState = xlMaximized
     ActiveWindow.WindowState = xlMinimized
-    
-    Windows.CompareSideBySideWith "¿ø·áLIST.xls"
+
+    Windows.CompareSideBySideWith "ì›ë£ŒLIST.xls"
     Windows.ResetPositionsSideBySide
     Windows.arrange ArrangeStyle:=xlVertical
-    Windows("¿ø·áLIST.xls").Activate
-    
+    Windows("ì›ë£ŒLIST.xls").Activate
+
 
 End Sub
 
@@ -283,34 +283,34 @@ End Sub
 
 '
 '======================================================================
-' ÃßÃâ°ü·Ã ÇÔ¼ö
+' ì¶”ì¶œê´€ë ¨ í•¨ìˆ˜
 '======================================================================
 '
-Sub exCol_Filter2() '061026/Ã³¹æÃßÃâ±â
+Sub exCol_Filter2() '061026/ì²˜ë°©ì¶”ì¶œê¸°
 
     act_row = ActiveCell.Row
     act_col = ActiveCell.Column
-    
+
     For cur_col = act_col To 220
-    
+
         With Cells(act_row, cur_col)
             If .Value > 0 Then
                 .EntireColumn.Hidden = False
             Else
                 .EntireColumn.Hidden = True
             End If
-            
+
         End With
     Next cur_col
-   
+
 End Sub
 
-Sub Col_Filter() 'jinsigo/061027/Ã³¹æ°Ë»ö Macro
+Sub Col_Filter() 'jinsigo/061027/ì²˜ë°©ê²€ìƒ‰ Macro
 
     r = ActiveCell.Row
     c = Range("list").Column
     Num_cols = Range("list").Columns.Count
-    
+
     For cc = c To c + Num_cols
         With Cells(r, cc)
             If .Value <> "" Then
@@ -318,44 +318,44 @@ Sub Col_Filter() 'jinsigo/061027/Ã³¹æ°Ë»ö Macro
             Else
                 .EntireColumn.Hidden = True
             End If
-            
+
         End With
     Next cc
-    
-   
+
+
 End Sub
 
-Sub exActiveCell() 'jinsigo/061110/ÇàÃßÃâ (ÇöÀç ¼¿ ±âÁØ)
+Sub exActiveCell() 'jinsigo/061110/í–‰ì¶”ì¶œ (í˜„ì¬ ì…€ ê¸°ì¤€)
 
     Selection.AutoFilter Field:=ActiveCell.Column, Criteria1:=ActiveCell.Value
 
 End Sub
 
 
-Sub exInput() ' À¯ÇüÃßÃâ Macro 06-12-07
+Sub exInput() ' ìœ í˜•ì¶”ì¶œ Macro 06-12-07
 '
-    Kwds = Application.InputBox(prompt:="°Ë»ö¾î ÀÔ·Â: ")
+    Kwds = Application.InputBox(prompt:="ê²€ìƒ‰ì–´ ì…ë ¥: ")
     Keywords1 = "=*" & Kwds & "*"
     Selection.AutoFilter Field:=ActiveCell.Column, Criteria1:=Keywords1, Operator:=xlAnd
 
 End Sub
 
 
-Sub exNoBlank() 'jinsigo/061012/ÇàÃßÃâ (°ø¹é ¾Æ´Ñ ¼¿ ±âÁØ)
+Sub exNoBlank() 'jinsigo/061012/í–‰ì¶”ì¶œ (ê³µë°± ì•„ë‹Œ ì…€ ê¸°ì¤€)
 
     Selection.AutoFilter Field:=ActiveCell.Column, Criteria1:="<>"
 
 End Sub
 
 
-Sub exShowAll() 'µ¥ÀÌÅÍ ÀÚµ¿ÇÊÅÍ¿¡¼­ ¸ğµÎº¸±â 06-11-10
+Sub exShowAll() 'ë°ì´í„° ìë™í•„í„°ì—ì„œ ëª¨ë‘ë³´ê¸° 06-11-10
 
     ActiveSheet.ShowAllData
 End Sub
 
-Sub ¿ùº¯°æ()
+Sub ì›”ë³€ê²½()
 '
-' ¿ùº¯°æ ¸ÅÅ©·Î
+' ì›”ë³€ê²½ ë§¤í¬ë¡œ
 '
 
 '
@@ -367,52 +367,52 @@ Dim Keywords1 As String
 End Sub
 
 Sub exSameBColor_HideColumns()
-' °°Àº ¹ÙÅÁ»ö ¿­ ¼û±â±â
+' ê°™ì€ ë°”íƒ•ìƒ‰ ì—´ ìˆ¨ê¸°ê¸°
 ' 160615
 '
-    'ÀüÃ¼º¸±â
+    'ì „ì²´ë³´ê¸°
     Range("list").EntireColumn.Hidden = False
-    
-    '¼±ÅÃº¸±â
+
+    'ì„ íƒë³´ê¸°
     Set rs = Selection
     rc = rs.Interior.Color
     r = rs.Row
     ln = Range("list").Columns.Count
-    
+
     Set rss = Range(Cells(r, 1), Cells(r, ln))
-    
-    
+
+
     For Each c In rss.Columns
         If c.Interior.Color <> rc Then c.EntireColumn.Hidden = True
-               
+
     Next c
 End Sub
 
 Sub exSameBColor_ShowColumns()
-' ¼±ÅÃ¿µ¿ª ¸ğµç ¿­ º¸ÀÌ±â
+' ì„ íƒì˜ì—­ ëª¨ë“  ì—´ ë³´ì´ê¸°
     Range("list").Columns.Select
     Selection.EntireColumn.Hidden = False
 End Sub
 
 Sub exSameBColor_HideRows()
-' °°Àº ¹ÙÅÁ»ö Çà ¼û±â±â
+' ê°™ì€ ë°”íƒ•ìƒ‰ í–‰ ìˆ¨ê¸°ê¸°
 ' 160615
 '
-    'ÀüÃ¼º¸±â
+    'ì „ì²´ë³´ê¸°
     Range("list").EntireRows.Hidden = False
-    
-    '¼±ÅÃº¸±â
+
+    'ì„ íƒë³´ê¸°
     Set rs = Selection
     cc = rs.Interior.Color
     c = rs.Column
     ln = Range("list").Rows.Count
-    
+
     Set rss = Range(Cells(1, c), Cells(ln, c))
-    
-    
+
+
     For Each r In rss.Columns
         If r.Interior.Color <> cc Then r.EntireColumn.Hidden = True
-               
+
     Next r
 End Sub
 
@@ -420,52 +420,52 @@ End Sub
 
 '
 '======================================================================
-'/// ¼¿ ÆíÁı ¸ğµâ by Jinsigo ///
+'/// ì…€ í¸ì§‘ ëª¨ë“ˆ by Jinsigo ///
 '======================================================================
 '
 Sub edMergeCell()
-'120813/¼±ÅÃ¹üÀ§ÀÇ ¹®ÀÚ¿­ ÇÕÄ¡±â
-'150421 Çà & ¿­ ¹üÀ§ È®Àå
+'120813/ì„ íƒë²”ìœ„ì˜ ë¬¸ìì—´ í•©ì¹˜ê¸°
+'150421 í–‰ & ì—´ ë²”ìœ„ í™•ì¥
 '
-    Dim rs As Range  'ÀÔ·Â¼¿
-    Dim ro As Range  'Ãâ·Â¼¿
-    Dim ss As String '±¸ºĞÀÚ
-    Dim st As String 'º´ÇÕ ¹®ÀÚ¿­
+    Dim rs As Range  'ì…ë ¥ì…€
+    Dim ro As Range  'ì¶œë ¥ì…€
+    Dim ss As String 'êµ¬ë¶„ì
+    Dim st As String 'ë³‘í•© ë¬¸ìì—´
     Dim tmp As String
     Dim i As Range
-  
+
     Set rs = Selection
-    ss = InputBox("±¸ºĞÀÚ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä(±âº»°ªÀº ',' ÀÔ´Ï´Ù).", "¼¿ º´ÇÕÇÏ±â", ",") '±¸ºĞÀÚ ÀÔ·Â
+    ss = InputBox("êµ¬ë¶„ìë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”(ê¸°ë³¸ê°’ì€ ',' ì…ë‹ˆë‹¤).", "ì…€ ë³‘í•©í•˜ê¸°", ",") 'êµ¬ë¶„ì ì…ë ¥
     st = ""
-    
+
     For Each i In rs.Rows
         For j = 1 To i.Columns.Count
             tmp = i.Cells(1, j)
             st = st + tmp & ss
         Next j
     Next i
-    
-    Set ro = Application.InputBox("°ªÀ» Ãâ·ÂÇÒ ¼¿À» ¼±ÅÃÇØ ÁÖ¼¼¿ä", "¼¿ º´ÇÕÇÏ±â", Type:=8)
+
+    Set ro = Application.InputBox("ê°’ì„ ì¶œë ¥í•  ì…€ì„ ì„ íƒí•´ ì£¼ì„¸ìš”", "ì…€ ë³‘í•©í•˜ê¸°", Type:=8)
     If Right(st, Len(ss)) = ss Then st = Left(st, Len(st) - Len(ss))
     ro.Formula = st
 End Sub
 
-Sub edMergeRange() '¼±ÅÃ¹üÀ§ ÇÕÄ¡±â 150520
-    Dim rs As Range  'ÀÔ·Â¹üÀ§
-    Dim ro As Range  'Ãâ·Â¹üÀ§
-    Dim cs As String 'Á¶°Ç¿­1
-    Dim co As String 'Á¶°Ç¿­2
-    Dim ns As Integer 'ÀÔ·Â¿­¼ö
-    Dim no As Integer 'Ãâ·Â¿­¼ö
-    Dim vs, vo As String 'ÀÔÃâ·Â °ª
-    Dim ks, ko As String '°°Àº Á¶°Ç À¯¹« Ã¼Å©
-    Dim chk As Integer ''°°Àº Á¶°Ç À¯¹« Ã¼Å©
-  
-    Set rs = Application.InputBox("º´ÇÕÇÒ ¿µ¿ªÀ» ¼±ÅÃÇØ ÁÖ¼¼¿ä", "¼¿ º´ÇÕÇÏ±â:A", Type:=8)
-        
-    Set ro = Application.InputBox("º´ÇÕÇÒ ¿µ¿ªÀ» ¼±ÅÃÇØ ÁÖ¼¼¿ä", "¼¿ º´ÇÕÇÏ±â:B", Type:=8)
+Sub edMergeRange() 'ì„ íƒë²”ìœ„ í•©ì¹˜ê¸° 150520
+    Dim rs As Range  'ì…ë ¥ë²”ìœ„
+    Dim ro As Range  'ì¶œë ¥ë²”ìœ„
+    Dim cs As String 'ì¡°ê±´ì—´1
+    Dim co As String 'ì¡°ê±´ì—´2
+    Dim ns As Integer 'ì…ë ¥ì—´ìˆ˜
+    Dim no As Integer 'ì¶œë ¥ì—´ìˆ˜
+    Dim vs, vo As String 'ì…ì¶œë ¥ ê°’
+    Dim ks, ko As String 'ê°™ì€ ì¡°ê±´ ìœ ë¬´ ì²´í¬
+    Dim chk As Integer ''ê°™ì€ ì¡°ê±´ ìœ ë¬´ ì²´í¬
+
+    Set rs = Application.InputBox("ë³‘í•©í•  ì˜ì—­ì„ ì„ íƒí•´ ì£¼ì„¸ìš”", "ì…€ ë³‘í•©í•˜ê¸°:A", Type:=8)
+
+    Set ro = Application.InputBox("ë³‘í•©í•  ì˜ì—­ì„ ì„ íƒí•´ ì£¼ì„¸ìš”", "ì…€ ë³‘í•©í•˜ê¸°:B", Type:=8)
     'If Right(st, Len(ss)) = ss Then st = Left(st, Len(st) - Len(ss))
-    
+
     ns = rs.Columns.Count
     no = ro.Columns.Count
     chk = 0
@@ -474,7 +474,7 @@ Sub edMergeRange() '¼±ÅÃ¹üÀ§ ÇÕÄ¡±â 150520
         cs = rs.Cells(i, 1)
         ks = rs.Cells(i, 2)
         vs = rs.Cells(i, ns)
-        
+
         For j = 2 To ro.Rows.Count
             co = ro.Cells(j, 1)
             ko = ro.Cells(j, 2)
@@ -483,13 +483,13 @@ Sub edMergeRange() '¼±ÅÃ¹üÀ§ ÇÕÄ¡±â 150520
                 ro.Cells(j, no).Formula = rs.Cells(i, ns).Value
                 chk = 0
                 Exit For
-            ElseIf ko = ks Then 'ÄÚµå¸¸ ´Ù¸¥°æ¿ì
+            ElseIf ko = ks Then 'ì½”ë“œë§Œ ë‹¤ë¥¸ê²½ìš°
                 chk = j + 1
-            Else 'ÄÚµå ¹× ±¸ºĞ ¸ğµÎ ´Ù¸¥ °æ¿ì
-                
+            Else 'ì½”ë“œ ë° êµ¬ë¶„ ëª¨ë‘ ë‹¤ë¥¸ ê²½ìš°
+
             End If
         Next j
-        
+
         If chk And (vs > 0) Then
             ro.EntireRow(chk).Insert
             ro.Cells(chk, 1).Formula = rs.Cells(i, 1).Value
@@ -497,29 +497,29 @@ Sub edMergeRange() '¼±ÅÃ¹üÀ§ ÇÕÄ¡±â 150520
             ro.Cells(chk, 3).Formula = rs.Cells(i, 3).Value
             ro.Cells(chk, no).Formula = rs.Cells(i, ns).Value
             chk = 0
-           
+
         Else
         End If
     Next i
-    
+
 
 End Sub
 
 Sub edSplitTXT2Cell()
-'120813/¼±ÅÃ¼¿ÀÇ ¹®ÀÚ¿­ ³ª´©±â
-    Dim rs As Range 'ÀÔ·Â¼¿
-    Dim ro As Range 'Ãâ·Â¼¿
-    Dim ss As String '±¸ºĞÀÚ
-    Dim st  '³ª´« ¹®ÀÚ¿­
-    Dim nc As Integer 'Ãâ·Â¼¿ Çà¼ö
-    
+'120813/ì„ íƒì…€ì˜ ë¬¸ìì—´ ë‚˜ëˆ„ê¸°
+    Dim rs As Range 'ì…ë ¥ì…€
+    Dim ro As Range 'ì¶œë ¥ì…€
+    Dim ss As String 'êµ¬ë¶„ì
+    Dim st  'ë‚˜ëˆˆ ë¬¸ìì—´
+    Dim nc As Integer 'ì¶œë ¥ì…€ í–‰ìˆ˜
+
     Set rs = Selection
-    ss = InputBox("±¸ºĞÀÚ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä(±âº»°ªÀº ',' ÀÔ´Ï´Ù).", "¼¿ ³ª´©±â", ",")
+    ss = InputBox("êµ¬ë¶„ìë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”(ê¸°ë³¸ê°’ì€ ',' ì…ë‹ˆë‹¤).", "ì…€ ë‚˜ëˆ„ê¸°", ",")
     st = Split(rs.Value, ss)
-        
-    Set ro = Application.InputBox("Ãâ·ÂÇÒ Ã¹ ¼¿À» ¼±ÅÃÇØ ÁÖ¼¼¿ä", "¼¿ ³ª´©±â", Type:=8)
+
+    Set ro = Application.InputBox("ì¶œë ¥í•  ì²« ì…€ì„ ì„ íƒí•´ ì£¼ì„¸ìš”", "ì…€ ë‚˜ëˆ„ê¸°", Type:=8)
     nc = ro.Columns.Count
-    
+
     For i = 0 To Round((UBound(st, 1) / nc), 1)
         For j = 1 To nc
             If (i * nc + j) <= UBound(st, 1) + 1 Then
@@ -532,36 +532,36 @@ End Sub
 
 Sub edSplitTXT2Cells()
 '
-'140923/¹®ÀÚ³ª´©±â.´ÙÁß¼¿
-'150114/º¯¼ö º¯°æ, for¹® j Ãß°¡.
-    Dim inCells As Range 'ÀÔ·Â¼¿
-    Dim rc As Integer 'ÀÔ·Â Çà¼ö
-    Dim cc As Integer 'ÀÔ·Â ¿­¼ö
-    Dim outCells As Range 'Ãâ·Â¼¿
-    Dim sp As String '±¸ºĞÀÚ
-    Dim st  '³ª´« ¹®ÀÚ¿­
-    Dim stc '³ª´« ¹®ÀÚ¿­¼ö
-    
+'140923/ë¬¸ìë‚˜ëˆ„ê¸°.ë‹¤ì¤‘ì…€
+'150114/ë³€ìˆ˜ ë³€ê²½, forë¬¸ j ì¶”ê°€.
+    Dim inCells As Range 'ì…ë ¥ì…€
+    Dim rc As Integer 'ì…ë ¥ í–‰ìˆ˜
+    Dim cc As Integer 'ì…ë ¥ ì—´ìˆ˜
+    Dim outCells As Range 'ì¶œë ¥ì…€
+    Dim sp As String 'êµ¬ë¶„ì
+    Dim st  'ë‚˜ëˆˆ ë¬¸ìì—´
+    Dim stc 'ë‚˜ëˆˆ ë¬¸ìì—´ìˆ˜
+
     Set inCells = Selection
     rc = inCells.Rows.Count
     cc = inCells.Columns.Count
-    
-    sp = InputBox("±¸ºĞÀÚ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä(±âº»°ªÀº ',' ÀÔ´Ï´Ù).", "¼¿ ³ª´©±â", ",")
-    Set outCells = Application.InputBox("Ãâ·ÂÇÒ Ã¹ ¼¿À» ¼±ÅÃÇØ ÁÖ¼¼¿ä", "¼¿ ³ª´©±â", Type:=8)
-    
+
+    sp = InputBox("êµ¬ë¶„ìë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”(ê¸°ë³¸ê°’ì€ ',' ì…ë‹ˆë‹¤).", "ì…€ ë‚˜ëˆ„ê¸°", ",")
+    Set outCells = Application.InputBox("ì¶œë ¥í•  ì²« ì…€ì„ ì„ íƒí•´ ì£¼ì„¸ìš”", "ì…€ ë‚˜ëˆ„ê¸°", Type:=8)
+
     For i = 1 To rc
         st = Split(inCells.Cells(i, 1), sp)
         stc = UBound(st) + 1
         For j = 1 To stc
-            '´À³¦Ç¥ ¿ŞÂÊÀÇ °ªÀº split_value(0) ¹è¿­¿¡ °ªÀÌ ÀÔ·ÂµÇ°í ¿À¸¥ÂÊÀº split_value(1) ¹è¿­¿¡ °ªÀÌ ÀÔ·ÂµË´Ï´Ù.
-           ' inCells.Offset(i - 1, 0).Formula = Trim(st(0)) '¾Õ¿¡ °ªÀ» »Ñ·ÁÁİ´Ï´Ù.
-            outCells.Offset(i - 1, j - 1).Formula = Trim(st(j - 1)) 'µÚ¿¡ °ªÀ» »Ñ·ÁÁİ´Ï´Ù.
+            'ëŠë‚Œí‘œ ì™¼ìª½ì˜ ê°’ì€ split_value(0) ë°°ì—´ì— ê°’ì´ ì…ë ¥ë˜ê³  ì˜¤ë¥¸ìª½ì€ split_value(1) ë°°ì—´ì— ê°’ì´ ì…ë ¥ë©ë‹ˆë‹¤.
+           ' inCells.Offset(i - 1, 0).Formula = Trim(st(0)) 'ì•ì— ê°’ì„ ë¿Œë ¤ì¤ë‹ˆë‹¤.
+            outCells.Offset(i - 1, j - 1).Formula = Trim(st(j - 1)) 'ë’¤ì— ê°’ì„ ë¿Œë ¤ì¤ë‹ˆë‹¤.
         Next j
     Next i
 End Sub
 
 
-Sub edFillRng_NA2Null() '110415/¼±ÅÃ¹üÀ§ÀÇ #NA °ªÀ» °ø¹éÀ¸·Î º¯°æÇÏ±â ¸ÅÅ©·Î
+Sub edFillRng_NA2Null() '110415/ì„ íƒë²”ìœ„ì˜ #NA ê°’ì„ ê³µë°±ìœ¼ë¡œ ë³€ê²½í•˜ê¸° ë§¤í¬ë¡œ
     Selection.Copy
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
@@ -570,16 +570,16 @@ Sub edFillRng_NA2Null() '110415/¼±ÅÃ¹üÀ§ÀÇ #NA °ªÀ» °ø¹éÀ¸·Î º¯°æÇÏ±â ¸ÅÅ©·Î
         ReplaceFormat:=False
 End Sub
 
-Sub edTxt2Char() '120119/Æ¯¼ö±âÈ£ º¯È¯ key: Ctrl+Shift+A
-    ActiveCell.Replace What:="-^", Replacement:="¡è", LookAt:=xlPart, _
+Sub edTxt2Char() '120119/íŠ¹ìˆ˜ê¸°í˜¸ ë³€í™˜ key: Ctrl+Shift+A
+    ActiveCell.Replace What:="-^", Replacement:="â†‘", LookAt:=xlPart, _
         SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
         ReplaceFormat:=False
-    ActiveCell.Replace What:="&^", Replacement:="¡è"
-    ActiveCell.Replace What:="&v", Replacement:="¡é"
-    ActiveCell.Replace What:="&>", Replacement:="¡æ"
-    ActiveCell.Replace What:="&<", Replacement:="¡ç"
-    ActiveCell.Replace What:="&c", Replacement:="¡É"
-    ActiveCell.Replace What:="&.", Replacement:="¡¤"
+    ActiveCell.Replace What:="&^", Replacement:="â†‘"
+    ActiveCell.Replace What:="&v", Replacement:="â†“"
+    ActiveCell.Replace What:="&>", Replacement:="â†’"
+    ActiveCell.Replace What:="&<", Replacement:="â†"
+    ActiveCell.Replace What:="&c", Replacement:="â„ƒ"
+    ActiveCell.Replace What:="&.", Replacement:="Â·"
 End Sub
 
 Sub edRmvSpecialChar()
@@ -589,11 +589,11 @@ Sub edRmvSpecialChar()
             c.Value = Replace(c.Value, Chr(i), "")
         Next i
     Next
-    
+
 End Sub
 
 Function edGetNums(strIN)
-'¼ıÀÚ¸¸ ÀĞ±â
+'ìˆ«ìë§Œ ì½ê¸°
     Dim RegExpObj As Object
     Dim NumStr As String
 
@@ -610,96 +610,96 @@ End Function
 Sub edTrimRanges()
 '150611
     Dim rs As Range
-    
+
     Set rs = Selection
     For Each c In rs.Cells
             c.Value = Trim(c)
     Next c
-    
+
 End Sub
 
 
 
-Sub edChange_Pic_Name() '150114/±×¸²ÀÌ¸§ ¹Ù²Ù±â
-    Dim shpC As Shape                                    '°¢°¢ÀÇ ±×¸²À» ³ÖÀ» º¯¼ö
-    Dim rngShp As Range                                  '°¢ ±×¸²ÀÇ ¿ŞÂÊÀ§°¡ ¼ÓÇÑ ¿µ¿ªÀ» ³ÖÀ» º¯¼ö
-   
-    For Each shpC In ActiveSheet.Shapes          '»èÁ¦¿µ¿ª³»ÀÇ °¢ ±×¸²À» ¼øÈ¯
-        Set rngShp = shpC.TopLeftCell                 '°¢ ±×¸²ÀÇ ¿ŞÂÊÀ§ÁöÁ¡ÀÌ ¼ÓÇÑ ¿µ¿ªÀ» º¯¼ö¿¡ ³ÖÀ½
-       
-        If Not Intersect(Columns("B"), rngShp) Is Nothing Then   '±×¸²°ú B¿­ÀÌ °ãÄ¡¸é
-                shpC.Name = rngShp.Previous.Value    '°¢ ±×¸²ÀÇ ÀÌ¸§À» A¿­ÀÇ ÀÌ¸§À¸·Î º¯°æ
+Sub edChange_Pic_Name() '150114/ê·¸ë¦¼ì´ë¦„ ë°”ê¾¸ê¸°
+    Dim shpC As Shape                                    'ê°ê°ì˜ ê·¸ë¦¼ì„ ë„£ì„ ë³€ìˆ˜
+    Dim rngShp As Range                                  'ê° ê·¸ë¦¼ì˜ ì™¼ìª½ìœ„ê°€ ì†í•œ ì˜ì—­ì„ ë„£ì„ ë³€ìˆ˜
+
+    For Each shpC In ActiveSheet.Shapes          'ì‚­ì œì˜ì—­ë‚´ì˜ ê° ê·¸ë¦¼ì„ ìˆœí™˜
+        Set rngShp = shpC.TopLeftCell                 'ê° ê·¸ë¦¼ì˜ ì™¼ìª½ìœ„ì§€ì ì´ ì†í•œ ì˜ì—­ì„ ë³€ìˆ˜ì— ë„£ìŒ
+
+        If Not Intersect(Columns("B"), rngShp) Is Nothing Then   'ê·¸ë¦¼ê³¼ Bì—´ì´ ê²¹ì¹˜ë©´
+                shpC.Name = rngShp.Previous.Value    'ê° ê·¸ë¦¼ì˜ ì´ë¦„ì„ Aì—´ì˜ ì´ë¦„ìœ¼ë¡œ ë³€ê²½
         End If
     Next shpC
-   
+
 End Sub
 
 Option Explicit
 
-Sub fitPictureInCell() '[ÃâÃ³] (622) ¼±ÅÃ¿µ¿ª³» ±×¸²À» °¢ ¼¿ÀÇ Å©±â¿¡ ¸ÂÃß±â (¿¢¼¿ VBA ¸ÅÅ©·Î)|ÀÛ¼ºÀÚ ´Ï²Ù
-    Dim rngAll As Range                                    '¼±ÅÃ¿µ¿ªÀ» ³ÖÀ» º¯¼ö
-    Dim rngShp As Range                                  '°¢ ±×¸²ÀÇ ¿ŞÂÊÀ§°¡ ¼ÓÇÑ ¿µ¿ªÀ» ³ÖÀ» º¯¼ö
-    Dim shpC As Shape                                    '°¢°¢ÀÇ µµÇü(shape)À» ³ÖÀ» º¯¼ö
-    Dim rotationDegree As Integer                       'µµÇüÀÇ È¸Àü°¢µµ ³ÖÀ» º¯¼ö
-   
-    Application.ScreenUpdating = False              'È­¸é ¾÷µ¥ÀÌÆ® (ÀÏ½Ã)Á¤Áö
-   
-    If Not TypeOf Selection Is Range Then           '¸¸ÀÏ ±×¸² µîÀ» ¼±ÅÃÇÏ°Å³ª ÇÏ¿´À» °æ¿ì
-        MsgBox "¿µ¿ªÀÌ ¼±ÅÃµÇÁö ¾ÊÀ½", 64, "¿µ¿ª¼±ÅÃ ¿À·ù"  '°æ°í ¸Ş½ÃÁö Ãâ·Â
-        Exit Sub                                                 '¸ÅÅ©·Î Áß´Ü
+Sub fitPictureInCell() '[ì¶œì²˜] (622) ì„ íƒì˜ì—­ë‚´ ê·¸ë¦¼ì„ ê° ì…€ì˜ í¬ê¸°ì— ë§ì¶”ê¸° (ì—‘ì…€ VBA ë§¤í¬ë¡œ)|ì‘ì„±ì ë‹ˆê¾¸
+    Dim rngAll As Range                                    'ì„ íƒì˜ì—­ì„ ë„£ì„ ë³€ìˆ˜
+    Dim rngShp As Range                                  'ê° ê·¸ë¦¼ì˜ ì™¼ìª½ìœ„ê°€ ì†í•œ ì˜ì—­ì„ ë„£ì„ ë³€ìˆ˜
+    Dim shpC As Shape                                    'ê°ê°ì˜ ë„í˜•(shape)ì„ ë„£ì„ ë³€ìˆ˜
+    Dim rotationDegree As Integer                       'ë„í˜•ì˜ íšŒì „ê°ë„ ë„£ì„ ë³€ìˆ˜
+
+    Application.ScreenUpdating = False              'í™”ë©´ ì—…ë°ì´íŠ¸ (ì¼ì‹œ)ì •ì§€
+
+    If Not TypeOf Selection Is Range Then           'ë§Œì¼ ê·¸ë¦¼ ë“±ì„ ì„ íƒí•˜ê±°ë‚˜ í•˜ì˜€ì„ ê²½ìš°
+        MsgBox "ì˜ì—­ì´ ì„ íƒë˜ì§€ ì•ŠìŒ", 64, "ì˜ì—­ì„ íƒ ì˜¤ë¥˜"  'ê²½ê³  ë©”ì‹œì§€ ì¶œë ¥
+        Exit Sub                                                 'ë§¤í¬ë¡œ ì¤‘ë‹¨
     End If
-   
-    Set rngAll = Selection                                  '¼±ÅÃ¿µ¿ªÀ» º¯¼ö¿¡ ³ÖÀ½
-   
-    For Each shpC In ActiveSheet.Shapes          'ÀüÃ¼¿µ¿ª³» °¢ ±×¸²À» ¼øÈ¯
-        If shpC.Type = 13 Then                            '¸¸ÀÏ °¢ µµÇüÀÌ ±×¸²ÀÌ¶ó¸é
-            Set rngShp = shpC.TopLeftCell             '°¢ µµÇüÀÇ ¿ŞÂÊÀ§ ¿µ¿ªÀ» º¯¼ö¿¡ ³ÖÀ½
-           
-            If rngShp.MergeCells Then                   'rngShp°¡ ¼¿º´ÇÕµÈ ¼¿ÀÌ¶ó¸é
-                Set rngShp = rngShp.MergeArea       '¿µ¿ªÀ» ¼¿º´ÇÕ ¿µ¿ªÀ¸·Î È®Àå
+
+    Set rngAll = Selection                                  'ì„ íƒì˜ì—­ì„ ë³€ìˆ˜ì— ë„£ìŒ
+
+    For Each shpC In ActiveSheet.Shapes          'ì „ì²´ì˜ì—­ë‚´ ê° ê·¸ë¦¼ì„ ìˆœí™˜
+        If shpC.Type = 13 Then                            'ë§Œì¼ ê° ë„í˜•ì´ ê·¸ë¦¼ì´ë¼ë©´
+            Set rngShp = shpC.TopLeftCell             'ê° ë„í˜•ì˜ ì™¼ìª½ìœ„ ì˜ì—­ì„ ë³€ìˆ˜ì— ë„£ìŒ
+
+            If rngShp.MergeCells Then                   'rngShpê°€ ì…€ë³‘í•©ëœ ì…€ì´ë¼ë©´
+                Set rngShp = rngShp.MergeArea       'ì˜ì—­ì„ ì…€ë³‘í•© ì˜ì—­ìœ¼ë¡œ í™•ì¥
             End If
-           
-            If Not Intersect(rngAll, rngShp) Is Nothing Then '°¢ µµÇüÀÌ ÀüÃ¼¿µ¿ª¿¡ Æ÷ÇÔµÇ¸é
-                rotationDegree = shpC.Rotation         '±×¸²ÀÇ È¸Àü°¢À» º¯¼ö¿¡ ³ÖÀ½
-               
-                If rotationDegree = 90 Or rotationDegree = 270 Then '±×¸²ÀÌ 90µµ or 270µµ È¸ÀüµÈ °æ¿ì
-               
-                    With shpC                                   '°¢ ±×¸²À¸·Î ÀÛ¾÷
-                        .LockAspectRatio = msoFalse   '±×¸² ÁÂ¿ì°íÁ¤ºñÀ² ÇØÁ¦
-                        .Rotation = 0                           '±×¸² È¸ÀüÀ» ¿ø»óÅÂ·Î µ¹·Á ³õÀ½
-                        .Height = rngShp.Width - 4        '±×¸² ³ôÀÌ¸¦ ÇöÀç¼¿ Å©±â  - 4
-                        .Width = rngShp.Height - 4        '±×¸² ÆøÀ» ÇöÀç¼¿ Å©±â - 4
+
+            If Not Intersect(rngAll, rngShp) Is Nothing Then 'ê° ë„í˜•ì´ ì „ì²´ì˜ì—­ì— í¬í•¨ë˜ë©´
+                rotationDegree = shpC.Rotation         'ê·¸ë¦¼ì˜ íšŒì „ê°ì„ ë³€ìˆ˜ì— ë„£ìŒ
+
+                If rotationDegree = 90 Or rotationDegree = 270 Then 'ê·¸ë¦¼ì´ 90ë„ or 270ë„ íšŒì „ëœ ê²½ìš°
+
+                    With shpC                                   'ê° ê·¸ë¦¼ìœ¼ë¡œ ì‘ì—…
+                        .LockAspectRatio = msoFalse   'ê·¸ë¦¼ ì¢Œìš°ê³ ì •ë¹„ìœ¨ í•´ì œ
+                        .Rotation = 0                           'ê·¸ë¦¼ íšŒì „ì„ ì›ìƒíƒœë¡œ ëŒë ¤ ë†“ìŒ
+                        .Height = rngShp.Width - 4        'ê·¸ë¦¼ ë†’ì´ë¥¼ í˜„ì¬ì…€ í¬ê¸°  - 4
+                        .Width = rngShp.Height - 4        'ê·¸ë¦¼ í­ì„ í˜„ì¬ì…€ í¬ê¸° - 4
                         .Left = rngShp.Left + (rngShp.Width - shpC.Width) / 2
-                                                                    '±×¸² Æø °¡¿îµ¥ À§Ä¡°¡ ¼¿ÀÇ Áß¾Ó¿¡ ¿Àµµ·Ï Á¤·Ä
+                                                                    'ê·¸ë¦¼ í­ ê°€ìš´ë° ìœ„ì¹˜ê°€ ì…€ì˜ ì¤‘ì•™ì— ì˜¤ë„ë¡ ì •ë ¬
                         .Top = rngShp.Top + (rngShp.Height - shpC.Height) / 2
-                                                                    '±×¸²À§ÂÊ °¡¿îµ¥ À§Ä¡°¡ ¼¿ÀÇ Áß¾Ó¿¡ ¿Àµµ·Ï Á¤·Ä
-                        .Rotation = rotationDegree        '±×¸² È¸Àü °¢µµ¸¦ º¹¿ø
+                                                                    'ê·¸ë¦¼ìœ„ìª½ ê°€ìš´ë° ìœ„ì¹˜ê°€ ì…€ì˜ ì¤‘ì•™ì— ì˜¤ë„ë¡ ì •ë ¬
+                        .Rotation = rotationDegree        'ê·¸ë¦¼ íšŒì „ ê°ë„ë¥¼ ë³µì›
                     End With
-               
+
                 Else
-                    With shpC                                  '°¢ ±×¸²À¸·Î ÀÛ¾÷
-                        .LockAspectRatio = msoFalse  '±×¸² ÁÂ¿ì°íÁ¤ºñÀ² ÇØÁ¦
-                        .Left = rngShp.Left + 2             '±×¸²¿ŞÂÊÀ§Ä¡¸¦ ¼¿ÀÇ ¿ŞÂÊÀ§ + 2
-                        .Top = rngShp.Top + 2             '±×¸²À§ÂÊ À§Ä¡¸¦  ¼¿ÀÇ ¿ŞÂÊÀ§ À§Ä¡ + 2
-                        .Height = rngShp.Height - 4      '±×¸² ³ôÀÌ¸¦ ÇöÀç¼¿ Å©±â  - 4
-                        .Width = rngShp.Width - 4        '±×¸² ÆøÀ» ÇöÀç¼¿ Å©±â - 4
+                    With shpC                                  'ê° ê·¸ë¦¼ìœ¼ë¡œ ì‘ì—…
+                        .LockAspectRatio = msoFalse  'ê·¸ë¦¼ ì¢Œìš°ê³ ì •ë¹„ìœ¨ í•´ì œ
+                        .Left = rngShp.Left + 2             'ê·¸ë¦¼ì™¼ìª½ìœ„ì¹˜ë¥¼ ì…€ì˜ ì™¼ìª½ìœ„ + 2
+                        .Top = rngShp.Top + 2             'ê·¸ë¦¼ìœ„ìª½ ìœ„ì¹˜ë¥¼  ì…€ì˜ ì™¼ìª½ìœ„ ìœ„ì¹˜ + 2
+                        .Height = rngShp.Height - 4      'ê·¸ë¦¼ ë†’ì´ë¥¼ í˜„ì¬ì…€ í¬ê¸°  - 4
+                        .Width = rngShp.Width - 4        'ê·¸ë¦¼ í­ì„ í˜„ì¬ì…€ í¬ê¸° - 4
                     End With
                 End If
             End If
         End If
     Next shpC
-   
-    Set rngAll = Nothing                                      '°³Ã¼º¯¼ö ÃÊ±âÈ­(¸Ş¸ğ¸® ºñ¿ì±â)
+
+    Set rngAll = Nothing                                      'ê°œì²´ë³€ìˆ˜ ì´ˆê¸°í™”(ë©”ëª¨ë¦¬ ë¹„ìš°ê¸°)
 End Sub
-   
+
 '
 '======================================================================
-' ½ÃÆ® Ãß°¡ ÆíÁı
+' ì‹œíŠ¸ ì¶”ê°€ í¸ì§‘
 '======================================================================
 '
 Sub AddFormatCondition()
     With ActiveSheet.Range("A1:A10").FormatConditions _
-        .Add(xlCellValue, xlEqual, "vbaÆÀ")
+        .Add(xlCellValue, xlEqual, "vbaíŒ€")
         .Font.Color = vbRed
     End With
  ''
@@ -711,7 +711,7 @@ Sub ModifyFormatCondition()
           .ThemeColor = xlThemeColorAccent1
 
     End With
-    
+
 End Sub
 
 Sub DeleteFormatCodition()
@@ -720,14 +720,14 @@ End Sub
 
 '
 '======================================================================
-' Ã£±â ¹× Á¤º¸ ÇÔ¼ö
+' ì°¾ê¸° ë° ì •ë³´ í•¨ìˆ˜
 '======================================================================
 '
 Function isOpenName(nn As String) As Integer
-'ÀÌ¸§Á¤ÀÇ Á¸Àç ¿©ºÎ Ã¼Å© 150318
+'ì´ë¦„ì •ì˜ ì¡´ì¬ ì—¬ë¶€ ì²´í¬ 150318
     Dim nam As Name
     isOpenName = 0
-    
+
     For Each nam In ActiveWorkbook.Names
         If nam.Name = nn Then
             isOpenName = isOpenName + 1
@@ -735,23 +735,23 @@ Function isOpenName(nn As String) As Integer
             isOpenName = isOpenName
         End If
     Next nam
-    
+
 End Function
 
 Function isOpenWrk(wb) As Integer
-'¿öÅ©½ÃÆ® ¿­¸² ¿©ºÎ Ã¼Å© 150318
+'ì›Œí¬ì‹œíŠ¸ ì—´ë¦¼ ì—¬ë¶€ ì²´í¬ 150318
     Dim wrk As Workbook
     isOpenWrk = 0
-    
+
     For Each wrk In Workbooks
         If wrk.Name = wb Then
-            'MsgBox wrk.name & "°¡ ÀÌ¹Ì ¿­·Á ÀÖ½À´Ï´Ù."
+            'MsgBox wrk.name & "ê°€ ì´ë¯¸ ì—´ë ¤ ìˆìŠµë‹ˆë‹¤."
             isOpenWrk = isOpenWrk + 1
         Else
             isOpenWrk = isOpenWrk
         End If
     Next wrk
-    
+
 End Function
 
 Sub isInfoModule()
@@ -760,9 +760,9 @@ Sub isInfoModule()
 End Sub
 
 Sub isMatchRow()
-' ¼±ÅÃ¿µ¿ªÀÇ Ã¹ÇàÀ» ÇÊµå¸íÀÇ·Î DB ¹ø
+' ì„ íƒì˜ì—­ì˜ ì²«í–‰ì„ í•„ë“œëª…ì˜ë¡œ DB ë²ˆ
     st = Selection.Value
-    'r = Application.Match(st, "[¿ø·áLIST.xls]!database").rows(1), 0)
+    'r = Application.Match(st, "[ì›ë£ŒLIST.xls]!database").rows(1), 0)
     MsgBox r
 End Sub
 
@@ -775,14 +775,14 @@ Sub isCallReadValue()
     Dim sht As Worksheet
     Dim r As Long
     Dim c As Integer
-    
+
     Application.ScreenUpdating = True
     Set sht = Worksheets.Add
     ActiveWindow.DisplayGridlines = False
     strPath = ThisWorkbook.path
-    strFile = "ÁöÁ¡º°½ÇÀû.xls"
+    strFile = "ì§€ì ë³„ì‹¤ì .xls"
     strSheet = "Sheet1"
-    
+
     For r = 1 To 11
         For c = 1 To 5
             strAddress = Cells(r, c).Address
@@ -790,29 +790,29 @@ Sub isCallReadValue()
             Cells(r, c) = ReadValue(strPath, strFile, strSheet, strAddress)
         Next c
     Next r
-    
+
     Selection.AutoFormat Format:=xlRangeAutoFormatList1, Number:=True, Font:= _
         True, Alignment:=True, Border:=True, Pattern:=True, Width:=True
     Rows("1:2").Insert Shift:=xlDown
-    
+
     With ActiveCell
         ActiveSheet.Buttons.Add(.Left, .Top, .Width * 2, .Height).Select
         With Selection
-            .Caption = "<<µ¹¾Æ°¡±â"
+            .Caption = "<<ëŒì•„ê°€ê¸°"
             .OnAction = "GoBack"
         End With
     End With
     Range("a1").Select
-    MsgBox "ÀÚ·á¸¦ ¸ğµÎ ÀĞ¾îµé¿´½À´Ï´Ù", vbInformation, "ÀÛ¾÷ Á¾·á//Exceller"
+    MsgBox "ìë£Œë¥¼ ëª¨ë‘ ì½ì–´ë“¤ì˜€ìŠµë‹ˆë‹¤", vbInformation, "ì‘ì—… ì¢…ë£Œ//Exceller"
 End Sub
 
 Function isReadValue(path, file, sht, rng) As Variant
     Dim msg As String
     Dim strTemp As String
-    
+
     If Trim(Right(path, 1)) <> "\" Then path = path & "\"
     If Dir(path & file) = "" Then
-        ReadValue = "ÇØ´ç ÆÄÀÏÀÌ ¾ø½À´Ï´Ù"
+        ReadValue = "í•´ë‹¹ íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤"
         Exit Function
     End If
     msg = "'" & path & "[" & file & "]" & sht & "'!" & Range(rng).Range("a1").Address(, , xlR1C1)
@@ -820,35 +820,35 @@ Function isReadValue(path, file, sht, rng) As Variant
 End Function
 
 Public Function IsFormula(c)
-'ÇÔ¼ö ¿©ºÎ¸¦ Ã¼Å© 150518
+'í•¨ìˆ˜ ì—¬ë¶€ë¥¼ ì²´í¬ 150518
     IsFormula = c.HasFormula
-   
+
 End Function
 
 '
 '======================================================================
-' ÆÄÀÏ ÀÔÃâ·Â ÇÔ¼ö
+' íŒŒì¼ ì…ì¶œë ¥ í•¨ìˆ˜
 '======================================================================
 '
 Function rPreset(nfile As String) As Range
-' ÀÌ¸§Á¤ÀÇÇ¥·Î ÆÄÀÏ ¿­±â     150401
-    
+' ì´ë¦„ì •ì˜í‘œë¡œ íŒŒì¼ ì—´ê¸°     150401
+
     Dim nam, path, file, sht As String
     Dim rng As Range
     Dim rs As Range
     Dim c As Range
-    
-    Set rs = Workbooks("HKC.xlsm").Sheets("R").Range("a:k") 'Âü°í ¿µ¿ª
-    
+
+    Set rs = Workbooks("HKC.xlsm").Sheets("R").Range("a:k") 'ì°¸ê³  ì˜ì—­
+
     For Each c In rs.Rows
         If c.Cells(1, 1).Value = nfile Then
             i = c.Row
             Set rs = c.Cells(i, 1).Resize(1, 5)
             MsgBox "i= " & i
         Else
-            MsgBox "ÇØ´ç ÀÌ¸§ÀÌ Á¤ÀÇµÇÁö ¾Ê¾Ò½À´Ï´Ù."
+            MsgBox "í•´ë‹¹ ì´ë¦„ì´ ì •ì˜ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤."
         End If
-        
+
     Next
     MsgBox rs.Address
     With rs.Rows(i)
@@ -858,20 +858,20 @@ Function rPreset(nfile As String) As Range
         sht = .Cells(1, 4).Value
         rng = .Cells(1, 5).Value
         ActiveWorkbook.Names.Add Name:=nam, RefersToR1C1:=rng
-    
+
     End With
     If Trim(Right(path, 1)) <> "\" Then path = path & "\"
     If Dir(path & file) = "" Then
-        MsgBox "ÇØ´ç ÆÄÀÏÀÌ ¾ø½À´Ï´Ù"
+        MsgBox "í•´ë‹¹ íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤"
         Exit Function
     End If
-    
+
     rPreset = "'" & path & "[" & file & "]" & sht & "'!" & rng
-       
+
 End Function
 
 Function ioOpenWrk(wb) As Integer
-'¿¢¼¿ÆÄÀÏ ¿­±â 150403
+'ì—‘ì…€íŒŒì¼ ì—´ê¸° 150403
     tmp = isOpenWrk(wb)
     If tmp = 0 Then Workbooks.Open wb
     ioOpenWrk = tmp
@@ -881,45 +881,45 @@ End Function
 
 
 Function ioOpenBydNames() As Integer
-'ÀÌ¸§Á¤ÀÇ¿µ¿ª.ÀÌ¸§À¸·Î ¿¢¼¿ÆÄÀÏ ¿­±â 150403
+'ì´ë¦„ì •ì˜ì˜ì—­.ì´ë¦„ìœ¼ë¡œ ì—‘ì…€íŒŒì¼ ì—´ê¸° 150403
     Dim nwbk As String
     Dim rs As Range
-    
+
     Set rs = rdefNames
     For Each i In rs
-        ndir = i.Cells(1, 2).Value  ' °æ·Î
-        nwbk = i.Cells(1, 3).Value  ' ÆÄÀÏ¸í
-        nvis = i.Cells(1, 6).Value  ' 1:¼û±â±â 0:º¸ÀÌ±â
-        nrdo = i.Cells(1, 7).Value '1: ÀĞ±âÀü¿ë
+        ndir = i.Cells(1, 2).Value  ' ê²½ë¡œ
+        nwbk = i.Cells(1, 3).Value  ' íŒŒì¼ëª…
+        nvis = i.Cells(1, 6).Value  ' 1:ìˆ¨ê¸°ê¸° 0:ë³´ì´ê¸°
+        nrdo = i.Cells(1, 7).Value '1: ì½ê¸°ì „ìš©
         'MsgBox ndir & nwbk & i
         If i.Cells(1, 1).Interior.ColorIndex <> -4142 And isOpenWrk(nwbk) = 0 Then
             Workbooks.Open FileName:=(ndir & "\" & nwbk), UpdateLinks:=0, ReadOnly:=nrdo
             If nvis = 1 Then ActiveWindow.Visible = False
         End If
     Next i
-            
+
 End Function
 
 Sub ioOpendBySelection()
-'¼±ÅÃ¿µ¿ª ÀÌ¸§À¸·Î ÆÄÀÏ¿­±â 150604
-    
+'ì„ íƒì˜ì—­ ì´ë¦„ìœ¼ë¡œ íŒŒì¼ì—´ê¸° 150604
+
     Dim rs As Range
     Dim rd As Range
     Dim nwbk As String
     Dim dn As String
     Dim tmp  As String
-    
+
     Set rs = Selection
     Set rd = rdefNames
-    
+
     For Each s In rs
         tmp = s.Cells(1, 1).Value
         If isOpenWrk(tmp) = 0 Then
             For Each i In rd
                 If i.Cells(1, 1).Value = tmp Then
-                    ndir = i.Cells(1, 2).Value  ' °æ·Î
-                    nwbk = i.Cells(1, 3).Value  ' ÆÄÀÏ¸í
-                    nvis = i.Cells(1, 6).Value  ' 1:¼û±â±â 0:º¸ÀÌ±â
+                    ndir = i.Cells(1, 2).Value  ' ê²½ë¡œ
+                    nwbk = i.Cells(1, 3).Value  ' íŒŒì¼ëª…
+                    nvis = i.Cells(1, 6).Value  ' 1:ìˆ¨ê¸°ê¸° 0:ë³´ì´ê¸°
                     Workbooks.Open FileName:=(ndir & "\" & nwbk), ReadOnly:=1, UpdateLinks:=0
                     If nvis = 1 Then ActiveWindow.Visible = False
                 End If
@@ -930,47 +930,47 @@ End Sub
 
 
 Sub ioOpendByActiveCell2()
-'ÀÌ¸§Á¤ÀÇ¿µ¿ª.ÀÌ¸§À¸·Î ¿¢¼¿ÆÄÀÏ ¿­±â 150403
+'ì´ë¦„ì •ì˜ì˜ì—­.ì´ë¦„ìœ¼ë¡œ ì—‘ì…€íŒŒì¼ ì—´ê¸° 150403
     Dim nwbk As String
     Dim rs As Range
-    
+
     dn = Selection.Value
     Set rs = rdefNames
-    
+
     i = rs.Columns(1).Find(dn).Row - 1
     MsgBox i
-    ndir = rs.Cells(i, 2).Value  ' °æ·Î
-    nwbk = rs.Cells(i, 3).Value  ' ÆÄÀÏ¸í
-    nvis = rs.Cells(i, 6).Value  ' 1:¼û±â±â 0:º¸ÀÌ±â
+    ndir = rs.Cells(i, 2).Value  ' ê²½ë¡œ
+    nwbk = rs.Cells(i, 3).Value  ' íŒŒì¼ëª…
+    nvis = rs.Cells(i, 6).Value  ' 1:ìˆ¨ê¸°ê¸° 0:ë³´ì´ê¸°
     'MsgBox ndir & nwbk & i
     If isOpenWrk(nwbk) = 0 Then
         Workbooks.Open FileName:=(ndir & "\" & nwbk), UpdateLinks:=0, ReadOnly:=1
         If nvis = 1 Then ActiveWindow.Visible = False
     End If
-            
+
 End Sub
 
 
 
 Sub isOpenXL()
-    st = "¿ø·áLIST"
+    st = "ì›ë£ŒLIST"
     MsgBox rPreset(st)
     Workbooks.Open rPreset(st).Cells(1, 1).Value
 End Sub
-Sub ioLoadModules() '150212/jinsigo ¸ğµâ °¡Á®¿À±â
-    
+Sub ioLoadModules() '150212/jinsigo ëª¨ë“ˆ ê°€ì ¸ì˜¤ê¸°
+
     Dim st(10) As String
-    
+
     ChDir ("D:\APP\VBA\BAS\")
     path = "D:\APP\VBA\BAS\"
-    
+
     With ThisWorkbook
         r = ActiveCell.Row
         For i = 1 To 5
             st(i) = .ActiveSheet.Cells(r, i).Value  ' sub,desc,date,module,file
         Next i
-        
-    
+
+
         MsgBox st(5) & st(4) & st(3) & st(2) & st(1)
         fn = path & st(1) & ".BAS"
         MsgBox fn
@@ -978,7 +978,7 @@ Sub ioLoadModules() '150212/jinsigo ¸ğµâ °¡Á®¿À±â
     End With
 End Sub
 
-Sub ioDumpModules()  '150212/jinsigo ¸ğµâ ¹ö¸®±â
+Sub ioDumpModules()  '150212/jinsigo ëª¨ë“ˆ ë²„ë¦¬ê¸°
 
     ThisWorkbook.VBProject.VBComponents.Remove ActiveWorkbook.VBProject("HKC").VBComponents("module1")
 
@@ -990,7 +990,7 @@ Sub IOBAS()
     Dim VBProj As VBIDE.VBComponent
     Dim lVbComp As Long
     Dim i As Long
-    
+
     wb = xlapp.ActiveWorkbook
     lVbComp = wb.VBProject.VBComponents.Count
 
@@ -1016,7 +1016,7 @@ End Sub
 
 Sub ioGo2Ref()
 '
-' ÇÔ¼ö Ã£¾Æ °¡±â
+' í•¨ìˆ˜ ì°¾ì•„ ê°€ê¸°
 '
 
 '
@@ -1027,15 +1027,15 @@ End Sub
 
 
 '*****
-' Source Code: esKillErrName.esAPI  °¡Á®¿È15.06.26
+' Source Code: esKillErrName.esAPI  ê°€ì ¸ì˜´15.06.26
 
 'Private Const MAX_PATH As Integer = 255
 'Private Declare Function GetSystemDirectory& Lib "kernel32" Alias "GetSystemDirectoryA" (ByVal lpBuffer As String, ByVal nSize As Long)
 'Private Declare Function GetWindowsDirectory& Lib "kernel32" Alias "GetWindowsDirectoryA" (ByVal lpBuffer As String, ByVal nSize As Long)
 'Private Declare Function GetTempDir Lib "kernel32" Alias "GetTempPathA" (ByVal nBufferLength As Long, ByVal lpBuffer As String) As Long
-        
+
 Function isReturnTempDir()
-'ÀÓ½Ã Æú´õ¸í ¹İÈ¯ Returns Temp Folder Name
+'ì„ì‹œ í´ë”ëª… ë°˜í™˜ Returns Temp Folder Name
 Dim strTempDir As String
 Dim lngx As Long
     strTempDir = String$(MAX_PATH, 0)
@@ -1048,7 +1048,7 @@ Dim lngx As Long
 End Function
 
 Function isReturnSysDir()
-'½Ã½ºÅÛ Æú´õ¸í ¹İÈ¯ (C:\WinNT\System32)
+'ì‹œìŠ¤í…œ í´ë”ëª… ë°˜í™˜ (C:\WinNT\System32)
 Dim strSysDirName As String
 Dim lngx As Long
     strSysDirName = String$(MAX_PATH, 0)
@@ -1060,7 +1060,7 @@ Dim lngx As Long
     End If
 End Function
 Function dhReturnWinDir()
-'OS Æú´õ¸í ¹İÈ¯ (C:\Win95)
+'OS í´ë”ëª… ë°˜í™˜ (C:\Win95)
 Dim strWinDirName As String
 Dim lngx As Long
     strWinDirName = String$(MAX_PATH, 0)
@@ -1074,7 +1074,7 @@ End Function
 '*****
 
 Sub GetSysInfo()
-' ÄÄÇ»ÅÍ È¯°æ º¯¼ö ÀĞ¾î¿À±â
+' ì»´í“¨í„° í™˜ê²½ ë³€ìˆ˜ ì½ì–´ì˜¤ê¸°
     Dim rs As Range: Set rs = Sheets.Add.Range("A1")
     Dim i As Integer: i = 1
     Dim j As Integer
@@ -1096,40 +1096,40 @@ End Sub
 
 Sub copyFormula()
 '
-' ¸ÅÅ©·Î3 ¸ÅÅ©·Î
+' ë§¤í¬ë¡œ3 ë§¤í¬ë¡œ
 '
 
 '
     Dim wd, ws As Object
     Dim rs, rd As Range
-    
+
     Set ws = ActiveWindow
-    Set wd = Windows("¼ººĞÇ¥±âÀÛ¼º5.0.xlsm")
+    Set wd = Windows("ì„±ë¶„í‘œê¸°ì‘ì„±5.0.xlsm")
     Set rs = Selection
-    
-'    Set rd = wd.Sheets("ÀÛ¼º").Range("A6")
-    
+
+'    Set rd = wd.Sheets("ì‘ì„±").Range("A6")
+
     'Windows("20150828100214.CDVSK.xls").Activate
     'Range("E2").Select
-    Application.Run "¼ººĞÇ¥±âÀÛ¼º5.0.xlsm!Clear_Data"
-    
+    Application.Run "ì„±ë¶„í‘œê¸°ì‘ì„±5.0.xlsm!Clear_Data"
+
     ws.Activate
     Range("E2").Select
     Range(Selection, Selection.End(xlDown)).Select
     Application.CutCopyMode = False
     Selection.Copy
-    
+
     wd.Activate
     Range("A6").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-    
+
     ws.Activate
     Range("I2").Select
     Range(Selection, Selection.End(xlDown)).Select
     Application.CutCopyMode = False
     Selection.Copy
-    
+
     wd.Activate
 
     Range("A6").Select
@@ -1137,35 +1137,35 @@ Sub copyFormula()
     Selection.Replace What:="JU", Replacement:="JU-", LookAt:=xlPart, _
         SearchOrder:=xlByColumns, MatchCase:=True, SearchFormat:=False, _
         ReplaceFormat:=False
-    
+
     Range("B6").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-        
+
     Range(Selection, Selection.End(xlDown)).Select
     For Each r In Selection
         r.Cells(1, 1) = r.Cells(1, 1) * 100
-        
+
     Next r
-    
-    
+
+
 End Sub
 
 
 Sub mkSheets()
 '
-' Àü¼ººĞ ½ÃÆ® ÀÛ¼º
+' ì „ì„±ë¶„ ì‹œíŠ¸ ì‘ì„±
 ' 2015.08.28
 
 '
     Dim wd, ws As Object
     Dim rs, rd As Range
-    
+
     Set ws = ActiveWindow
-    Set wd = Windows("¼ººĞÇ¥±âÀÛ¼º5.0.xlsm")
+    Set wd = Windows("ì„±ë¶„í‘œê¸°ì‘ì„±5.0.xlsm")
     Set rs = Selection
-    Set rd = Worksheets("Àü¼ººĞ").Range("A6")
-    
+    Set rd = Worksheets("ì „ì„±ë¶„").Range("A6")
+
     'Windows("20150828100214.CDVSK.xls").Activate
     'Range("E2").Select
     ws.Activate
@@ -1173,18 +1173,18 @@ Sub mkSheets()
     Range(Selection, Selection.End(xlDown)).Select
     Application.CutCopyMode = False
     Selection.Copy
-    
+
     wd.Activate
     Range("A6").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-    
+
     ws.Activate
     Range("I2").Select
     Range(Selection, Selection.End(xlDown)).Select
     Application.CutCopyMode = False
     Selection.Copy
-    
+
     wd.Activate
 
     Range("A6").Select
@@ -1192,33 +1192,33 @@ Sub mkSheets()
     Selection.Replace What:="JU", Replacement:="JU-", LookAt:=xlPart, _
         SearchOrder:=xlByColumns, MatchCase:=True, SearchFormat:=False, _
         ReplaceFormat:=False
-    
+
     Range("B6").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-        
+
     Range(Selection, Selection.End(xlDown)).Select
     For Each r In Selection
         r.Cells(1, 1) = r.Cells(1, 1) * 100
-        
+
     Next r
-    
-    
+
+
 End Sub
 
 
 
 Function rdefNames() As Range
-'ÀÌ¸§Á¤ÀÇ ¿µ¿ª °¡Á®¿À±â150403
-    Dim sc As Range '½ÃÀÛ¼¿
+'ì´ë¦„ì •ì˜ ì˜ì—­ ê°€ì ¸ì˜¤ê¸°150403
+    Dim sc As Range 'ì‹œì‘ì…€
     'Set sc = Workbooks("HKC.xlsm").Sheets("R").Range("setup")
     'Set rdefNames = Range(sc, sc.End(xlUp))
     Set rdefNames = Workbooks("HKC.xlsm").Sheets("S").Range("setup")
-    
+
 End Function
 
 Sub ioDefines()
-'»ç¿ëÀÚÁ¤ÀÇ ¿µ¿ª(»ö»ó ºÎºĞ) ÀÌ¸§Á¤ÀÇ 150406
+'ì‚¬ìš©ìì •ì˜ ì˜ì—­(ìƒ‰ìƒ ë¶€ë¶„) ì´ë¦„ì •ì˜ 150406
 
     Dim rs As Range
     Dim nam As String
@@ -1233,24 +1233,24 @@ Sub ioDefines()
         file = .Cells(1, 3).Value
         sht = .Cells(1, 4).Value
         rng = .Cells(1, 5).Value
-        
+
         ref = "='" & file & "'!" & rng
-        
+
         ck = isOpenName(nam)
         If ck = 1 Then ActiveWorkbook.Names(nam).Delete
 
         If i.Cells(1, 1).Interior.ColorIndex <> -4142 Then
             ActiveWorkbook.Names.Add Name:=nam, RefersToR1C1:=ref
         End If
-                   
+
         End With
     Next i
     wbk.Activate
-    
+
 End Sub
 
 Sub Cells2defNames()
-' ¸®½ºÆ® to ÀÌ¸§Á¤ÀÇ 150403
+' ë¦¬ìŠ¤íŠ¸ to ì´ë¦„ì •ì˜ 150403
 '
     Dim ndef As String
     Dim ndir As String
@@ -1258,10 +1258,10 @@ Sub Cells2defNames()
     Dim nsht As String
     Dim nrng As String
     Dim ncom As String
-    Dim rdef As String 'Âü°í¿µ¿ª(°æ·ÎÆ÷ÇÔ)
+    Dim rdef As String 'ì°¸ê³ ì˜ì—­(ê²½ë¡œí¬í•¨)
     Dim wbk As Workbook
     Dim r As Range
-        
+
     Set rs = Sheets("R").Range("A2:F2", Cells(2, 1).End(xlDown))
 
     For Each r In rs.Rows
@@ -1273,15 +1273,15 @@ Sub Cells2defNames()
         ncom = r.Cells(1, 6).Value
         rdef = "[" & ndir & "\" & nwbk & "]" & nsht & "!" & nrng
         'MsgBox rdef
-        
+
         'If isOpenwbk(nwbk) = 0 Then Workbooks.Open Filename:=ndir & "\" & nwbk
-        
+
         With ActiveWorkbook
                 .Activate
                 If isOpenName(ndef) > 0 Then .Names(ndef).Delete
                 .Names.Add Name:=ndef, RefersTo:=rdef
         End With
-        
+
     Next
 End Sub
 
@@ -1289,9 +1289,9 @@ Sub redefineNames()
 
     Set rs = Sheets("S").Range("A2:F2", Cells(2, 1).End(xlDown))
 
-    With ActiveWorkbook.Names("µ¥ÀÌÅ¸")
-        .Name = "µ¥ÀÌÅ¸2"
-        .RefersToR1C1 = "='D:\Documents and Settings\ÀÌÁø¼º\My Documents\1.¿ø·á¼ººĞ\µ¥ÀÌÅ¸.xls'!list"
+    With ActiveWorkbook.Names("ë°ì´íƒ€")
+        .Name = "ë°ì´íƒ€2"
+        .RefersToR1C1 = "='D:\Documents and Settings\ì´ì§„ì„±\My Documents\1.ì›ë£Œì„±ë¶„\ë°ì´íƒ€.xls'!list"
         .Comment = ""
     End With
 
@@ -1305,16 +1305,15 @@ Sub redefineNames()
         ncom = r.Cells(1, 6).Value
         rdef = "[" & ndir & "\" & nwbk & "]" & nsht & "!" & nrng
         'MsgBox rdef
-        
+
         'If isOpenwbk(nwbk) = 0 Then Workbooks.Open Filename:=ndir & "\" & nwbk
-        
+
         With ActiveWorkbook
                 .Activate
                 If isOpenName(ndef) > 0 Then .Names(ndef).Delete
                 .Names.Add Name:=ndef, RefersTo:=rdef
         End With
-        
+
     Next
 
 End Sub
-

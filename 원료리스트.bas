@@ -1,33 +1,33 @@
-Attribute VB_Name = "¿ø·á¸®½ºÆ®"
+Attribute VB_Name = "ì›ë£Œë¦¬ìŠ¤íŠ¸"
 
 '======================================================================
-' ¿ø·á¸®½ºÆ® °ü·Ã ÇÔ¼ö
+' ì›ë£Œë¦¬ìŠ¤íŠ¸ ê´€ë ¨ í•¨ìˆ˜
 '======================================================================
 Sub rmSetNames_old()
-Attribute rmSetNames_old.VB_Description = "¿ø·á¸®½ºÆ® ÀÌ¸§Á¤ÀÇ"
+Attribute rmSetNames_old.VB_Description = "ì›ë£Œë¦¬ìŠ¤íŠ¸ ì´ë¦„ì •ì˜"
 Attribute rmSetNames_old.VB_ProcData.VB_Invoke_Func = " \n14"
 '
-' mk_¿ø·áLIST ¸ÅÅ©·Î 2013.9.30 / ÀÌÁø¼º
-' ¿ø·á¸®½ºÆ® ÀÌ¸§Á¤ÀÇ
+' mk_ì›ë£ŒLIST ë§¤í¬ë¡œ 2013.9.30 / ì´ì§„ì„±
+' ì›ë£Œë¦¬ìŠ¤íŠ¸ ì´ë¦„ì •ì˜
 '
-'    Windows("D:\1.¿ø·á¼ººĞ\¿ø·áLIST.xls").Activate
-'    Windows("D:\1.¿ø·á¼ººĞ\±â´É¼ºÇÔ·®.xlsx").Activate
-'    ActiveWorkbook.Names.Item("¿ø·áLIST").Delete
-'    ActiveWorkbook.Names.Item("±â´É¼º").Delete
+'    Windows("D:\1.ì›ë£Œì„±ë¶„\ì›ë£ŒLIST.xls").Activate
+'    Windows("D:\1.ì›ë£Œì„±ë¶„\ê¸°ëŠ¥ì„±í•¨ëŸ‰.xlsx").Activate
+'    ActiveWorkbook.Names.Item("ì›ë£ŒLIST").Delete
+'    ActiveWorkbook.Names.Item("ê¸°ëŠ¥ì„±").Delete
     Dim fn(3) As String
     Dim dn(3) As String
     Dim nn(3) As String
     Dim wrk As Workbook
-        
+
     Set wrk = ActiveWorkbook
-    
-    dn(1) = "D:\RND\¿ø·á¼ººĞ"
-    dn(2) = "D:\RND\¿ø·á¼ººĞ"
-    fn(1) = "¿ø·áLIST.xls"
-    fn(2) = "¿ø·áLIST.±â´É¼ºÇÔ·®.xlsx"
-    nn(1) = "¿ø·áLIST"
-    nn(2) = "±â´É¼º"
-    
+
+    dn(1) = "D:\RND\ì›ë£Œì„±ë¶„"
+    dn(2) = "D:\RND\ì›ë£Œì„±ë¶„"
+    fn(1) = "ì›ë£ŒLIST.xls"
+    fn(2) = "ì›ë£ŒLIST.ê¸°ëŠ¥ì„±í•¨ëŸ‰.xlsx"
+    nn(1) = "ì›ë£ŒLIST"
+    nn(2) = "ê¸°ëŠ¥ì„±"
+
     ChDir (dn(1))
     If isOpenWrk(fn(1)) = 0 Then Workbooks.Open FileName:=dn(1) & "\" & fn(1)
     If isOpenWrk(fn(2)) = 0 Then Workbooks.Open FileName:=dn(2) & "\" & fn(2)
@@ -38,7 +38,7 @@ Attribute rmSetNames_old.VB_ProcData.VB_Invoke_Func = " \n14"
         If isOpenName(nn(2)) > 0 Then .Names(nn(2)).Delete
 
         .Names.Add Name:=nn(1), RefersToR1C1:="='" & fn(1) & "'!Database"
-        .Names.Add Name:=nn(2), RefersToR1C1:="='" & fn(2) & "'!±â´É¼º"
+        .Names.Add Name:=nn(2), RefersToR1C1:="='" & fn(2) & "'!ê¸°ëŠ¥ì„±"
         .Names(nn(1)).Comment = nn(1)
         .Names(nn(2)).Comment = nn(1)
         MsgBox wrk.Name
@@ -51,7 +51,7 @@ End Sub
 
 Sub rmPutData()
 '
-' ¿µ¿ªÁÖ¼Ò ÀÓ½ÃÀúÀå ¸ÅÅ©·Î 2015.2.4 / ÀÌÁø¼º
+' ì˜ì—­ì£¼ì†Œ ì„ì‹œì €ì¥ ë§¤í¬ë¡œ 2015.2.4 / ì´ì§„ì„±
 '
 
 ' OR Range(Range("A1:K1"), Range("A1:K1").End(xlDown)).Select
@@ -69,19 +69,19 @@ End Sub
 
 Sub rmGetData()
 '
-' ¿µ¿ªÁÖ¼Ò °¡Á®¿À±â ¸ÅÅ©·Î 2015.2.4 / ÀÌÁø¼º
+' ì˜ì—­ì£¼ì†Œ ê°€ì ¸ì˜¤ê¸° ë§¤í¬ë¡œ 2015.2.4 / ì´ì§„ì„±
 '
 Dim wb As Workbook
     tr = Selection
     Application.ScreenUpdating = False ' turn off the screen updating
-    
+
     With Workbooks("HKC.xlsm").Sheets("P")
         pn = .Range("A1").Value  'path name
         fn = .Range("B1").Value  'File name
         sn = .Range("C1").Value  'Sheet name
         rn = .Range("D1").Formula  'Selection address
     End With
-    
+
     fName = pn & "\" & fn
     Set wb = Workbooks.Open(fName, True, True) ' open the source workbook, read only
     wb.Worksheets(sn).Range(rn).Copy
@@ -90,7 +90,7 @@ Dim wb As Workbook
         wb.Close False ' close the source workbook without saving any changes
     Set wb = Nothing ' free memory
     Application.ScreenUpdating = True ' turn on the screen updating
-      
+
 End Sub
 
 Sub rmGetDataFromClosedWorkbook()
@@ -119,69 +119,69 @@ Sub rmFindText()
         .SearchSubFolders = False
         .TextOrProperty = "*Find*" 'Word to find in this line
         .Execute 'start search
-     
+
         'This loop will bring up a message box with the name of
         'each file that meets the search criteria
         For i = 1 To .FoundFiles.Count
             MsgBox .FoundFiles(i)
         Next i
     End With
- 
+
 End Sub
 
 Function rmJU(cd As String, opt As Integer)
-' juÄÚµå ´Ü°¡ °¡Á®¿À±â / ÀÌÁø¼º
+' juì½”ë“œ ë‹¨ê°€ ê°€ì ¸ì˜¤ê¸° / ì´ì§„ì„±
 '2013.6.13
-    fn = "D:\¶Ë°­¾ÆÁö\HKC\LST\"
+    fn = "D:\ë˜¥ê°•ì•„ì§€\HKC\LST\"
     cd = Replace(cd, "-", "")
-    Set rs = Range("¿ø·á´Ü°¡")
+    Set rs = Range("ì›ë£Œë‹¨ê°€")
     If opt = 0 Then opt = 4
     jcost = WorksheetFunction.VLookup(cd, rs, opt, 0)
     If opt = 4 Then jcost = jcost * 1000
-    
+
 End Function
 
 Sub rmRead_BOM()
-' BOM¿¡¼­ JUÄÚµå °¡Á®¿À±â
-' 2015.12.21 ÀÌÁø¼º ;
+' BOMì—ì„œ JUì½”ë“œ ê°€ì ¸ì˜¤ê¸°
+' 2015.12.21 ì´ì§„ì„± ;
 Dim rs, ro, rJUcode, rComp As Range
 Dim np As Integer
-    
-    Set rJUcode = Selection 'Range(rs.Cells(5, 2), rs.End(xlDown)) 'BOM ÀÚÀç ¿µ¿ª
-       
-    np = InputBox("¼Ò¿ä·® »ó´ëÀ§Ä¡¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä(±âº»°ªÀº '5' ÀÔ´Ï´Ù).", "Ã³¹æ °¡Á®¿À±â", 5) '¼Ò¿ä·® »ó´ëÀ§Ä¡ °¡Á®¿À±â
+
+    Set rJUcode = Selection 'Range(rs.Cells(5, 2), rs.End(xlDown)) 'BOM ìì¬ ì˜ì—­
+
+    np = InputBox("ì†Œìš”ëŸ‰ ìƒëŒ€ìœ„ì¹˜ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”(ê¸°ë³¸ê°’ì€ '5' ì…ë‹ˆë‹¤).", "ì²˜ë°© ê°€ì ¸ì˜¤ê¸°", 5) 'ì†Œìš”ëŸ‰ ìƒëŒ€ìœ„ì¹˜ ê°€ì ¸ì˜¤ê¸°
     Set rComp = rJUcode.Offset(0, np)
-          
+
     Set rs = Union(rJUcode, rComp)
-    
+
     'Application.DisplayAlerts = False
     rs.Parent.Parent.Activate
-    
+
     'Sheets(ro.Parent.CodeName).Activate
-    
-    Set ro = Application.InputBox("ÀÌµ¿ÇÒ À§Ä¡¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä", "Ã³¹æ º¸³»±â:B", Type:=8)
+
+    Set ro = Application.InputBox("ì´ë™í•  ìœ„ì¹˜ë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”", "ì²˜ë°© ë³´ë‚´ê¸°:B", Type:=8)
     Application.DisplayAlerts = True
-    
+
     With ActiveSheet
         rs.Copy
         ro.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks:=True
 
     End With
-    
+
 '    rJUcode = rJUcode.Replace("JU", "JU-")
 '    Selection.Replace What:="JU", Replacement:="JU-", LookAt:=xlPart, _
 '        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
 '        ReplaceFormat:=False
-'    Set rs = Range("¿ø·á´Ü°¡")
+'    Set rs = Range("ì›ë£Œë‹¨ê°€")
 '    If opt = 0 Then opt = 4
 '    jcost = WorksheetFunction.VLookup(cd, rs, opt, 0)
 '    If opt = 4 Then jcost = jcost * 1000
-    
+
 End Sub
 
 Sub InputBoxTest()
     Dim MySelection As Range
-     
+
     On Error Resume Next
     Set MySelection = Application.InputBox(prompt:="Select a range of cells", Type:=8)
     With MySelection

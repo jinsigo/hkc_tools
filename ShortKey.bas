@@ -1,7 +1,7 @@
 Attribute VB_Name = "ShortKey"
 Private Sub Workbook_Activate()
     'Application.OnKey "+^{RIGHT}", "YourMacroName"
-    Application.OnKey "^m", "ºÎÀÚÀçÀç°í_°í°´»çº°½ÃÆ®"
+    Application.OnKey "^m", "ë¶€ìì¬ì¬ê³ _ê³ ê°ì‚¬ë³„ì‹œíŠ¸"
 End Sub
 
 Private Sub Workbook_Deactivate()
@@ -14,4 +14,3 @@ Sub setOnKeys()
     Application.OnKey "+^{G}", "Go2Database2"
 '    Application.OnKey "+^{G}", "Go2Database"
 End Sub
-

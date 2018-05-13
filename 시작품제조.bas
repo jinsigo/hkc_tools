@@ -1,4 +1,4 @@
-Attribute VB_Name = "½ÃÀÛÇ°Á¦Á¶"
+Attribute VB_Name = "ì‹œì‘í’ˆì œì¡°"
 Sub ShowUserForm()
 Attribute ShowUserForm.VB_ProcData.VB_Invoke_Func = "i\n14"
     UserForm1.show
@@ -15,9 +15,9 @@ Set range1 = shtdata.Range("B14:H" & LastRow)
             Set rngMulti = Union(rngMulti, rngTmp)
         End If
     Next i
-    
+
     rngMulti.Select
-    
+
 Sheets("ODM").Range("C14").Value = Sheets("Agreement").multiplerange.Value
 
 End Sub
@@ -28,7 +28,7 @@ Public Function ioFileFolderExists(strFullPath) As Boolean
 'Macro Purpose: Check if a file or folder exists
     On Error GoTo EarlyExit
     If Not Dir(strFullPath, vbDirectory) = vbNullString Then ioFileFolderExists = True
-    
+
 EarlyExit:
     On Error GoTo 0
 End Function
@@ -39,43 +39,43 @@ Attribute ioOpenFolder.VB_ProcData.VB_Invoke_Func = "m\n14"
   Dim preFolder, theFolder, theFolderA, theFolderB, fullFolder As String
   Dim r As Integer
     r = Selection.Row
-    preFolder = "D:\RND.ºĞ¿ø\½ÃÀÛÇ°Á¦Á¶\"
+    preFolder = "D:\RND.ë¶„ì›\ì‹œì‘í’ˆì œì¡°\"
     theFolderA = Cells(r, 3).Value
     theFolderB = Mid(Cells(r, 15).Value, 1, 5)
     theFolder = theFolderA
     fullFolder = preFolder & theFolder
-    
+
     If FileFolderExists(fullFolder) Then
         'MsgBox "File exists!"
         Call Shell("explorer.exe " & fullFolder, vbNormalFocus)
     Else
         MsgBox theFolder & " / Folder does not exist!"
     End If
-        
+
 End Sub
 
 Sub ioCheckFile()
   Dim prePath, thePath, sPath, strFile As String
   Dim r, rs As Range
   Dim c  As Integer
-    prePath = "D:\RND.ºĞ¿ø\½ÃÀÛÇ°Á¦Á¶\"
-    
+    prePath = "D:\RND.ë¶„ì›\ì‹œì‘í’ˆì œì¡°\"
+
     rs = Range("list")
     c = rs.Column
-    
-    
+
+
     For Each r In rs.Rows
-        thePath = r.Cells(1, 8).Value '¾÷Ã¼¸í °æ·Î
+        thePath = r.Cells(1, 8).Value 'ì—…ì²´ëª… ê²½ë¡œ
         sPath = prePath & thePath
-        
+
         For i = 17 To 20
             r.Cells(1, i) = FileDate()
         Next i
-               
-    Next r
-    
 
-    
+    Next r
+
+
+
     strFile = Cells(1, c) 'Your Variable here
     strFile = Left(strFile, 3)
     If FileFolderExists(sPath) Then
@@ -103,12 +103,12 @@ Attribute ioOpenFile.VB_ProcData.VB_Invoke_Func = "F\n14"
     r = Selection.Row
     c = Selection.Column
     cCode = WorksheetFunction.Match(vbcKey1, Rows(1), 0)
-    sKey = Left(Cells(r, cCode), 5)    '18 ÄÚµå°ª ¿­¹øÈ£, ÄÚµå 5ÀÚ¸®
-    
+    sKey = Left(Cells(r, cCode), 5)    '18 ì½”ë“œê°’ ì—´ë²ˆí˜¸, ì½”ë“œ 5ìë¦¬
+
     posPath = Cells(1, c).Value & "\"
-    prePath = vbcPath1   '»óÀ§ Æú´õ
-    sPath = prePath & posPath    '°Ë»ö Æú´õ
- 
+    prePath = vbcPath1   'ìƒìœ„ í´ë”
+    sPath = prePath & posPath    'ê²€ìƒ‰ í´ë”
+
     If ioFileFolderExists(sPath) Then
         sFil = Dir(sPath & sKey & "*.*")
         MsgBox sFil '"File exists!"
@@ -147,7 +147,7 @@ Attribute makeCode.VB_ProcData.VB_Invoke_Func = "H\n14"
     strA = code6(str)
     strB = code3(str)
     strC = Format(Date, "YYMMDD")
-   
+
     MsgBox strA & "-" & strB & "-" & strC
 End Sub
 
@@ -163,22 +163,22 @@ End Function
 
 Function code3(str)
     Dim lang, CLS As String
-    If InStr(1, str, "¿µ¹®", vbTextCompare) Then lang = "(EN)"
-    If InStr(1, str, "±¹¹®", vbTextCompare) Then lang = "(KR)"
+    If InStr(1, str, "ì˜ë¬¸", vbTextCompare) Then lang = "(EN)"
+    If InStr(1, str, "êµ­ë¬¸", vbTextCompare) Then lang = "(KR)"
     If lang = "" Then lang = "(EN)"
     If InStr(1, str, "SPEC", vbTextCompare) Then CLS = "SPEC"
     If InStr(1, str, "MSDS", vbTextCompare) Then CLS = "MSDS"
     If InStr(1, str, "GHS", vbTextCompare) Then CLS = "MSDS(GHS)"
-    If InStr(1, str, "°Å·¡¸í¼¼¼­", vbTextCompare) Then CLS = "°Å·¡¸í¼¼¼­"
-    If InStr(1, str, "°Å·¡¸í¼¼Ç¥", vbTextCompare) Then CLS = "°Å·¡¸í¼¼¼­"
-    If InStr(1, str, "¿ø»êÁö", vbTextCompare) Then CLS = "¿ø»êÁöÁõ¸í¼­"
-    If InStr(1, str, "origin", vbTextCompare) Then CLS = "¿ø»êÁöÁõ¸í¼­"
-    If InStr(1, str, "animal", vbTextCompare) Then CLS = "ºñµ¿¹°½ÇÇèÈ®ÀÎ¼­"
-    If InStr(1, str, "µ¿¹°", vbTextCompare) Then CLS = "ºñµ¿¹°½ÇÇèÈ®ÀÎ¼­"
+    If InStr(1, str, "ê±°ë˜ëª…ì„¸ì„œ", vbTextCompare) Then CLS = "ê±°ë˜ëª…ì„¸ì„œ"
+    If InStr(1, str, "ê±°ë˜ëª…ì„¸í‘œ", vbTextCompare) Then CLS = "ê±°ë˜ëª…ì„¸ì„œ"
+    If InStr(1, str, "ì›ì‚°ì§€", vbTextCompare) Then CLS = "ì›ì‚°ì§€ì¦ëª…ì„œ"
+    If InStr(1, str, "origin", vbTextCompare) Then CLS = "ì›ì‚°ì§€ì¦ëª…ì„œ"
+    If InStr(1, str, "animal", vbTextCompare) Then CLS = "ë¹„ë™ë¬¼ì‹¤í—˜í™•ì¸ì„œ"
+    If InStr(1, str, "ë™ë¬¼", vbTextCompare) Then CLS = "ë¹„ë™ë¬¼ì‹¤í—˜í™•ì¸ì„œ"
     If InStr(1, str, "composition", vbTextCompare) Then CLS = "Composition"
-    If InStr(1, str, "Á¶¼ººñ", vbTextCompare) Then CLS = "Composition"
-    If InStr(1, str, "¼öÃâ¼­·ù", vbTextCompare) Then CLS = "¼öÃâ¼­·ù"
-    If InStr(1, str, "À¯È¿", vbTextCompare) Then CLS = "À¯È¿±â°£"
+    If InStr(1, str, "ì¡°ì„±ë¹„", vbTextCompare) Then CLS = "Composition"
+    If InStr(1, str, "ìˆ˜ì¶œì„œë¥˜", vbTextCompare) Then CLS = "ìˆ˜ì¶œì„œë¥˜"
+    If InStr(1, str, "ìœ íš¨", vbTextCompare) Then CLS = "ìœ íš¨ê¸°ê°„"
     If CLS = "" Then CLS = "ZZZZ"
     code3 = CLS & lang
 End Function
@@ -193,7 +193,7 @@ Dim sStr As String 'Message string
 Dim foundText As Integer 'Holds return value from "FindText" method
 
 'hard coding for a PDF to open, it can be changed when needed.
-gPDFPath = "D:\RND.Áö¿ø\¿ø·áLIST ÀÛ¼º\0321.ÃëÇÕÀÚ·á\¼öÃâ¼­·ù\³²¿µ»ó»ç(ÁÖ)\JU-1197(Citric Acid)-¿µ¹®MSDS.pdf"
+gPDFPath = "D:\RND.ì§€ì›\ì›ë£ŒLIST ì‘ì„±\0321.ì·¨í•©ìë£Œ\ìˆ˜ì¶œì„œë¥˜\ë‚¨ì˜ìƒì‚¬(ì£¼)\JU-1197(Citric Acid)-ì˜ë¬¸MSDS.pdf"
 
 'Initialize Acrobat by creating App object
 Set gApp = CreateObject("AcroExch.App", "")
@@ -226,4 +226,3 @@ gApp.show
 gAvDoc.BringToFront
 
 End Sub
-

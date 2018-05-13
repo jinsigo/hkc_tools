@@ -2,7 +2,7 @@ Attribute VB_Name = "ioModules"
 Option Explicit
 
 '==================================================================
-' VBA ¸ðµâ ÀÔÃâ·Â
+' VBA ëª¨ë“ˆ ìž…ì¶œë ¥
 ' ref: http://www.rondebruin.nl/win/s9/win002.htm
 ' 150212 jinsigo@naver.com
 '
@@ -23,7 +23,7 @@ Public Sub ExportModules()
         MsgBox "Export Folder not exist"
         Exit Sub
     End If
-    
+
     On Error Resume Next
         Kill FolderWithVBAProjectFiles & "\*.*"
     On Error GoTo 0
@@ -31,17 +31,17 @@ Public Sub ExportModules()
     ''' NOTE: This workbook must be open in Excel.
     szSourceWorkbook = ActiveWorkbook.Name
     Set wkbSource = Application.Workbooks(szSourceWorkbook)
-    
+
     If wkbSource.VBProject.Protection = 1 Then
     MsgBox "The VBA in this workbook is protected," & _
         "not possible to export the code"
     Exit Sub
     End If
-    
+
     szExportPath = FolderWithVBAProjectFiles & "\"
-    
+
     For Each cmpComponent In wkbSource.VBProject.VBComponents
-        
+
         bExport = True
         szFileName = cmpComponent.Name
 
@@ -58,16 +58,16 @@ Public Sub ExportModules()
                 ''' Don't try to export.
                 bExport = False
         End Select
-        
+
         If bExport Then
             ''' Export the component to a text file.
             cmpComponent.Export szExportPath & szFileName
-            
+
         ''' remove it from the project if you want
         '''wkbSource.VBProject.VBComponents.Remove cmpComponent
-        
+
         End If
-   
+
     Next cmpComponent
 
     MsgBox "Export is ready"
@@ -98,7 +98,7 @@ Public Sub ImportModules()
     ''' NOTE: This workbook must be open in Excel.
     szTargetWorkbook = ActiveWorkbook.Name
     Set wkbTarget = Application.Workbooks(szTargetWorkbook)
-    
+
     If wkbTarget.VBProject.Protection = 1 Then
     MsgBox "The VBA in this workbook is protected," & _
         "not possible to Import the code"
@@ -107,7 +107,7 @@ Public Sub ImportModules()
 
     ''' NOTE: Path where the code modules are located.
     szImportPath = FolderWithVBAProjectFiles & "\"
-        
+
     Set objFSO = New Scripting.FileSystemObject
     If objFSO.GetFolder(szImportPath).Files.Count = 0 Then
        MsgBox "There are no files to import"
@@ -118,19 +118,19 @@ Public Sub ImportModules()
     Call ioDeleteVBAModulesAndUserForms
 
     Set cmpComponents = wkbTarget.VBProject.VBComponents
-    
+
     ''' Import all the code modules in the specified path
     ''' to the ActiveWorkbook.
     For Each objFile In objFSO.GetFolder(szImportPath).Files
-    
+
         If (objFSO.GetExtensionName(objFile.Name) = "cls") Or _
             (objFSO.GetExtensionName(objFile.Name) = "frm") Or _
             (objFSO.GetExtensionName(objFile.Name) = "bas") Then
             cmpComponents.Import objFile.path
         End If
-        
+
     Next objFile
-    
+
     MsgBox "Import is ready"
 End Sub
 
@@ -147,27 +147,27 @@ Function FolderWithVBAProjectFiles() As String
     If Right(SpecialPath, 1) <> "\" Then
         SpecialPath = SpecialPath & "\"
     End If
-    
+
     If FSO.FolderExists(SpecialPath & "VBAProjectFiles") = False Then
         On Error Resume Next
         MkDir SpecialPath & "VBAProjectFiles"
         On Error GoTo 0
     End If
-    
+
     If FSO.FolderExists(SpecialPath & "VBAProjectFiles") = True Then
         FolderWithVBAProjectFiles = SpecialPath & "VBAProjectFiles"
     Else
         FolderWithVBAProjectFiles = "Error"
     End If
-    
+
 End Function
 
 Function DeleteVBAModulesAndUserForms()
         Dim VBProj As VBIDE.VBProject
         Dim VBComp As VBIDE.VBComponent
-        
+
         Set VBProj = ActiveWorkbook.VBProject
-        
+
         For Each VBComp In VBProj.VBComponents
             If VBComp.Type = vbext_ct_Document Then
                 'Thisworkbook or worksheet module
@@ -177,4 +177,3 @@ Function DeleteVBAModulesAndUserForms()
             End If
         Next VBComp
 End Function
-

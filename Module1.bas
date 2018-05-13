@@ -2,13 +2,13 @@ Attribute VB_Name = "Module1"
 Option Explicit
 Option Compare Text
 
-Dim xclass As New Class1 'Å¬·¡½º¸ğµâ »ç¿ë
+Dim xclass As New Class1 'í´ë˜ìŠ¤ëª¨ë“ˆ ì‚¬ìš©
 Dim strCut As String, rngMulti As Range
 Dim lngMinRow As Long, lngMinColumn As Long
 Dim lngMaxRow As Long, lngMaxColumn As Long
 Dim blnMode As Boolean
 Public rngUndo As Range, varUndo As Variant
- '½ÇÇàÃë¼Ò¸¦ À§ÇØ ÇÊ¿ä
+ 'ì‹¤í–‰ì·¨ì†Œë¥¼ ìœ„í•´ í•„ìš”
 #If Win64 Then
   Private Declare PtrSafe Function ImmGetContext Lib "imm32.dll" _
     (ByVal hwnd As LongPtr) As LongPtr
@@ -24,12 +24,12 @@ Public rngUndo As Range, varUndo As Variant
   Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" _
     (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
 #End If
- 'ÇÑ±Û¸ğµå½ÃÀÛÀ» À§ÇØ ÇÊ¿ä
+ 'í•œê¸€ëª¨ë“œì‹œì‘ì„ ìœ„í•´ í•„ìš”
 
 Sub Addin_Open_MyAddin(Optional x As Boolean)
 Dim cmdCont As CommandBarControl
     On Error Resume Next
-    Set xclass.App = Application 'Å¬·¡½º¸ğµâ »ç¿ë
+    Set xclass.App = Application 'í´ë˜ìŠ¤ëª¨ë“ˆ ì‚¬ìš©
     Call ImmSetConversionStatus(ImmGetContext(FindWindow("XLMAIN", _
       Application.Caption)), &H1, &H0) 'IME_CMODE_HANGEUL, IME_SMODE_NONE
     With Application
@@ -41,279 +41,279 @@ Dim cmdCont As CommandBarControl
           .Tag = "My_Addin2015"
           .OnAction = "menu_enable"
           With .Controls.Add(Type:=msoControlPopup)
-            .Caption = "ÀÚÁÖ¾²´Â ´ÜÃàÅ°"
-            .Tag = "ÀÚÁÖ¾²´Â ´ÜÃàÅ°"
+            .Caption = "ìì£¼ì“°ëŠ” ë‹¨ì¶•í‚¤"
+            .Tag = "ìì£¼ì“°ëŠ” ë‹¨ì¶•í‚¤"
             With .Controls.Add(Type:=msoControlButton)
               .FaceId = 40
-              .Caption = "¾Æ·¡ÂÊ ¹üÀ§¼±ÅÃ"
+              .Caption = "ì•„ë˜ìª½ ë²”ìœ„ì„ íƒ"
               .ShortcutText = "Alt+PageDown"
               .OnAction = "End1_Cell"
             End With
             With .Controls.Add(msoControlButton)
               .FaceId = 39
-              .Caption = "¿À¸¥ÂÊ ¹üÀ§¼±ÅÃ"
+              .Caption = "ì˜¤ë¥¸ìª½ ë²”ìœ„ì„ íƒ"
               .ShortcutText = "Alt+PageUp"
               .OnAction = "End2_Cell"
             End With
             With .Controls.Add(msoControlButton)
-              .Caption = "¸¶Áö¸·¼¿ Àç¼³Á¤"
+              .Caption = "ë§ˆì§€ë§‰ì…€ ì¬ì„¤ì •"
               .ShortcutText = "Ctrl+Alt+End"
               .OnAction = "Sheet_Refresh"
             End With
             With .Controls.Add(msoControlButton)
               .BeginGroup = True
-              .Caption = "¿À¸¥ÂÊ(¿ŞÂÊ,¡¦) ÀÌµ¿"
-              .ShortcutText = "Ctrl+Alt+¹æÇâ"
+              .Caption = "ì˜¤ë¥¸ìª½(ì™¼ìª½,â€¦) ì´ë™"
+              .ShortcutText = "Ctrl+Alt+ë°©í–¥"
               .OnAction = "'Offset_Select " & True & ", " & True & "'"
             End With
             With .Controls.Add(msoControlButton)
-              .Caption = "¼±ÅÃ¹üÀ§ È®Àå"
-              .ShortcutText = "Ctrl+Shift+Alt+¹æÇâ"
+              .Caption = "ì„ íƒë²”ìœ„ í™•ì¥"
+              .ShortcutText = "Ctrl+Shift+Alt+ë°©í–¥"
               .OnAction = "'Tot_Select " & True & ", " & True & "'"
             End With
             With .Controls.Add(msoControlButton)
-              .Caption = "´ÙÁß¼¿ ÁöÁ¤ Ãë¼Ò"
+              .Caption = "ë‹¤ì¤‘ì…€ ì§€ì • ì·¨ì†Œ"
               .ShortcutText = "Ctrl+Shift+Alt+-"
               .OnAction = "Cancel_EndSelect"
             End With
             With .Controls.Add(msoControlButton)
               .BeginGroup = True
               .FaceId = 368
-              .Caption = "G/Ç¥ÁØ À¸·Î"
-              .ShortcutText = "Ctrl+[Shift]+¡ç"
+              .Caption = "G/í‘œì¤€ ìœ¼ë¡œ"
+              .ShortcutText = "Ctrl+[Shift]+â†"
               .OnAction = "'General_Format " & True & "'"
             End With
             With .Controls.Add(msoControlButton)
               .FaceId = 376
-              .Caption = "»çÄ¢¿¬»êÇÏ±â"
+              .Caption = "ì‚¬ì¹™ì—°ì‚°í•˜ê¸°"
               .ShortcutText = "Alt+F10"
               .OnAction = "Calculate_Num"
             End With
             With .Controls.Add(Type:=msoControlButton)
               .BeginGroup = True
               .FaceId = 183
-              .Caption = "Çà´ÜÀ§(ÀÚÀ½) Ã£±â"
+              .Caption = "í–‰ë‹¨ìœ„(ììŒ) ì°¾ê¸°"
               .ShortcutText = "Ctrl+Shift+F"
               .OnAction = "Special_Find"
             End With
             With .Controls.Add(Type:=msoControlButton)
               .FaceId = 202
-              .Caption = "¿À·ù(´Ù¸¥)¼¿ Ã£±â"
+              .Caption = "ì˜¤ë¥˜(ë‹¤ë¥¸)ì…€ ì°¾ê¸°"
               .ShortcutText = "Ctrl+Alt+F"
               .OnAction = "Diff_Select"
             End With
             With .Controls.Add(Type:=msoControlButton)
               .FaceId = 29
-              .Caption = "Áßº¹¼¿ Ã£±â"
+              .Caption = "ì¤‘ë³µì…€ ì°¾ê¸°"
               .ShortcutText = "Ctrl+Alt+D"
               .OnAction = "Duplicated_Range"
             End With
             With .Controls.Add(Type:=msoControlButton)
               .FaceId = 564
-              .Caption = "¾ÈÀüÇÑ ¹Ù²Ù±â"
+              .Caption = "ì•ˆì „í•œ ë°”ê¾¸ê¸°"
               .ShortcutText = "Ctrl+Shift+H"
               .OnAction = "Safe_Replace"
             End With
             With .Controls.Add(Type:=msoControlButton)
               .BeginGroup = True
-              .Caption = "´ÙÁß(º´ÇÕ)¼¿ º¹»ç"
+              .Caption = "ë‹¤ì¤‘(ë³‘í•©)ì…€ ë³µì‚¬"
               .ShortcutText = "Ctrl+Shift+C"
               .OnAction = "'Special_Copy " & False & "'"
             End With
             With .Controls.Add(Type:=msoControlButton)
-              .Caption = "º´ÇÕ¼¿ Àß¶ó³»±â"
+              .Caption = "ë³‘í•©ì…€ ì˜ë¼ë‚´ê¸°"
               .ShortcutText = "Ctrl+Shift+X"
               .OnAction = "'Special_Copy " & True & "'"
             End With
             With .Controls.Add(Type:=msoControlButton)
-              .Caption = "´ÙÁß¼¿ ºÙ¿©³Ö±â"
+              .Caption = "ë‹¤ì¤‘ì…€ ë¶™ì—¬ë„£ê¸°"
               .ShortcutText = "Ctrl+Shift[Alt]+V"
               .OnAction = "Special_Paste"
             End With
             With .Controls.Add(Type:=msoControlButton)
               .FaceId = 535
-              .Caption = "´õÇÏ±â ½ÇÇàÇÏ±â"
+              .Caption = "ë”í•˜ê¸° ì‹¤í–‰í•˜ê¸°"
               .ShortcutText = "Ctrl+Alt+A"
               .OnAction = "Paste_AddValue"
             End With
             With .Controls.Add(Type:=msoControlButton)
               .BeginGroup = True
               .FaceId = 309
-              .Caption = "¹®ÀÚ ÀÏ°ı»ğÀÔ(»èÁ¦)"
+              .Caption = "ë¬¸ì ì¼ê´„ì‚½ì…(ì‚­ì œ)"
               .ShortcutText = "Ctrl+Shift+I"
               .OnAction = "Insert_Text"
             End With
             With .Controls.Add(Type:=msoControlButton)
               .FaceId = 653
-              .Caption = "¿¬¹ø ±âÀÔÇÏ±â"
+              .Caption = "ì—°ë²ˆ ê¸°ì…í•˜ê¸°"
               .ShortcutText = "Ctrl+Shift+N"
               .OnAction = "Input_Serialnum"
             End With
             With .Controls.Add(Type:=msoControlButton)
-              .Caption = "°ø¹éÃ¤¿ì±â(Áö¿ì±â)"
+              .Caption = "ê³µë°±ì±„ìš°ê¸°(ì§€ìš°ê¸°)"
               .ShortcutText = "Ctrl+Shift+B"
               .OnAction = "BlankCell_Input"
             End With
             With .Controls.Add(Type:=msoControlButton)
-              .Caption = "¼ö½ÄÃ¤¿ì±â"
+              .Caption = "ìˆ˜ì‹ì±„ìš°ê¸°"
               .ShortcutText = "Ctrl+Alt+B"
               .OnAction = "Formula_MultiInput"
             End With
             With .Controls.Add(msoControlButton)
               .BeginGroup = True
               .FaceId = 3
-              .Caption = "¾ÈÀüÇÑ ÀúÀå"
+              .Caption = "ì•ˆì „í•œ ì €ì¥"
               .ShortcutText = "Ctrl+S"
               .OnAction = "Safe_Save"
             End With
             With .Controls.Add(msoControlButton)
-              .Caption = "ÀÎ¼â¹İº¹Çà ¼³Á¤"
+              .Caption = "ì¸ì‡„ë°˜ë³µí–‰ ì„¤ì •"
               .ShortcutText = "Shift+F11"
               .OnAction = "Print_Title"
             End With
             With .Controls.Add(msoControlButton)
-              .Caption = "Æ²°íÁ¤ ¼³Á¤"
+              .Caption = "í‹€ê³ ì • ì„¤ì •"
               .ShortcutText = "Shift+Alt+F11"
               .OnAction = "Freeze_Panes"
             End With
             With .Controls.Add(msoControlButton)
               .BeginGroup = True
               .FaceId = 487
-              .Caption = "°¢Á¾ Á¤º¸Ç¥½Ã"
+              .Caption = "ê°ì¢… ì •ë³´í‘œì‹œ"
               .ShortcutText = "F12"
               .OnAction = "Total_Info"
             End With
           End With
           With .Controls.Add(Type:=msoControlButton)
             .BeginGroup = True
-            .Caption = "¾ç³¡°ø¹é Áö¿ì±â"
+            .Caption = "ì–‘ëê³µë°± ì§€ìš°ê¸°"
             .ShortcutText = "Ctrl+Shift+T"
             .OnAction = "Trim_Text"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 47
-            .Caption = "À¯·É¹®ÀÚ Áö¿ì±â"
+            .Caption = "ìœ ë ¹ë¬¸ì ì§€ìš°ê¸°"
             .ShortcutText = "Ctrl+Shift+Del"
             .OnAction = "Del_Ascii"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 288
-            .Caption = "¹®ÀÚ ºÎºĞ »ö»óº¯°æ"
+            .Caption = "ë¬¸ì ë¶€ë¶„ ìƒ‰ìƒë³€ê²½"
             .OnAction = "Color_Text"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .BeginGroup = True
             .FaceId = 125
-            .Caption = "³¯Â¥Çü½Ä Àû¿ë"
+            .Caption = "ë‚ ì§œí˜•ì‹ ì ìš©"
             .ShortcutText = "Ctrl+Alt+Y"
             .OnAction = "Date_Format"
           End With
           With .Controls.Add(Type:=msoControlButton)
-            .Caption = "(¹İ¿Ã¸²)ÇÔ¼ö ¹Ù·ÎÀû¿ë"
+            .Caption = "(ë°˜ì˜¬ë¦¼)í•¨ìˆ˜ ë°”ë¡œì ìš©"
             .ShortcutText = "Ctrl+Shift+R"
             .OnAction = "Function_Evaluate"
           End With
           With .Controls.Add(Type:=msoControlButton)
-            .Caption = "¼Ò¼ö(á³â¦)¼¿ ¼±ÅÃ"
+            .Caption = "ì†Œìˆ˜(å°æ•¸)ì…€ ì„ íƒ"
             .OnAction = "Fraction_Select"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .BeginGroup = True
             .FaceId = 127
-            .Caption = "À¯ÀÏ(Áßº¹)µ¥ÀÌÅÍ ¼±ÅÃÇÏ±â"
+            .Caption = "ìœ ì¼(ì¤‘ë³µ)ë°ì´í„° ì„ íƒí•˜ê¸°"
             .ShortcutText = "Ctrl+[Shift]+Alt+O"
             .OnAction = "'Select_UniqData " & True & "'"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 464
-            .Caption = "Áßº¹Çà (»èÁ¦ÈÄ) ÇÕ»êÇÏ±â"
+            .Caption = "ì¤‘ë³µí–‰ (ì‚­ì œí›„) í•©ì‚°í•˜ê¸°"
             .OnAction = "Del_Repetition"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 295
-            .Caption = "ÁöÁ¤¼ıÀÚ¸¸Å­ Çà»ğÀÔ"
+            .Caption = "ì§€ì •ìˆ«ìë§Œí¼ í–‰ì‚½ì…"
             .OnAction = "Insert_BlankRowCol"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 633
-            .Caption = "µÎ ¿µ¿ª ¼ø¼­ ¸ÂÃß±â"
+            .Caption = "ë‘ ì˜ì—­ ìˆœì„œ ë§ì¶”ê¸°"
             .OnAction = "TwoArea_Adjust"
           End With
           With .Controls.Add(Type:=msoControlButton)
-            .Caption = "³»¿ëº¸Á¸ º´ÇÕ"
+            .Caption = "ë‚´ìš©ë³´ì¡´ ë³‘í•©"
             .ShortcutText = "Ctrl+Shift+M"
             .OnAction = "Multi_Murge"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .BeginGroup = True
             .FaceId = 246
-            .Caption = "Å×ÀÌºí ÇüÅÂº¯È¯"
+            .Caption = "í…Œì´ë¸” í˜•íƒœë³€í™˜"
             .OnAction = "Table_Conform"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 545
-            .Caption = "ÁÙ¹Ù²Ş¼¿ ÇàºĞ¸®"
+            .Caption = "ì¤„ë°”ê¿ˆì…€ í–‰ë¶„ë¦¬"
             .OnAction = "Str_Split"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 541
-            .Caption = "Çà(¿­)°£°İ ÀÏ°ı´Ã¸®±â"
+            .Caption = "í–‰(ì—´)ê°„ê²© ì¼ê´„ëŠ˜ë¦¬ê¸°"
             .ShortcutText = "Ctrl+Alt+H"
             .OnAction = "RowHightColWidth"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 620
-            .Caption = "µ¥ÀÌÅÍ ±¸ºĞÇÏ¿© ÀúÀåÇÏ±â"
+            .Caption = "ë°ì´í„° êµ¬ë¶„í•˜ì—¬ ì €ì¥í•˜ê¸°"
             .OnAction = "DataBase_Split"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 159
-            .Caption = "¿©·¯ ÅëÇÕ¹®¼­ ÃëÇÕÇÏ±â"
+            .Caption = "ì—¬ëŸ¬ í†µí•©ë¬¸ì„œ ì·¨í•©í•˜ê¸°"
             .OnAction = "Wb_Combine"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 455
-            .Caption = "º¹±¸ÆÄÀÏ »ı¼ºÇÏ±â"
+            .Caption = "ë³µêµ¬íŒŒì¼ ìƒì„±í•˜ê¸°"
             .OnAction = "Make_RecoveryNewBook"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .BeginGroup = True
             .FaceId = 503
-            .Caption = "¹®ÀÚ¼ıÀÚ Á¤·Ä"
+            .Caption = "ë¬¸ììˆ«ì ì •ë ¬"
             .ShortcutText = "Ctrl+Alt+S"
             .OnAction = "StrAndNum_Sort"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 163
-            .Caption = "¹«ÀÛÀ§ Á¤·Ä"
+            .Caption = "ë¬´ì‘ìœ„ ì •ë ¬"
             .ShortcutText = "Ctrl+Alt+R"
             .OnAction = "Randomize_Sort"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .BeginGroup = True
             .FaceId = 628
-            .Caption = "ÇÊÅÍÇà ¹İÀü"
+            .Caption = "í•„í„°í–‰ ë°˜ì „"
             .ShortcutText = "Shift+Alt+L"
             .OnAction = "Filter_Reverse"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .FaceId = 499
-            .Caption = "»ö»óÀ¸·Î ÇÊÅÍ"
+            .Caption = "ìƒ‰ìƒìœ¼ë¡œ í•„í„°"
             .ShortcutText = "Ctrl+Alt+L"
             .OnAction = "Color_Filter"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .BeginGroup = True
             .FaceId = 160
-            .Caption = "¼±ÅÃÆäÀÌÁö ÀÎ¼â"
+            .Caption = "ì„ íƒí˜ì´ì§€ ì¸ì‡„"
             .ShortcutText = "Ctrl+Shift+P"
             .OnAction = "Print_SelectPage"
           End With
           With .Controls.Add(Type:=msoControlButton)
             .BeginGroup = True
-            .Caption = "Addin2015 µµ¿ò¸»"
+            .Caption = "Addin2015 ë„ì›€ë§"
             .OnAction = "Help_Text"
-            .FaceId = 273 'Á¾¸ğ¾ç
+            .FaceId = 273 'ì¢…ëª¨ì–‘
           End With
         End With
       End With
@@ -375,7 +375,7 @@ Sub Onkey_Make(Optional x As Boolean)
 End Sub
 
 Sub Addin_Close_MyAddin(Optional x As Boolean)
- 'Ãß°¡±â´ÉÀÌ ´İÈú¶§ ¸Ş´º»èÁ¦
+ 'ì¶”ê°€ê¸°ëŠ¥ì´ ë‹«íë•Œ ë©”ë‰´ì‚­ì œ
 Dim cmdCont As CommandBarControl
     On Error Resume Next
     With Application
@@ -434,7 +434,7 @@ Dim cmdCont As CommandBarControl
 End Sub
 
 Private Sub Menu_Enable()
- '¾Æ¹«·± ½ÃÆ®°¡ ¾ø´Â °æ¿ì ¸Ş´º¸¦ ºñÈ°¼ºÈ­
+ 'ì•„ë¬´ëŸ° ì‹œíŠ¸ê°€ ì—†ëŠ” ê²½ìš° ë©”ë‰´ë¥¼ ë¹„í™œì„±í™”
 Dim stChk As Worksheet, lngI As Long
     On Error GoTo Err_Step
     Set stChk = ActiveSheet
@@ -455,15 +455,15 @@ Err_Step:
 End Sub
 
 Private Sub End1_Cell()
- '´ÜÃàÅ° Alt+PageDown
- 'µ¥ÀÌÅÍ¹üÀ§¸¦ ½Å¼ÓÁöÁ¤
+ 'ë‹¨ì¶•í‚¤ Alt+PageDown
+ 'ë°ì´í„°ë²”ìœ„ë¥¼ ì‹ ì†ì§€ì •
 Dim rngSelec As Range, rngCell As Range, rngTarget As Range
 Dim lngI As Long
     On Error Resume Next
     Set rngSelec = Selection
     Set rngCell = Cells(ActiveCell.SpecialCells(xlLastCell).Row + 1, ActiveCell.Column)
     Application.GoTo rngCell
-    '¾Æ·¡ÂÊ¼¿·Î È­¸éÀÌµ¿
+    'ì•„ë˜ìª½ì…€ë¡œ í™”ë©´ì´ë™
     Set rngTarget = Range(rngSelec.Areas(1), _
       Cells(rngSelec.Areas(1).SpecialCells(xlLastCell).Row, rngSelec.Areas(1).Column))
     For lngI = 2 To rngSelec.Areas.Count
@@ -477,8 +477,8 @@ Dim lngI As Long
 End Sub
 
 Private Sub End2_Cell()
- '´ÜÃàÅ° Alt+PageUp
- 'µ¥ÀÌÅÍ¹üÀ§¸¦ ½Å¼ÓÁöÁ¤
+ 'ë‹¨ì¶•í‚¤ Alt+PageUp
+ 'ë°ì´í„°ë²”ìœ„ë¥¼ ì‹ ì†ì§€ì •
 Dim rngSelec As Range, rngCell As Range, rngTarget As Range
 Dim lngI As Long
     On Error Resume Next
@@ -498,8 +498,8 @@ Dim lngI As Long
 End Sub
 
 Private Sub Sheet_Refresh()
- '´ÜÃàÅ° Ctrl+Alt+End
- 'µ¥ÀÌÅÍ ¸¶Áö¸·¼¿À» ÀçÁ¶Á¤ÇÏ¹Ç·Î½á ºÒÇÊ¿äÇÑ ¿µ¿ª»ç¿ë¿¡ µû¸¥ ºÒÆíÇØ¼Ò
+ 'ë‹¨ì¶•í‚¤ Ctrl+Alt+End
+ 'ë°ì´í„° ë§ˆì§€ë§‰ì…€ì„ ì¬ì¡°ì •í•˜ë¯€ë¡œì¨ ë¶ˆí•„ìš”í•œ ì˜ì—­ì‚¬ìš©ì— ë”°ë¥¸ ë¶ˆí¸í•´ì†Œ
 Dim rngNow As Range, rngLastcell As Range
 Dim rngRow As Range, rngCol As Range
 Dim lngR As Long, lngC As Long
@@ -513,9 +513,9 @@ Dim objDraw As Object
     If Application.CountA(rngLastcell.SpecialCells(xlLastCell)(1).EntireRow) = 0 Then
       If ActiveSheet.FilterMode = False Then
         rngLastcell.SpecialCells(xlLastCell).Select
-        If MsgBox("¸¶Áö¸·¼¿(" & rngLastcell.SpecialCells(xlLastCell).Address _
-          & "¼¿)¿¡´Â ¼­½Ä¸¸ ÀÖ½À´Ï´Ù. ÀÌ ºÒÇÊ¿äÇÑ ¼­½ÄÀ» »èÁ¦ÇÏ¿© " & _
-          "¸¶Áö¸·¼¿À» µ¥ÀÌÅÍ¿µ¿ª±îÁö·Î Ãà¼ÒÇÏ½Ã°Ú½À´Ï±î?", _
+        If MsgBox("ë§ˆì§€ë§‰ì…€(" & rngLastcell.SpecialCells(xlLastCell).Address _
+          & "ì…€)ì—ëŠ” ì„œì‹ë§Œ ìˆìŠµë‹ˆë‹¤. ì´ ë¶ˆí•„ìš”í•œ ì„œì‹ì„ ì‚­ì œí•˜ì—¬ " & _
+          "ë§ˆì§€ë§‰ì…€ì„ ë°ì´í„°ì˜ì—­ê¹Œì§€ë¡œ ì¶•ì†Œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?", _
           vbYesNo + vbInformation) = vbYes Then
           Set rngRow = rngLastcell.Find(What:="*", After:=rngLastcell(1), _
             SearchOrder:=xlByRows, SearchDirection:=xlPrevious)
@@ -559,7 +559,7 @@ Dim objDraw As Object
     Set rngLastcell = ActiveSheet.UsedRange.SpecialCells(xlLastCell) _
       (ActiveSheet.UsedRange.SpecialCells(xlLastCell).Cells.Count)
     rngLastcell.Select
-    MsgBox "¸¶Áö¸·¼¿ÀÌ " & rngLastcell.Address & " (À¸)·Î Á¶Á¤µÇ¾ú½À´Ï´Ù." _
+    MsgBox "ë§ˆì§€ë§‰ì…€ì´ " & rngLastcell.Address & " (ìœ¼)ë¡œ ì¡°ì •ë˜ì—ˆìŠµë‹ˆë‹¤." _
       , vbInformation
     rngNow.Select
     Intersect(rngNow, Range(rngNow(1), rngNow.SpecialCells(xlLastCell))).Select
@@ -568,8 +568,8 @@ Err_Step:
 End Sub
 
 Sub Offset_Select(x As Boolean, Y As Boolean)
- '´ÜÃàÅ° Shift+Alt+Right[Left,Down,Up]
- 'µ¥ÀÌÅÍ¹üÀ§ ÁöÁ¤
+ 'ë‹¨ì¶•í‚¤ Shift+Alt+Right[Left,Down,Up]
+ 'ë°ì´í„°ë²”ìœ„ ì§€ì •
 Dim strAddress As String
     On Error GoTo Err_Step
     If Selection.Areas(1).MergeCells Then
@@ -597,8 +597,8 @@ Err_Step:
 End Sub
 
 Sub Tot_Select(x As Boolean, Y As Boolean)
- '´ÜÃàÅ° Ctrl+Shift+Alt+Right[Left,Down,Up]
- 'µ¥ÀÌÅÍ¹üÀ§ ÁöÁ¤
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+Alt+Right[Left,Down,Up]
+ 'ë°ì´í„°ë²”ìœ„ ì§€ì •
 Dim lngArea As Long, lngRow As Long, lngCol As Long, lngI As Long
 Dim rngArea As Range, rngTemp As Range
 Dim strAddress As String
@@ -702,7 +702,7 @@ Err_Step:
 End Sub
 
 Sub EntireRowCol_Select(x As Boolean)
- 'ÀüÃ¼ Çà(¿­)À» ¼±ÅÃÇÏ¿© Áİ´Ï´Ù.
+ 'ì „ì²´ í–‰(ì—´)ì„ ì„ íƒí•˜ì—¬ ì¤ë‹ˆë‹¤.
 Dim rngTemp As Range
     On Error GoTo Err_Step
     Set rngTemp = ActiveCell
@@ -718,15 +718,15 @@ Err_Step:
 End Sub
 
 Sub General_Format(x As Boolean)
- '´ÜÃàÅ° Ctrl+[Shift]+¡ç
- '¹®ÀÚ¿­Ç¥½ÃÇü½Ä µîÀ» ÀÏ¹İÇ¥½ÃÇü½ÄÀ¸·Î ½Å¼ÓÇÏ°Ô ¹Ù²ß´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+[Shift]+â†
+ 'ë¬¸ìì—´í‘œì‹œí˜•ì‹ ë“±ì„ ì¼ë°˜í‘œì‹œí˜•ì‹ìœ¼ë¡œ ì‹ ì†í•˜ê²Œ ë°”ê¿‰ë‹ˆë‹¤.
 Dim rngSelect As Range, rngArea As Range
     On Error GoTo Err_Step
     If x Then
-      Selection.NumberFormatLocal = "G/Ç¥ÁØ"
+      Selection.NumberFormatLocal = "G/í‘œì¤€"
       Application.SendKeys "{F2}"
     Else
-      Selection.NumberFormatLocal = "G/Ç¥ÁØ"
+      Selection.NumberFormatLocal = "G/í‘œì¤€"
       Set rngSelect = Intersect(Selection, ActiveSheet.UsedRange)
       For Each rngArea In rngSelect
         rngArea = rngArea.Formula
@@ -737,8 +737,8 @@ Err_Step:
 End Sub
 
 Private Sub Calculate_Num()
- '´ÜÃàÅ° Alt+F10
- '¼ıÀÚ ´õÇÏ±â, »©±â, ³ª´©±â, °öÇÏ±â ¿¬»ê ¼öÇà
+ 'ë‹¨ì¶•í‚¤ Alt+F10
+ 'ìˆ«ì ë”í•˜ê¸°, ë¹¼ê¸°, ë‚˜ëˆ„ê¸°, ê³±í•˜ê¸° ì—°ì‚° ìˆ˜í–‰
 Dim rngConstant As Range, rngEacharea As Range
 Dim varQues
     On Error GoTo Err_Step
@@ -748,61 +748,61 @@ Dim varQues
     End If
     Set rngConstant = Intersect(rngUndo, _
       Selection.SpecialCells(xlCellTypeConstants, 5))
-    varQues = InputBox("¿¬»êÇÏ°í ½ÍÀº ±âÈ£ ¹× ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.", Default:="*1000")
+    varQues = InputBox("ì—°ì‚°í•˜ê³  ì‹¶ì€ ê¸°í˜¸ ë° ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”.", Default:="*1000")
     If varQues = vbNullString Then Exit Sub
     If varQues Like "[/,*]0" Then
-      MsgBox "0À» °öÇÏ°Å³ª ³ª´©±âÇÏ½Ã¸é °ï¶õÇÕ´Ï´Ù.", vbInformation
+      MsgBox "0ì„ ê³±í•˜ê±°ë‚˜ ë‚˜ëˆ„ê¸°í•˜ì‹œë©´ ê³¤ë€í•©ë‹ˆë‹¤.", vbInformation
       Exit Sub
     End If
 
-    '¼±ÅÃÇÏ¿©ºÙ¿©³Ö±â ±â´É»ç¿ëÀÇ ¹®Á¦Á¡ º¸¿Ï
+    'ì„ íƒí•˜ì—¬ë¶™ì—¬ë„£ê¸° ê¸°ëŠ¥ì‚¬ìš©ì˜ ë¬¸ì œì  ë³´ì™„
     For Each rngEacharea In rngConstant.Areas
       rngEacharea = Application.Evaluate(rngEacharea.Address & varQues)
     Next rngEacharea
     If rngUndo.Areas.Count = 1 Then
-      Application.OnUndo "¿¬»ê Ãë¼Ò", "Action_Undo"
+      Application.OnUndo "ì—°ì‚° ì·¨ì†Œ", "Action_Undo"
     End If
 Err_Step:
     If Err.Number = 1004 Then
-      MsgBox "ÁöÁ¤µÈ ¹üÀ§¿¡ »ó¼ö°¡ ¾ø½À´Ï´Ù.", vbInformation
+      MsgBox "ì§€ì •ëœ ë²”ìœ„ì— ìƒìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Print_Title()
- '´ÜÃàÅ° Shift+F11
- '¹İº¹Çà ¼³Á¤ ¹× ÇØÁ¦¸¦ ÇÒ¼öÀÖµµ·Ï
+ 'ë‹¨ì¶•í‚¤ Shift+F11
+ 'ë°˜ë³µí–‰ ì„¤ì • ë° í•´ì œë¥¼ í• ìˆ˜ìˆë„ë¡
     On Error GoTo Err_Step
     If ActiveSheet.PageSetup.PrintTitleRows <> "" Then
       ActiveSheet.PageSetup.PrintTitleRows = ""
-      MsgBox "ÀÎ¼â¹İº¹ÇàÀÌ ÇØÁ¦µÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì¸ì‡„ë°˜ë³µí–‰ì´ í•´ì œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     Else
       ActiveSheet.PageSetup.PrintTitleRows = Selection.EntireRow.Address
-      MsgBox "ÀÎ¼â¹İº¹ÇàÀÌ " & Selection.EntireRow.Address & _
-          " ·Î ¼³Á¤µÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì¸ì‡„ë°˜ë³µí–‰ì´ " & Selection.EntireRow.Address & _
+          " ë¡œ ì„¤ì •ë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
 Err_Step:
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Freeze_Panes()
- '´ÜÃàÅ° Shift+Alt+F11
- 'Æ²°íÁ¤ ¼³Á¤ ¹× ÇØÁ¦¸¦ ÇÒ¼öÀÖµµ·Ï
+ 'ë‹¨ì¶•í‚¤ Shift+Alt+F11
+ 'í‹€ê³ ì • ì„¤ì • ë° í•´ì œë¥¼ í• ìˆ˜ìˆë„ë¡
     On Error GoTo Err_Step
     If ActiveWindow.FreezePanes = True Then
       ActiveWindow.FreezePanes = False
-      MsgBox "Æ²°íÁ¤ÀÌ ÇØÁ¦µÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "í‹€ê³ ì •ì´ í•´ì œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     Else
       ActiveWindow.FreezePanes = True
-      MsgBox "Æ²°íÁ¤ÀÌ ¼³Á¤µÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "í‹€ê³ ì •ì´ ì„¤ì •ë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
 Err_Step:
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Total_Info()
- '´ÜÃàÅ° F12
- '¼±ÅÃ¿µ¿ªÀÇ °¢Á¾ Á¤º¸¸¦ º¸¿©Áİ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ F12
+ 'ì„ íƒì˜ì—­ì˜ ê°ì¢… ì •ë³´ë¥¼ ë³´ì—¬ì¤ë‹ˆë‹¤.
 Dim rngVisible As Range, rngEach As Range
 Dim varArr As Variant
 Dim varSum As Variant, varMod As Variant
@@ -817,29 +817,29 @@ Dim strInfo As String
     If IsNumeric(varSum) Then
       varMod = varSum - Int(varSum)
       If varMod = 0 Then
-        strInfo = strInfo & "ÇÕ°è : " & _
+        strInfo = strInfo & "í•©ê³„ : " & _
           Application.Text(Application.Sum(rngVisible), "#,##0") & vbCr
       Else
-        strInfo = strInfo & "ÇÕ°è : " & _
+        strInfo = strInfo & "í•©ê³„ : " & _
           Application.Text(Application.Sum(rngVisible), "#,##0.############") & vbCr
       End If
     End If
     strInfo = strInfo & " (" & _
-      Application.Text(Application.Sum(rngVisible) * 0.3025, "#,##0.0") & "Æò, " & _
-      Application.Text(Application.Sum(rngVisible) / 0.3025, "#,##0.0") & "§³)" & vbCr
+      Application.Text(Application.Sum(rngVisible) * 0.3025, "#,##0.0") & "í‰, " & _
+      Application.Text(Application.Sum(rngVisible) / 0.3025, "#,##0.0") & "ã¡)" & vbCr
     If Selection.Areas.Count = 2 Then
-      strInfo = strInfo & " »©±â : " & _
+      strInfo = strInfo & " ë¹¼ê¸° : " & _
         Application.Sum(Intersect(Selection.Areas(1), rngVisible)) - _
         Application.Sum(Intersect(Selection.Areas(2), rngVisible)) & vbCr
-      strInfo = strInfo & " °öÇÏ±â : " & _
+      strInfo = strInfo & " ê³±í•˜ê¸° : " & _
         Application.Sum(Intersect(Selection.Areas(1), rngVisible)) * _
         Application.Sum(Intersect(Selection.Areas(2), rngVisible)) & vbCr
     End If
-    strInfo = strInfo & "¼±ÅÃ¼¿ : " & rngVisible.Cells.Count & " ("
-    strInfo = strInfo & Intersect(Selection, Selection(1).EntireColumn).Cells.Count & "Çà*"
-    strInfo = strInfo & Intersect(Selection, Selection(1).EntireRow).Cells.Count & "¿­)" & vbCr
-    strInfo = strInfo & "°³¼ö : " & Application.CountA(rngVisible) & vbCr
-    strInfo = strInfo & "¼ıÀÚ°³¼ö : " & Application.Count(rngVisible) & vbCr
+    strInfo = strInfo & "ì„ íƒì…€ : " & rngVisible.Cells.Count & " ("
+    strInfo = strInfo & Intersect(Selection, Selection(1).EntireColumn).Cells.Count & "í–‰*"
+    strInfo = strInfo & Intersect(Selection, Selection(1).EntireRow).Cells.Count & "ì—´)" & vbCr
+    strInfo = strInfo & "ê°œìˆ˜ : " & Application.CountA(rngVisible) & vbCr
+    strInfo = strInfo & "ìˆ«ìê°œìˆ˜ : " & Application.Count(rngVisible) & vbCr
     If rngVisible.Cells.Count <= 10000 Then
       Err = 0
       If rngVisible.Cells.Count = 1 Then
@@ -874,28 +874,28 @@ Dim strInfo As String
           End If
         Next rngEach
       End If
-      strInfo = strInfo & "°íÀ¯µ¥ÀÌÅÍ¼ö : " & lngCount & vbCr
+      strInfo = strInfo & "ê³ ìœ ë°ì´í„°ìˆ˜ : " & lngCount & vbCr
     End If
     If rngVisible.Cells.Count = 1 Then
-      strInfo = strInfo & "¹®ÀÚ¿­±æÀÌ : " & Len(rngVisible) & vbCr
+      strInfo = strInfo & "ë¬¸ìì—´ê¸¸ì´ : " & Len(rngVisible) & vbCr
     End If
-    strInfo = strInfo & "Æò±Õ : " & Application.Average(rngVisible) & vbCr
-    strInfo = strInfo & "ÃÖ´ë°ª : " & Application.Max(rngVisible) & vbCr
-    strInfo = strInfo & "ÃÖ¼Ò°ª : " & Application.Min(rngVisible)
+    strInfo = strInfo & "í‰ê·  : " & Application.Average(rngVisible) & vbCr
+    strInfo = strInfo & "ìµœëŒ€ê°’ : " & Application.Max(rngVisible) & vbCr
+    strInfo = strInfo & "ìµœì†Œê°’ : " & Application.Min(rngVisible)
     If ActiveSheet.FilterMode Then
       With Intersect(Names("'" & ActiveSheet.Name & "'!_FilterDatabase") _
         .RefersToRange.EntireRow, ActiveCell.EntireColumn)
-        strInfo = strInfo & vbCr & vbCr & .Cells.Count - 1 & "°³ Áß " & _
-         .SpecialCells(xlCellTypeVisible).Count - 1 & "°³ÀÇ ·¹ÄÚµå°¡ ÇÊÅÍµÊ"
+        strInfo = strInfo & vbCr & vbCr & .Cells.Count - 1 & "ê°œ ì¤‘ " & _
+         .SpecialCells(xlCellTypeVisible).Count - 1 & "ê°œì˜ ë ˆì½”ë“œê°€ í•„í„°ë¨"
       End With
     End If
     If ActiveWorkbook.Styles.Count > 300 Then
-      strInfo = strInfo & vbCr & vbCr & "(Áß¿ä)" & vbCr & ActiveWorkbook.Name & _
-        " ÆÄÀÏ¿¡ " & vbCr & ActiveWorkbook.Styles.Count & _
-        "°³ÀÇ ½ºÅ¸ÀÏÀÌ ÀÖ½À´Ï´Ù." & vbCr & _
-        "½ºÅ¸ÀÏÀÌ °úµµÇÏ°Ô ¸¹Àº °æ¿ì ½É°¢ÇÑ ¹®Á¦°¡ ¾ß±âµÉ ¼ö ÀÖ½À´Ï´Ù." & vbCr & _
-        "MyAddin¿¡ ÀÖ´Â ""º¹±¸ÆÄÀÏ »ı¼ºÇÏ±â"" ±â´ÉÀ¸·Î " & vbCr & _
-        "º¹±¸ÆÄÀÏÀ» »õ·Î ¸¸µå½Ã±â ¹Ù¶ø´Ï´Ù.(°­·Â±ÇÀå!!)"
+      strInfo = strInfo & vbCr & vbCr & "(ì¤‘ìš”)" & vbCr & ActiveWorkbook.Name & _
+        " íŒŒì¼ì— " & vbCr & ActiveWorkbook.Styles.Count & _
+        "ê°œì˜ ìŠ¤íƒ€ì¼ì´ ìˆìŠµë‹ˆë‹¤." & vbCr & _
+        "ìŠ¤íƒ€ì¼ì´ ê³¼ë„í•˜ê²Œ ë§ì€ ê²½ìš° ì‹¬ê°í•œ ë¬¸ì œê°€ ì•¼ê¸°ë  ìˆ˜ ìˆìŠµë‹ˆë‹¤." & vbCr & _
+        "MyAddinì— ìˆëŠ” ""ë³µêµ¬íŒŒì¼ ìƒì„±í•˜ê¸°"" ê¸°ëŠ¥ìœ¼ë¡œ " & vbCr & _
+        "ë³µêµ¬íŒŒì¼ì„ ìƒˆë¡œ ë§Œë“œì‹œê¸° ë°”ëë‹ˆë‹¤.(ê°•ë ¥ê¶Œì¥!!)"
     End If
     MsgBox strInfo, vbInformation
 Err_Step:
@@ -903,11 +903,11 @@ Err_Step:
 End Sub
 
 Private Sub Special_Find()
- '´ÜÃàÅ° Ctrl+Shift+F
- 'Çà´ÜÀ§·Î Ã£À» °ªÀ» Ã£¾ÆÁİ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+F
+ 'í–‰ë‹¨ìœ„ë¡œ ì°¾ì„ ê°’ì„ ì°¾ì•„ì¤ë‹ˆë‹¤.
     On Error GoTo Err_Step
     If Selection.Areas.Count > 1 Then
-      MsgBox "´ÙÁß¹üÀ§¿¡¼­´Â ½ÇÇàÇÒ ¼ö ¾ø´Â ¸í·ÉÀÔ´Ï´Ù.", vbInformation
+      MsgBox "ë‹¤ì¤‘ë²”ìœ„ì—ì„œëŠ” ì‹¤í–‰í•  ìˆ˜ ì—†ëŠ” ëª…ë ¹ì…ë‹ˆë‹¤.", vbInformation
       Exit Sub
     End If
     Join_Find.show
@@ -915,8 +915,8 @@ Err_Step:
 End Sub
 
 Private Sub Diff_Select()
- '´ÜÃàÅ° Ctrl+Alt+F
- 'ActiveCell°ú °ªÀÌ ´Ù¸¥¼¿ ¶Ç´Â ¿À·ù¼¿µéÀ» Ã£¾ÆÁİ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Alt+F
+ 'ActiveCellê³¼ ê°’ì´ ë‹¤ë¥¸ì…€ ë˜ëŠ” ì˜¤ë¥˜ì…€ë“¤ì„ ì°¾ì•„ì¤ë‹ˆë‹¤.
 Dim colTemp As New Collection
 Dim rngTarget As Range, rngEach As Range, rngUnion As Range
 Dim blnChk As Boolean
@@ -924,7 +924,7 @@ Dim lngRow As Long, lngCol As Long
 Dim varArr As Variant
     On Error GoTo Err_Step
     Set rngTarget = Intersect(Selection, Selection.SpecialCells(xlCellTypeVisible))
-    Select Case MsgBox("¿À·ù°ªÀ» Ã£À»·Á¸é ¿¹¸¦, È°¼º¼¿ÀÇ °ª°ú ´Ù¸¥¼¿À» Ã£À»·Á¸é ¾Æ´Ï¿À¸¦ Å¬¸¯ÇÏ¼¼¿ä.", _
+    Select Case MsgBox("ì˜¤ë¥˜ê°’ì„ ì°¾ì„ë ¤ë©´ ì˜ˆë¥¼, í™œì„±ì…€ì˜ ê°’ê³¼ ë‹¤ë¥¸ì…€ì„ ì°¾ì„ë ¤ë©´ ì•„ë‹ˆì˜¤ë¥¼ í´ë¦­í•˜ì„¸ìš”.", _
       vbInformation + vbYesNoCancel)
     Case vbYes
       On Error Resume Next
@@ -980,8 +980,8 @@ Err_Step:
 End Sub
 
 Private Sub Duplicated_Range()
- '´ÜÃàÅ° Ctrl+Alt+D
- 'Áßº¹µÇ´Â °ªµéÀ» ¼±ÅÃÇÏ¿© Áİ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Alt+D
+ 'ì¤‘ë³µë˜ëŠ” ê°’ë“¤ì„ ì„ íƒí•˜ì—¬ ì¤ë‹ˆë‹¤.
 Dim colData As New Collection
 Dim rngTarget As Range, rngEach As Range
 Dim varInput As Variant, varOut() As Variant
@@ -1039,8 +1039,8 @@ Dim lngTmp As Long, lngTemp As Long
       Next lngI
       Quick_Sort varOut, 5, True, 5, 1, lngI - 1
       With Uniq_Items
-        .Label3.Caption = "ÀüÃ¼¼¿ : " & rngTarget.Cells.Count & _
-          "¼¿ / °íÀ¯µ¥ÀÌÅÍ : " & lngI - 1 & "°Ç"
+        .Label3.Caption = "ì „ì²´ì…€ : " & rngTarget.Cells.Count & _
+          "ì…€ / ê³ ìœ ë°ì´í„° : " & lngI - 1 & "ê±´"
         .ListBox1.List = varOut
         .ListBox1.ListIndex = 0
         .ListBox1.SetFocus
@@ -1052,8 +1052,8 @@ Err_Step:
 End Sub
 
 Private Sub Safe_Replace()
- '´ÜÃàÅ° Ctrl+Shift+H
- 'Ã£±â-¹Ù²Ù±â¸¦ ¾ÈÀüÇÏ°Ô ÇÒ ¼ö ÀÖµµ·Ï µµ¿ÍÁİ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+H
+ 'ì°¾ê¸°-ë°”ê¾¸ê¸°ë¥¼ ì•ˆì „í•˜ê²Œ í•  ìˆ˜ ìˆë„ë¡ ë„ì™€ì¤ë‹ˆë‹¤.
 Dim strChk As String
     On Error GoTo Err_Step
     strChk = ActiveCell.Text
@@ -1062,7 +1062,7 @@ Err_Step:
 End Sub
 
 Function AscExtract(strInput As Variant)
- 'chrW·Î ÀÛ¼ºµÈ ¹®ÀÚ¿­À» ¾Æ½ºÅ°¹®ÀÚ·Î º¯È¯ÇÕ´Ï´Ù.
+ 'chrWë¡œ ì‘ì„±ëœ ë¬¸ìì—´ì„ ì•„ìŠ¤í‚¤ë¬¸ìë¡œ ë³€í™˜í•©ë‹ˆë‹¤.
 Dim strTemp As String
 Dim varMatch As Variant
 Dim lngI As Long
@@ -1081,8 +1081,8 @@ Dim lngI As Long
 End Function
 
 Private Sub Insert_Text()
- '´ÜÃàÅ° Ctrl+Shift+I
- '¹®ÀÚ¿­À» µé¿©¾²±â, »èÁ¦ µîÀ» ÇÏ°íÀÚ ÇÒ ¶§ Æí¸®
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+I
+ 'ë¬¸ìì—´ì„ ë“¤ì—¬ì“°ê¸°, ì‚­ì œ ë“±ì„ í•˜ê³ ì í•  ë•Œ í¸ë¦¬
 Dim strChk As String
     On Error GoTo Err_Step
     strChk = ActiveCell.Text
@@ -1091,7 +1091,7 @@ Err_Step:
 End Sub
 
 Private Sub Color_Text()
- '¹®ÀÚ¿­Áß ÀÏºÎºĞÀ» °Ë»öÇÏ¿© »ö»óÀ» º¯°æÇÕ´Ï´Ù.
+ 'ë¬¸ìì—´ì¤‘ ì¼ë¶€ë¶„ì„ ê²€ìƒ‰í•˜ì—¬ ìƒ‰ìƒì„ ë³€ê²½í•©ë‹ˆë‹¤.
 Dim rngText As Range
     On Error GoTo Err_Step
     Set rngText = Selection.SpecialCells(xlCellTypeConstants, 2)
@@ -1099,13 +1099,13 @@ Dim rngText As Range
     Exit Sub
 Err_Step:
     If Err.Number = 1004 Then
-      MsgBox "ÁöÁ¤µÈ ¹üÀ§¿¡ ¹®ÀÚ°¡ ¾ø½À´Ï´Ù.", vbInformation
+      MsgBox "ì§€ì •ëœ ë²”ìœ„ì— ë¬¸ìê°€ ì—†ìŠµë‹ˆë‹¤.", vbInformation
     End If
 End Sub
 
 Private Sub Trim_Text()
- '´ÜÃàÅ° Ctrl+Shift+T
- '¹®ÀÚ¿­ ¾ç³¡ÀÇ ºÒÇÊ¿äÇÑ °ø¹éÀ» Áö¿öÁİ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+T
+ 'ë¬¸ìì—´ ì–‘ëì˜ ë¶ˆí•„ìš”í•œ ê³µë°±ì„ ì§€ì›Œì¤ë‹ˆë‹¤.
 Dim rngText As Range, rngTemp  As Range, strTemp As String
 Dim lngI As Long, lngJ As Long, lngK As Long, lngL As Long, lngQues As Long
 Dim varTemp As Variant
@@ -1117,8 +1117,8 @@ Dim varTemp As Variant
     End If
     Set rngText = Intersect(rngUndo, _
       Selection.SpecialCells(xlCellTypeConstants, 2))
-    lngQues = MsgBox("¹®ÀÚ¿­À» TrimÇÕ´Ï´Ù. ¹®ÀÚ¿­ µŞºÎºĞ¸¸ TrimÇÒ·Á¸é ¾Æ´Ï¿À¸¦ " _
-      & "Å¬¸¯ÇÏ¼¼¿ä.", vbYesNoCancel + vbInformation)
+    lngQues = MsgBox("ë¬¸ìì—´ì„ Trimí•©ë‹ˆë‹¤. ë¬¸ìì—´ ë’·ë¶€ë¶„ë§Œ Trimí• ë ¤ë©´ ì•„ë‹ˆì˜¤ë¥¼ " _
+      & "í´ë¦­í•˜ì„¸ìš”.", vbYesNoCancel + vbInformation)
     Select Case lngQues
     Case vbYes
       For lngI = 1 To rngText.Areas.Count
@@ -1164,20 +1164,20 @@ Dim varTemp As Variant
       Next lngI
     End Select
     If rngUndo.Areas.Count = 1 Then
-      Application.OnUndo "¾ç³¡°ø¹é Áö¿ì±â Ãë¼Ò", "Action_Undo"
+      Application.OnUndo "ì–‘ëê³µë°± ì§€ìš°ê¸° ì·¨ì†Œ", "Action_Undo"
     End If
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     ElseIf Err.Number = 1004 Then
-      MsgBox "ÁöÁ¤µÈ ¹üÀ§¿¡ ¹®ÀÚ°¡ ¾ø½À´Ï´Ù.", vbInformation
+      MsgBox "ì§€ì •ëœ ë²”ìœ„ì— ë¬¸ìê°€ ì—†ìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Del_Ascii()
- '´ÜÃàÅ° Ctrl+Shift+Del
- 'À½Ç¥¹®ÀÚ, À¯·É¹®ÀÚ¸¦ Áö¿ó´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+Del
+ 'ìŒí‘œë¬¸ì, ìœ ë ¹ë¬¸ìë¥¼ ì§€ì›ë‹ˆë‹¤.
 Dim rngDB As Range, rngEach As Range
 Dim varTemp As Variant
 Dim lngI As Long, lngJ As Long
@@ -1188,7 +1188,7 @@ Dim lngI As Long, lngJ As Long
     Else
       Set rngDB = Selection
     End If
-    If MsgBox("À½Ç¥, À¯·É, Àü°¢¹®ÀÚ¸¦ »èÁ¦ÇÕ´Ï´Ù.", vbInformation + vbYesNo) = vbNo Then
+    If MsgBox("ìŒí‘œ, ìœ ë ¹, ì „ê°ë¬¸ìë¥¼ ì‚­ì œí•©ë‹ˆë‹¤.", vbInformation + vbYesNo) = vbNo Then
       Exit Sub
     End If
     Application.ScreenUpdating = False
@@ -1212,16 +1212,16 @@ Dim lngI As Long, lngJ As Long
       rngEach = varTemp
     Next rngEach
     Application.ScreenUpdating = True
-    MsgBox "À½Ç¥,À¯·É, Àü°¢¹®ÀÚ¸¦ Á¦°ÅÇÏ¿´½À´Ï´Ù.", vbInformation
+    MsgBox "ìŒí‘œ,ìœ ë ¹, ì „ê°ë¬¸ìë¥¼ ì œê±°í•˜ì˜€ìŠµë‹ˆë‹¤.", vbInformation
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Fraction_Select()
- '¼Ò¼ö(á³â¦)¼¿ Áï Á¤¼ö°¡ ¾Æ´Ñ¼¿À» ¼±ÅÃÇÒ ¼ö ÀÖµµ·Ï µµ¿ÍÁİ´Ï´Ù.
+ 'ì†Œìˆ˜(å°æ•¸)ì…€ ì¦‰ ì •ìˆ˜ê°€ ì•„ë‹Œì…€ì„ ì„ íƒí•  ìˆ˜ ìˆë„ë¡ ë„ì™€ì¤ë‹ˆë‹¤.
 Dim rngTarget As Range, rngEach As Range, rngUnion As Range
 Dim varEach As Variant, varRound As Variant
 Dim lngRow As Long, lngColumn As Long
@@ -1260,21 +1260,21 @@ Dim blnUnion As Boolean
       End If
     Next rngEach
     If rngUnion Is Nothing Then
-      MsgBox "ºĞ¼ö(Á¤¼ö°¡ ¾Æ´Ñ ¼ö)ÀÎ ¼¿ÀÌ ¾ø½À´Ï´Ù!!!", vbInformation
+      MsgBox "ë¶„ìˆ˜(ì •ìˆ˜ê°€ ì•„ë‹Œ ìˆ˜)ì¸ ì…€ì´ ì—†ìŠµë‹ˆë‹¤!!!", vbInformation
       Exit Sub
     Else
       rngUnion.Select
     End If
 Err_Step:
     If Err.Number = 1004 Then
-      MsgBox "¼±ÅÃ¹üÀ§¿¡ ¼ıÀÚ»ó¼ö°¡ ¾ø½À´Ï´Ù.", vbInformation
+      MsgBox "ì„ íƒë²”ìœ„ì— ìˆ«ììƒìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Input_Serialnum()
- '´ÜÃàÅ° Ctrl+Shift+N
- '¼±ÅÃ¹üÀ§¿¡ ¿¬¹øÀ» ±âÀÔÇÕ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+N
+ 'ì„ íƒë²”ìœ„ì— ì—°ë²ˆì„ ê¸°ì…í•©ë‹ˆë‹¤.
 Dim rngArea As Range, rngEach As Range
 Dim varTemp As Variant
 Dim lngChk As Long, lngI As Long, lngJ As Long
@@ -1293,7 +1293,7 @@ Dim strFormat As String
     If rngUndo.Areas.Count = 1 Then
       varUndo = rngUndo.Formula
     End If
-    If MsgBox("¿¬¹øÀ» ±âÀÔÇÒ±î¿ä?", _
+    If MsgBox("ì—°ë²ˆì„ ê¸°ì…í• ê¹Œìš”?", _
       vbInformation + vbOKCancel) = vbCancel Then
       Exit Sub
     End If
@@ -1376,18 +1376,18 @@ Dim strFormat As String
       End If
     Next rngArea
     If rngUndo.Areas.Count = 1 Then
-      Application.OnUndo "¿¬¹ø±âÀÔ Ãë¼Ò", "Action_Undo"
+      Application.OnUndo "ì—°ë²ˆê¸°ì… ì·¨ì†Œ", "Action_Undo"
     End If
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub BlankCell_Input()
- '´ÜÃàÅ° Ctrl+Shift+B
- '°ø¹éÀ» À§ÂÊµ¥ÀÌÅÍ·Î Ã¤¿ì°Å³ª, Ã¤¿öÁøµ¥ÀÌÅÍÀÇ ¾Æ·¡ÂÊÀ» Áö¿ó´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+B
+ 'ê³µë°±ì„ ìœ„ìª½ë°ì´í„°ë¡œ ì±„ìš°ê±°ë‚˜, ì±„ì›Œì§„ë°ì´í„°ì˜ ì•„ë˜ìª½ì„ ì§€ì›ë‹ˆë‹¤.
 Dim rngTmp As Range, rngTemp As Range
 Dim lngRow As Long, lngCol As Long, lngI As Long, lngJ As Long
 Dim blnCheck As Boolean
@@ -1400,17 +1400,17 @@ Dim blnCheck As Boolean
     If Selection.Cells.Count = 1 Then
       Exit Sub
     ElseIf rngUndo.Areas.Count > 1 Then
-      MsgBox "´ÙÁß¿µ¿ª(¶Ç´Â º´ÇÕ¼¿)¿¡¼­´Â ÀÌ ±â´ÉÀ» »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.", vbInformation
+      MsgBox "ë‹¤ì¤‘ì˜ì—­(ë˜ëŠ” ë³‘í•©ì…€)ì—ì„œëŠ” ì´ ê¸°ëŠ¥ì„ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", vbInformation
       Exit Sub
     ElseIf IsNull(rngUndo.MergeCells) Or rngUndo.MergeCells Then
-      MsgBox "´ÙÁß¿µ¿ª(¶Ç´Â º´ÇÕ¼¿)¿¡¼­´Â ÀÌ ±â´ÉÀ» »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.", vbInformation
+      MsgBox "ë‹¤ì¤‘ì˜ì—­(ë˜ëŠ” ë³‘í•©ì…€)ì—ì„œëŠ” ì´ ê¸°ëŠ¥ì„ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", vbInformation
       Exit Sub
     End If
     On Error Resume Next
     Set rngTmp = rngUndo.SpecialCells(xlCellTypeBlanks)
     If rngTmp Is Nothing Then
       On Error GoTo Err_Step
-      If MsgBox("À§ÂÊµ¥ÀÌÅÍ¿Í °°Àº °æ¿ì ¾Æ·¡ÂÊµ¥ÀÌÅÍ¸¦ Áö¿ó´Ï´Ù.", _
+      If MsgBox("ìœ„ìª½ë°ì´í„°ì™€ ê°™ì€ ê²½ìš° ì•„ë˜ìª½ë°ì´í„°ë¥¼ ì§€ì›ë‹ˆë‹¤.", _
         vbInformation + vbOKCancel) = vbCancel Then
         Exit Sub
       End If
@@ -1438,11 +1438,11 @@ Dim blnCheck As Boolean
       Next lngJ
     Else
       On Error GoTo Err_Step
-      If MsgBox("°ø¹éÀ» À§ÂÊµ¥ÀÌÅÍ·Î Ã¤¿ó´Ï´Ù.", _
+      If MsgBox("ê³µë°±ì„ ìœ„ìª½ë°ì´í„°ë¡œ ì±„ì›ë‹ˆë‹¤.", _
         vbInformation + vbOKCancel) = vbCancel Then
         Exit Sub
       End If
-      rngTmp.NumberFormatLocal = "G/Ç¥ÁØ"
+      rngTmp.NumberFormatLocal = "G/í‘œì¤€"
       rngTmp.FormulaR1C1 = "=R[-1]C"
       rngUndo.Copy
       rngUndo.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, _
@@ -1450,18 +1450,18 @@ Dim blnCheck As Boolean
       Application.CutCopyMode = False
     End If
     If rngUndo.Areas.Count = 1 Then
-      Application.OnUndo "°ø¹éÃ¤¿ì±â(Áö¿ì±â) Ãë¼Ò", "Action_Undo"
+      Application.OnUndo "ê³µë°±ì±„ìš°ê¸°(ì§€ìš°ê¸°) ì·¨ì†Œ", "Action_Undo"
     End If
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Formula_MultiInput()
- '´ÜÃàÅ° Ctrl+Alt+B
- 'Ã¹Â°ÇàÀÇ ¼ö½ÄÀ» ¼­½Ä¾øÀÌ ¾Æ·¡ÂÊ(VLOOKPÀÎ °æ¿ì ¿À¸¥ÂÊ)À¸·Î Ã¤¿öÁİ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Alt+B
+ 'ì²«ì§¸í–‰ì˜ ìˆ˜ì‹ì„ ì„œì‹ì—†ì´ ì•„ë˜ìª½(VLOOKPì¸ ê²½ìš° ì˜¤ë¥¸ìª½)ìœ¼ë¡œ ì±„ì›Œì¤ë‹ˆë‹¤.
 Dim rngSelect As Range, rngFirst As Range, rngEach As Range
 Dim lngI As Long, lngCount As Long, lngSplit As Long
 Dim strFormula() As Variant, strFx As String
@@ -1475,7 +1475,7 @@ Dim varSplit As Variant
     If Intersect(rngUndo, rngUndo(1).EntireColumn).Cells.Count = 1 Then
       strFx = Selection(1).Formula
       If StrComp(Left(strFx, 9), "=VLOOKUP(", 1) = 0 Then
-        If MsgBox("VLOOKUPÀÇ ¼ö½ÄÀ» ¿À¸¥ÂÊ¼¿¿¡ Ã¤¿ó´Ï´Ù.", _
+        If MsgBox("VLOOKUPì˜ ìˆ˜ì‹ì„ ì˜¤ë¥¸ìª½ì…€ì— ì±„ì›ë‹ˆë‹¤.", _
           vbInformation + vbOKCancel) = vbCancel Then
           Exit Sub
         End If
@@ -1495,7 +1495,7 @@ Dim varSplit As Variant
         rngEach.Value = strFormula
       Next rngEach
     Else
-      If MsgBox("Ã¹Â°ÇàÀÇ ¼ö½ÄÀ» ¾Æ·¡ÂÊÀ¸·Î Ã¤¿ó´Ï´Ù.", _
+      If MsgBox("ì²«ì§¸í–‰ì˜ ìˆ˜ì‹ì„ ì•„ë˜ìª½ìœ¼ë¡œ ì±„ì›ë‹ˆë‹¤.", _
         vbInformation + vbOKCancel) = vbCancel Then
         Exit Sub
       End If
@@ -1511,18 +1511,18 @@ Dim varSplit As Variant
       rngSelect.Select
     End If
     If rngUndo.Areas.Count = 1 Then
-      Application.OnUndo "¼ö½ÄÃ¤¿ì±â Ãë¼Ò", "Action_Undo"
+      Application.OnUndo "ìˆ˜ì‹ì±„ìš°ê¸° ì·¨ì†Œ", "Action_Undo"
     End If
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Date_Format()
- '´ÜÃàÅ° Ctrl+Alt+Y
- '³¯Â¥·Î Ç¥ÇöÇÔ°ú µ¿½Ã¿¡ ³¯Â¥Ç¥½ÃÇü½ÄÀ¸·Î ¹Ù²ãÁİ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Alt+Y
+ 'ë‚ ì§œë¡œ í‘œí˜„í•¨ê³¼ ë™ì‹œì— ë‚ ì§œí‘œì‹œí˜•ì‹ìœ¼ë¡œ ë°”ê¿”ì¤ë‹ˆë‹¤.
 Dim rngEach As Range, rngTarget As Range
 Dim varDate As Variant
 Dim strTemp As String
@@ -1533,7 +1533,7 @@ Dim lngI As Long, lngJ As Long, lngK As Long
     If rngUndo.Areas.Count = 1 Then
       varUndo = rngUndo.Formula
     End If
-    If MsgBox("¼±ÅÃ¿µ¿ªÀ» ³¯Â¥Çü½ÄÀ¸·Î ÀÏ°ıÀûÀ¸·Î º¯°æÇÕ´Ï´Ù.", _
+    If MsgBox("ì„ íƒì˜ì—­ì„ ë‚ ì§œí˜•ì‹ìœ¼ë¡œ ì¼ê´„ì ìœ¼ë¡œ ë³€ê²½í•©ë‹ˆë‹¤.", _
       vbInformation + vbOKCancel) = vbCancel Then
       Exit Sub
     End If
@@ -1586,18 +1586,18 @@ Dim lngI As Long, lngJ As Long, lngK As Long
       .ScreenUpdating = True
     End With
     If rngUndo.Areas.Count = 1 Then
-      Application.OnUndo "³¯Â¥Ç¥½ÃÇü½Ä Ãë¼Ò", "Action_Undo"
+      Application.OnUndo "ë‚ ì§œí‘œì‹œí˜•ì‹ ì·¨ì†Œ", "Action_Undo"
     End If
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Function_Evaluate()
- '´ÜÃàÅ° Ctrl+Shift+R
- '´çÇØ ¿µ¿ª¿¡ ÇÔ¼ö¸¦ ¹Ù·Î Àû¿ëÇÕ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+R
+ 'ë‹¹í•´ ì˜ì—­ì— í•¨ìˆ˜ë¥¼ ë°”ë¡œ ì ìš©í•©ë‹ˆë‹¤.
 Dim rngNum As Range, rngEach As Range
 Dim varQues(0 To 2) As String
 Dim lngI As Long, lngInsu As Long
@@ -1613,7 +1613,7 @@ Dim lngI As Long, lngInsu As Long
     If lngInsu > 0 Then
       lngInsu = Len(rngNum(1).Text) - InStr(rngNum(1).Text, ".")
     End If
-    varQues(2) = InputBox("»ç¿ëÇÔ¼ö ¹× ÀÎ¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä.", _
+    varQues(2) = InputBox("ì‚¬ìš©í•¨ìˆ˜ ë° ì¸ìˆ˜ë¥¼ ì…ë ¥í•˜ì„¸ìš”.", _
       Default:="Round, " & lngInsu)
     lngI = InStr(varQues(2) & ",", ",")
     varQues(0) = Left$(varQues(2), lngI - 1)
@@ -1628,20 +1628,20 @@ Dim lngI As Long, lngInsu As Long
       End If
     Next rngEach
     If rngUndo.Areas.Count = 1 Then
-      Application.OnUndo "ÇÔ¼öÀû¿ë Ãë¼Ò", "Action_Undo"
+      Application.OnUndo "í•¨ìˆ˜ì ìš© ì·¨ì†Œ", "Action_Undo"
     End If
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     ElseIf Err.Number = 1004 Then
-      MsgBox "ÁöÁ¤µÈ ¹üÀ§¿¡ »ó¼ö°¡ ¾ø½À´Ï´Ù.", vbInformation
+      MsgBox "ì§€ì •ëœ ë²”ìœ„ì— ìƒìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Paste_AddValue()
- '´ÜÃàÅ° Ctrl+Alt+A
- 'È°¼º¼¿¿¡¼­ ´õÇÑ°ªÀ» Ç¥½ÃÇÕ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Alt+A
+ 'í™œì„±ì…€ì—ì„œ ë”í•œê°’ì„ í‘œì‹œí•©ë‹ˆë‹¤.
 Dim colTemp As New Collection
 Dim rngC As Range
 Dim varSum As Variant
@@ -1665,7 +1665,7 @@ Dim varSum As Variant
           If Err > 0 Then Exit Sub
         End If
       Next rngC
-      Select Case MsgBox("È°¼º¼¿¿¡ ÇÕ°è¸¦ Ç¥½ÃÇÏ°í ³ª¸ÓÁö´Â Áö¿ï±î¿ä?", _
+      Select Case MsgBox("í™œì„±ì…€ì— í•©ê³„ë¥¼ í‘œì‹œí•˜ê³  ë‚˜ë¨¸ì§€ëŠ” ì§€ìš¸ê¹Œìš”?", _
         vbYesNoCancel + vbInformation)
       Case vbYes
         rngUndo.ClearContents
@@ -1675,26 +1675,26 @@ Dim varSum As Variant
       End Select
     End If
     If rngUndo.Areas.Count = 1 Then
-      Application.OnUndo "´õÇÏ±â ½ÇÇàÇÏ±â Ãë¼Ò", "Action_Undo"
+      Application.OnUndo "ë”í•˜ê¸° ì‹¤í–‰í•˜ê¸° ì·¨ì†Œ", "Action_Undo"
     End If
 Err_Step:
     Application.OnRepeat "", ""
 End Sub
 
 Sub Action_Undo(Optional x As Boolean)
- '½ÇÇà Ãë¼Ò
+ 'ì‹¤í–‰ ì·¨ì†Œ
     rngUndo = varUndo
 End Sub
 
 Sub Special_Copy(x As Boolean)
- '´ÜÃàÅ° Ctrl+Shift+C[X]
- '´ÙÁß¼¿(º´ÇÕ¼¿)À» º¹»ç°¡ °¡´ÉÇÏµµ·Ï ÇÔ
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+C[X]
+ 'ë‹¤ì¤‘ì…€(ë³‘í•©ì…€)ì„ ë³µì‚¬ê°€ ê°€ëŠ¥í•˜ë„ë¡ í•¨
 Dim rngMurge As Range, rng_Area As Range
 Dim lngTemp As Long
     On Error GoTo Err_Step
     If x Then
       If Selection.SpecialCells(xlCellTypeVisible).Areas.Count > 1 Then
-        MsgBox "´ÙÁß(ÇÊÅÍ)¿µ¿ª¿¡¼­´Â Àß¶ó³»±â ±â´ÉÀº Áö¿øµÇÁö ¾Ê½À´Ï´Ù.", vbInformation
+        MsgBox "ë‹¤ì¤‘(í•„í„°)ì˜ì—­ì—ì„œëŠ” ì˜ë¼ë‚´ê¸° ê¸°ëŠ¥ì€ ì§€ì›ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.", vbInformation
         Exit Sub
       End If
       Set rngMurge = Selection
@@ -1731,7 +1731,7 @@ Dim lngTemp As Long
           Cells(lngMaxRow, lngMaxColumn))
         On Error Resume Next
         rngMurge.Copy
-        'ÇÊÅÍ»óÅÂ¿¡¼­ º¹»çÇÏ°íÀÚ ÇÏ´Â °æ¿ì¹ß»ıµÇ´Â ¿¡·¯¿¡ ´ëºñ
+        'í•„í„°ìƒíƒœì—ì„œ ë³µì‚¬í•˜ê³ ì í•˜ëŠ” ê²½ìš°ë°œìƒë˜ëŠ” ì—ëŸ¬ì— ëŒ€ë¹„
         If Err.Number = 1004 Then
           rngMurge(1).Copy
         End If
@@ -1749,8 +1749,8 @@ Err_Step:
 End Sub
 
 Sub Special_Paste(Optional x As Boolean)
- '´ÜÃàÅ° Ctrl+Shift(Alt)+V
- '´ÙÁß¼¿(º´ÇÕ¼¿)¿¡ ºÙ¿©³Ö±â°¡ °¡´ÉÇÏµµ·Ï ÇÔ
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift(Alt)+V
+ 'ë‹¤ì¤‘ì…€(ë³‘í•©ì…€)ì— ë¶™ì—¬ë„£ê¸°ê°€ ê°€ëŠ¥í•˜ë„ë¡ í•¨
 Dim strAddress As String
 Dim rngCopy As Range, rngPaste As Range
 Dim rngTemp As Range, rngEach As Range
@@ -1764,7 +1764,7 @@ Dim varRow() As Long, varColumn() As Long
           ActiveSheet.Paste
         Else
           If Selection(1).MergeCells Then
-            strAddress = InputBox("ºÙ¿©³ÖÀ» ½ÃÀÛ¼¿ ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä", _
+            strAddress = InputBox("ë¶™ì—¬ë„£ì„ ì‹œì‘ì…€ ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì„¸ìš”", _
               Default:=Selection(1).Address(0, 0))
             If strAddress = vbNullString Then
               Exit Sub
@@ -1927,8 +1927,8 @@ Err_Step:
 End Sub
 
 Private Sub Multi_Murge()
- '´ÜÃàÅ° Ctrl+Shift+M
- '¼¿º´ÇÕ½Ã ³»¿ëÀº ±×´ë·Î º¸Á¸ÇÏ¸é¼­ º´ÇÕ
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+M
+ 'ì…€ë³‘í•©ì‹œ ë‚´ìš©ì€ ê·¸ëŒ€ë¡œ ë³´ì¡´í•˜ë©´ì„œ ë³‘í•©
 Static strGubun As Variant
 Static blnGubun As Boolean
 Dim rngEacharea As Range, varEacharea As Variant
@@ -1938,8 +1938,8 @@ Dim strGubunja As Variant, strTemp As String, lngI As Long, lngJ As Long
     If Not blnGubun Then
       strGubun = "ChrW(10)"
     End If
-    strGubun = Application.InputBox("ÅØ½ºÆ®¸¦ ¹­À» ±¸ºĞÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä." & vbCr & _
-      "(¾Æ½ºÅ°¹®ÀÚ´Â ChrW(10) Ã³·³ ÀÔ·ÂÇÏ¼¼¿ä!!)", "±¸ºĞÀÚ", strGubun)
+    strGubun = Application.InputBox("í…ìŠ¤íŠ¸ë¥¼ ë¬¶ì„ êµ¬ë¶„ìë¥¼ ì…ë ¥í•˜ì„¸ìš”." & vbCr & _
+      "(ì•„ìŠ¤í‚¤ë¬¸ìëŠ” ChrW(10) ì²˜ëŸ¼ ì…ë ¥í•˜ì„¸ìš”!!)", "êµ¬ë¶„ì", strGubun)
     If VarType(strGubun) = vbBoolean Then
       Exit Sub
     ElseIf LCase(Left$(strGubun, 5)) = "chrw(" Then
@@ -1975,13 +1975,13 @@ Err_Step:
 End Sub
 
 Private Sub Table_Conform()
- 'Å×ÀÌºíÀÇ ÇüÅÂ¸¦ º¯È¯ÇÏ¿© Áİ´Ï´Ù.
+ 'í…Œì´ë¸”ì˜ í˜•íƒœë¥¼ ë³€í™˜í•˜ì—¬ ì¤ë‹ˆë‹¤.
 Dim rngVisible As Range
     On Error GoTo Err_Step
     Set rngVisible = Intersect(Selection, ActiveSheet.UsedRange, _
       Selection.SpecialCells(xlCellTypeVisible))
     If rngVisible.Areas.Count > 1 Then
-      MsgBox "´ÙÁß¿µ¿ª(¼û°ÜÁø ¿µ¿ª)ÀÌ ÀÖ´Â °æ¿ì¿¡´Â ½ÇÇàÀÌ ºÒ°¡ÇÕ´Ï´Ù.", vbInformation
+      MsgBox "ë‹¤ì¤‘ì˜ì—­(ìˆ¨ê²¨ì§„ ì˜ì—­)ì´ ìˆëŠ” ê²½ìš°ì—ëŠ” ì‹¤í–‰ì´ ë¶ˆê°€í•©ë‹ˆë‹¤.", vbInformation
       Exit Sub
     ElseIf rngVisible.Cells.Count = 1 Then
       Exit Sub
@@ -1991,7 +1991,7 @@ Err_Step:
 End Sub
 
 Private Sub Str_Split()
- 'ÇÑ ¼¿¿¡ °³Çà¹®ÀÚ·Î ÀÔ·ÂµÈ ³»¿ëÀ» °¢ ¼¿·Î ºĞ¸®ÇÕ´Ï´Ù.
+ 'í•œ ì…€ì— ê°œí–‰ë¬¸ìë¡œ ì…ë ¥ëœ ë‚´ìš©ì„ ê° ì…€ë¡œ ë¶„ë¦¬í•©ë‹ˆë‹¤.
 Dim rngTemp As Range
 Dim lngCount As Long, lngColumns As Long
 Dim lngI As Long, lngJ As Long, lngK As Long
@@ -2000,10 +2000,10 @@ Dim varTemp As Variant
     On Error GoTo Err_Step
     Application.EnableCancelKey = xlErrorHandler
     If Selection.Areas.Count > 1 Then
-      MsgBox "´ÙÁß¿µ¿ª »óÅÂ¿¡¼­´Â ½ÇÇàÇÒ ¼ö ¾ø´Â ¸í·ÉÀÔ´Ï´Ù.", vbInformation
+      MsgBox "ë‹¤ì¤‘ì˜ì—­ ìƒíƒœì—ì„œëŠ” ì‹¤í–‰í•  ìˆ˜ ì—†ëŠ” ëª…ë ¹ì…ë‹ˆë‹¤.", vbInformation
       Exit Sub
     Else
-      If MsgBox("ÁÙ¹Ù²Ş¼¿À» °¢°¢ÀÇ ÇàÀ¸·Î ºĞ¸®ÇÏ´Â ÀÛ¾÷À» ½ÇÇàÇÕ´Ï´Ù.", _
+      If MsgBox("ì¤„ë°”ê¿ˆì…€ì„ ê°ê°ì˜ í–‰ìœ¼ë¡œ ë¶„ë¦¬í•˜ëŠ” ì‘ì—…ì„ ì‹¤í–‰í•©ë‹ˆë‹¤.", _
         vbInformation + vbOKCancel) = vbCancel Then
         Exit Sub
       End If
@@ -2039,13 +2039,13 @@ Dim varTemp As Variant
       Selection.Columns.Count).Select
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Del_Repetition()
- 'Áßº¹Çà¿¡ ´ëÇØ (»èÁ¦ÈÄ) ÇÕ»ê±â´ÉÀ» ¼öÇàÇÕ´Ï´Ù.
+ 'ì¤‘ë³µí–‰ì— ëŒ€í•´ (ì‚­ì œí›„) í•©ì‚°ê¸°ëŠ¥ì„ ìˆ˜í–‰í•©ë‹ˆë‹¤.
 Dim colData1 As New Collection, colData2 As New Collection
 Dim rngTarget As Range, rngComp As Range
 Dim rngEach As Range, rngUnion As Range
@@ -2060,11 +2060,11 @@ Dim varArr1() As Variant, varArr2() As Variant
     Application.EnableCancelKey = xlErrorHandler
     Set rngTarget = Intersect(Selection, Selection.SpecialCells(xlCellTypeVisible))
     lngCol = rngTarget.Areas(1).Columns.Count
-    Set rngComp = Application.InputBox("ÇÕ»êÇÏ±â¸¦ ¿øÇÏ´Â ¿­µéÀ» ¼±ÅÃÇÏ¼¼¿ä." & vbCr & _
-      "(ÇÑ¼¿¸¸ ¼±ÅÃÇÏ¿©µµ ÇØ´ç¿­¿¡ ´ëÇØ ÇÕ»êÀ» ÇÕ´Ï´Ù.)", Title:="Áßº¹ÇàÇÕ»ê", Type:=8)
+    Set rngComp = Application.InputBox("í•©ì‚°í•˜ê¸°ë¥¼ ì›í•˜ëŠ” ì—´ë“¤ì„ ì„ íƒí•˜ì„¸ìš”." & vbCr & _
+      "(í•œì…€ë§Œ ì„ íƒí•˜ì—¬ë„ í•´ë‹¹ì—´ì— ëŒ€í•´ í•©ì‚°ì„ í•©ë‹ˆë‹¤.)", Title:="ì¤‘ë³µí–‰í•©ì‚°", Type:=8)
     Set rngComp = Intersect(rngComp, rngComp(1).EntireRow)
     If Intersect(rngTarget, rngComp) Is Nothing Then
-      Select Case MsgBox("ÇÕ»ê ÈÄ Áßº¹ÇàÀ» »èÁ¦ÇÒ±î¿ä?", vbYesNoCancel + vbInformation)
+      Select Case MsgBox("í•©ì‚° í›„ ì¤‘ë³µí–‰ì„ ì‚­ì œí• ê¹Œìš”?", vbYesNoCancel + vbInformation)
       Case vbNo
         blnStay = True
       Case vbCancel
@@ -2186,13 +2186,13 @@ Dim varArr1() As Variant, varArr2() As Variant
     End If
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Insert_BlankRowCol()
- 'ÇØ´çµÇ´Â ¼ıÀÚ¸¸Å­ Çà(¿­)À» »ğÀÔÇÕ´Ï´Ù.
+ 'í•´ë‹¹ë˜ëŠ” ìˆ«ìë§Œí¼ í–‰(ì—´)ì„ ì‚½ì…í•©ë‹ˆë‹¤.
 Dim rngTarget As Range
 Dim blnChk As Boolean
 Dim varCount As Variant, varQues As Variant
@@ -2207,7 +2207,7 @@ Dim lngCount As Long, lngI As Long
       blnChk = True
     End If
     If rngTarget.Areas.Count > 1 Then
-      MsgBox "´ÙÁß(º´ÇÕ)¿µ¿ª¿¡¼­´Â Áö¿øÀÌ µÇÁö ¾Ê´Â ±â´ÉÀÔ´Ï´Ù.", vbInformation
+      MsgBox "ë‹¤ì¤‘(ë³‘í•©)ì˜ì—­ì—ì„œëŠ” ì§€ì›ì´ ë˜ì§€ ì•ŠëŠ” ê¸°ëŠ¥ì…ë‹ˆë‹¤.", vbInformation
       Exit Sub
     ElseIf rngTarget.Cells.Count = 1 Then
       Exit Sub
@@ -2216,7 +2216,7 @@ Dim lngCount As Long, lngI As Long
     lngCount = rngTarget.Cells.Count
     Set rngTarget = rngTarget(1)
     If Not IsNumeric(varCount(1, 1) & vbNullString) Then
-      varQues = InputBox("»ğÀÔÇÏ°íÀÚ ÇÏ´Â " & IIf(blnChk, "¿­", "Çà") & "°£°İ ¼ö¸¦ ±âÀçÇÏ¼¼¿ä.", Default:=2)
+      varQues = InputBox("ì‚½ì…í•˜ê³ ì í•˜ëŠ” " & IIf(blnChk, "ì—´", "í–‰") & "ê°„ê²© ìˆ˜ë¥¼ ê¸°ì¬í•˜ì„¸ìš”.", Default:=2)
       If Not IsNumeric(varQues) Then Exit Sub
       If blnChk Then
         For lngI = 1 To lngCount
@@ -2227,7 +2227,7 @@ Dim lngCount As Long, lngI As Long
           varCount(lngI, 1) = varQues
         Next lngI
       End If
-    ElseIf MsgBox("ÇØ´çµÇ´Â ¼ıÀÚ¸¸Å­ ÀüÃ¼" & IIf(blnChk, "¿­", "Çà") & "À» »ğÀÔÇÕ´Ï´Ù.", _
+    ElseIf MsgBox("í•´ë‹¹ë˜ëŠ” ìˆ«ìë§Œí¼ ì „ì²´" & IIf(blnChk, "ì—´", "í–‰") & "ì„ ì‚½ì…í•©ë‹ˆë‹¤.", _
       vbInformation + vbOKCancel) = vbCancel Then
       Exit Sub
     End If
@@ -2248,15 +2248,15 @@ Dim lngCount As Long, lngI As Long
     End If
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     ElseIf Err.Number = 1004 Then
-      MsgBox "ÁöÁ¤µÈ ¹üÀ§¿¡ Á¤¼ö°¡ ¾ø¾î ½ÇÇàÀÌ ÁßÁöµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì§€ì •ëœ ë²”ìœ„ì— ì •ìˆ˜ê°€ ì—†ì–´ ì‹¤í–‰ì´ ì¤‘ì§€ë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub TwoArea_Adjust()
- '¶³¾îÁø µÎ°³ÀÇ ¿µ¿ªÀÇ ¼ø¼­¸¦ ¸ÂÃä´Ï´Ù.
+ 'ë–¨ì–´ì§„ ë‘ê°œì˜ ì˜ì—­ì˜ ìˆœì„œë¥¼ ë§ì¶¥ë‹ˆë‹¤.
 Dim rngAarea As Range, rngBarea As Range
 Dim varAarea As Variant, varBarea As Variant
 Dim varARearea() As Variant, varBRearea() As Variant
@@ -2268,10 +2268,10 @@ Dim lngRemake As Long, lngI As Long, lngJ As Long
     On Error GoTo Err_Step
     Application.EnableCancelKey = xlErrorHandler
     If Selection.Areas.Count <> 2 Then
-      MsgBox "¿µ¿ªÀÌ ´Ù¸¥ µÎ °÷ÀÇ ºñ±³¼¿À» ÁöÁ¤ÇÏ¿©¾ß ÇÕ´Ï´Ù.", vbInformation
+      MsgBox "ì˜ì—­ì´ ë‹¤ë¥¸ ë‘ ê³³ì˜ ë¹„êµì…€ì„ ì§€ì •í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤.", vbInformation
       Exit Sub
     End If
-    
+
     lngAcheck = Selection.Areas(1)(1).Row
     lngBcheck = Selection.Areas(2)(1).Row
     If lngAcheck < lngBcheck Then
@@ -2279,21 +2279,21 @@ Dim lngRemake As Long, lngI As Long, lngJ As Long
     Else
       lngBcheck = lngAcheck
     End If
-    
+
     Set rngAarea = Intersect(Selection.Areas(1).CurrentRegion, _
       Range(Cells(lngAcheck, 1), ActiveCell.SpecialCells(xlLastCell)))
     Set rngBarea = Intersect(Selection.Areas(2).CurrentRegion, _
       Range(Cells(lngBcheck, 1), ActiveCell.SpecialCells(xlLastCell)))
-    
+
     If Intersect(rngAarea.EntireColumn, rngBarea.EntireColumn) Is Nothing Then
-      If MsgBox("µÎ°³ ¿µ¿ªÀÇ ¼ø¼­ ¸ÂÃß±â¸¦ ½ÇÇàÇÏ±î¿ä?", vbInformation + vbYesNo) = vbNo Then
+      If MsgBox("ë‘ê°œ ì˜ì—­ì˜ ìˆœì„œ ë§ì¶”ê¸°ë¥¼ ì‹¤í–‰í•˜ê¹Œìš”?", vbInformation + vbYesNo) = vbNo Then
         Exit Sub
       End If
     Else
-      MsgBox "¿µ¿ªÀÌ ´Ù¸¥ µÎ °÷ÀÇ ºñ±³¼¿À» ÁöÁ¤ÇÏ¿©¾ß ÇÕ´Ï´Ù.", vbInformation
+      MsgBox "ì˜ì—­ì´ ë‹¤ë¥¸ ë‘ ê³³ì˜ ë¹„êµì…€ì„ ì§€ì •í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤.", vbInformation
       Exit Sub
     End If
-    
+
     With rngAarea
       varAarea = .Value
       lngArowbound = UBound(varAarea, 1)
@@ -2306,10 +2306,10 @@ Dim lngRemake As Long, lngI As Long, lngJ As Long
       lngBcolbound = UBound(varBarea, 2)
       lngBcheck = Selection.Areas(2)(1).Column - .Column + 1
     End With
-    
+
     ReDim varARearea(1 To lngArowbound + lngBrowbound, 1 To lngAcolbound)
     ReDim varBRearea(1 To lngArowbound + lngBrowbound, 1 To lngBcolbound)
-    
+
     lngArowst = 1
     lngBrowst = 1
     lngRemake = 1
@@ -2354,16 +2354,16 @@ Dim lngRemake As Long, lngI As Long, lngJ As Long
     End If
     rngAarea(1).Resize(lngRemake, lngAcolbound) = varARearea
     rngBarea(1).Resize(lngRemake, lngBcolbound) = varBRearea
-    
+
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Sub Select_UniqData(blnUniq As Boolean)
- 'À¯ÀÏÇÑ ¶Ç´Â Áßº¹µÈ µ¥ÀÌÅÍ¸¦ ¼±ÅÃÇÏ¿© Áİ´Ï´Ù.
+ 'ìœ ì¼í•œ ë˜ëŠ” ì¤‘ë³µëœ ë°ì´í„°ë¥¼ ì„ íƒí•˜ì—¬ ì¤ë‹ˆë‹¤.
 Dim colData1 As New Collection, colData2 As New Collection
 Dim rngTarget As Range, rngComp As Range, rngUnion As Range
 Dim lngRow As Long, lngCol As Long
@@ -2373,9 +2373,9 @@ Dim strTemp As String
 Dim blnChk As Boolean, blnSame As Boolean
     On Error GoTo Err_Step
     Set rngTarget = Intersect(Selection, Selection.SpecialCells(xlCellTypeVisible))
-    Set rngComp = Application.InputBox(IIf(blnUniq, "À¯ÀÏ", "Áßº¹") & _
-      "¿©ºÎ ºñ±³´ë»ó ¼¿¹üÀ§¸¦ ÁöÁ¤ÇÏ¼¼¿ä.", _
-      Title:=IIf(blnUniq, "À¯ÀÏ", "Áßº¹") & "µ¥ÀÌÅÍ ¼±ÅÃ", _
+    Set rngComp = Application.InputBox(IIf(blnUniq, "ìœ ì¼", "ì¤‘ë³µ") & _
+      "ì—¬ë¶€ ë¹„êµëŒ€ìƒ ì…€ë²”ìœ„ë¥¼ ì§€ì •í•˜ì„¸ìš”.", _
+      Title:=IIf(blnUniq, "ìœ ì¼", "ì¤‘ë³µ") & "ë°ì´í„° ì„ íƒ", _
       Default:=rngTarget.Areas(1).Address, Type:=8)
     Set rngComp = Intersect(rngComp, rngComp.SpecialCells(xlCellTypeVisible))
     If rngTarget.Address = rngComp.Address Then
@@ -2464,8 +2464,8 @@ Err_Step:
 End Sub
 
 Private Sub RowHightColWidth()
- '´ÜÃàÅ° Ctrl+Alt+H
- 'Çà(¿­)°£°İÀ» ÀÏ°ıÀûÀ¸·Î ³ĞÈü´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Alt+H
+ 'í–‰(ì—´)ê°„ê²©ì„ ì¼ê´„ì ìœ¼ë¡œ ë„“í™ë‹ˆë‹¤.
 Dim blnChk As Boolean
 Dim rngTarget As Range, rng_Each As Range
 Dim lngQues As Variant
@@ -2476,8 +2476,8 @@ Dim lngQues As Variant
       blnChk = True
       Set rngTarget = Intersect(ActiveSheet.UsedRange, Selection(1).EntireRow, Selection)
     End If
-    lngQues = InputBox("¼±ÅÃ¿µ¿ªÀÇ " & IIf(blnChk, "¿­³Êºñ", "Çà³ôÀÌ") & _
-      "¸¦ ÀÏ°ıÀûÀ¸·Î ³ĞÈü´Ï´Ù.", Default:=5)
+    lngQues = InputBox("ì„ íƒì˜ì—­ì˜ " & IIf(blnChk, "ì—´ë„ˆë¹„", "í–‰ë†’ì´") & _
+      "ë¥¼ ì¼ê´„ì ìœ¼ë¡œ ë„“í™ë‹ˆë‹¤.", Default:=5)
     If lngQues = vbNullString Then Exit Sub
     For Each rng_Each In rngTarget
       If blnChk Then
@@ -2491,7 +2491,7 @@ Err_Step:
 End Sub
 
 Private Sub DataBase_Split()
- 'ÇÏ³ªÀÇ ½ÃÆ®¿¡ ´ë·®À¸·Î ÀÖ´Â µ¥ÀÌÅÍ¸¦ ±¸ºĞÇÏ¿© ¿©·¯°³ÀÇ ÆÄÀÏ·Î ÀúÀåÇÏ¿© Áİ´Ï´Ù.
+ 'í•˜ë‚˜ì˜ ì‹œíŠ¸ì— ëŒ€ëŸ‰ìœ¼ë¡œ ìˆëŠ” ë°ì´í„°ë¥¼ êµ¬ë¶„í•˜ì—¬ ì—¬ëŸ¬ê°œì˜ íŒŒì¼ë¡œ ì €ì¥í•˜ì—¬ ì¤ë‹ˆë‹¤.
 Dim colData As New Collection
 Dim stTarget As Worksheet
 Dim strFolder As String
@@ -2509,7 +2509,7 @@ Dim strWbname As String, strPassword As String
     If strFolder = "" Then
       strFolder = Application.DefaultFilePath
     End If
-    strWbname = InputBox("ÀúÀåÇÒ·Á´Â ÆÄÀÏ¸í[;ºñ¹Ğ¹øÈ£]À» ±âÀçÇÏ¼¼¿ä.", Default:="³»¿ª")
+    strWbname = InputBox("ì €ì¥í• ë ¤ëŠ” íŒŒì¼ëª…[;ë¹„ë°€ë²ˆí˜¸]ì„ ê¸°ì¬í•˜ì„¸ìš”.", Default:="ë‚´ì—­")
     If strWbname = vbNullString Then Exit Sub
     varWbname = Split(strWbname, ";")
     If UBound(varWbname) = 1 Then
@@ -2552,17 +2552,17 @@ Dim strWbname As String, strPassword As String
         End If
       Next lngI
     End With
-    MsgBox strFolder & " Æú´õ¿¡" & vbCr & lngCount & _
-      "°³ÀÇ ÆÄÀÏÀ» Á¤»óÀûÀ¸·Î ÀúÀåÇß½À´Ï´Ù.", vbInformation
+    MsgBox strFolder & " í´ë”ì—" & vbCr & lngCount & _
+      "ê°œì˜ íŒŒì¼ì„ ì •ìƒì ìœ¼ë¡œ ì €ì¥í–ˆìŠµë‹ˆë‹¤.", vbInformation
     Exit Sub
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
 End Sub
 
 Private Sub Wb_Combine()
- '¿©·¯ ÅëÇÕ¹®¼­¸¦ ÃëÇÕÇÕ´Ï´Ù.
+ 'ì—¬ëŸ¬ í†µí•©ë¬¸ì„œë¥¼ ì·¨í•©í•©ë‹ˆë‹¤.
 Dim strChk As String
     On Error GoTo Err_Step
     strChk = ActiveCell.Value
@@ -2571,7 +2571,7 @@ Err_Step:
 End Sub
 
 Sub Make_RecoveryNewBook(Optional blnMsg As Boolean)
- 'Á¤»óÀûÀÎ º¹±¸ÆÄÀÏÀ» »ı¼ºÇÏ¿© Áİ´Ï´Ù.
+ 'ì •ìƒì ì¸ ë³µêµ¬íŒŒì¼ì„ ìƒì„±í•˜ì—¬ ì¤ë‹ˆë‹¤.
 Dim wbActive As Workbook
 Dim lngI As Long
     On Error GoTo Err_Step
@@ -2582,8 +2582,8 @@ Dim lngI As Long
     Set wbActive = ActiveWorkbook
     With wbActive
       If blnMsg = False Then
-        If MsgBox("ÇöÀçÀÇ ¹®¼­´Â ´İ°í, Á¤»óÀûÀÎ º¹±¸ÆÄÀÏ(¸ÅÅ©·Î Á¦¿Ü)À»" _
-          & vbCr & "»ı¼ºÇÏ½Ã°Ú½À´Ï±î?", _
+        If MsgBox("í˜„ì¬ì˜ ë¬¸ì„œëŠ” ë‹«ê³ , ì •ìƒì ì¸ ë³µêµ¬íŒŒì¼(ë§¤í¬ë¡œ ì œì™¸)ì„" _
+          & vbCr & "ìƒì„±í•˜ì‹œê² ìŠµë‹ˆê¹Œ?", _
           vbInformation + vbYesNo) = vbNo Then Exit Sub
       End If
       CommandBars("Exit Design Mode").Controls(1).Reset
@@ -2599,13 +2599,13 @@ Dim lngI As Long
     End With
     Application.OnTime Now + 0.00001, "Xml_Tempmake"
     wbActive.Worksheets.Copy
-    '¿¢¼¿2007¿¡¼­´Â ¿øÈ°ÇÏ°Ô ½ÇÇàµÇÁö ¾Ê¾Æ ÇÒ¼ö ¾øÀÌ ±¸¹®À» ºĞ¸®ÇÔ
+    'ì—‘ì…€2007ì—ì„œëŠ” ì›í™œí•˜ê²Œ ì‹¤í–‰ë˜ì§€ ì•Šì•„ í• ìˆ˜ ì—†ì´ êµ¬ë¬¸ì„ ë¶„ë¦¬í•¨
     Exit Sub
 Err_Step:
     Application.DisplayAlerts = True
     Application.ScreenUpdating = True
     Application.EnableEvents = True
-    MsgBox "º¹±¸Áß ¹®Á¦°¡ ÀÖ¾î Á¤»óº¹±¸ÇÏÁö ¸øÇß½À´Ï´Ù.", vbCritical
+    MsgBox "ë³µêµ¬ì¤‘ ë¬¸ì œê°€ ìˆì–´ ì •ìƒë³µêµ¬í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.", vbCritical
 End Sub
 
 Private Sub Xml_Tempmake()
@@ -2674,8 +2674,8 @@ Dim lngI As Long, lngJ As Long
     ChDir strOldPath
     wbOld.Close SaveChanges:=False
     Application.ScreenUpdating = True
-    MsgBox "¼º°øÀûÀ¸·Î Á¤»óÀûÀÎ º¹±¸ÆÄÀÏÀ» »ı¼ºÇÏ¿´½À´Ï´Ù. " _
-      & vbCr & "´Ù¸¥ÀÌ¸§(µ¤¾î¾²±â°¡´É)À¸·Î ÀúÀåÇÏ½Ã±â ¹Ù¶ø´Ï´Ù.", vbInformation
+    MsgBox "ì„±ê³µì ìœ¼ë¡œ ì •ìƒì ì¸ ë³µêµ¬íŒŒì¼ì„ ìƒì„±í•˜ì˜€ìŠµë‹ˆë‹¤. " _
+      & vbCr & "ë‹¤ë¥¸ì´ë¦„(ë®ì–´ì“°ê¸°ê°€ëŠ¥)ìœ¼ë¡œ ì €ì¥í•˜ì‹œê¸° ë°”ëë‹ˆë‹¤.", vbInformation
     Application.OnRepeat "", ""
 End Sub
 
@@ -2716,17 +2716,17 @@ Err_Step:
 End Sub
 
 Private Sub StrAndNum_Sort()
- '´ÜÃàÅ° Ctrl+Alt+S
- '¹®ÀÚ¼ıÀÚ¸¦ Á¤·ÄÇÕ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Alt+S
+ 'ë¬¸ììˆ«ìë¥¼ ì •ë ¬í•©ë‹ˆë‹¤.
 Dim rngTemp As Range
     On Error GoTo Err_Step
     Set rngTemp = Intersect(ActiveSheet.UsedRange, _
       Selection.SpecialCells(xlCellTypeVisible))
     If rngTemp.Columns(1).Cells.Count = 1 Then
-      MsgBox "Á¤·ÄÇÒ ¹üÀ§¸¦ ÁöÁ¤ÇÑ ÈÄ ½ÇÇàÇÏ¼¼¿ä.", vbInformation
+      MsgBox "ì •ë ¬í•  ë²”ìœ„ë¥¼ ì§€ì •í•œ í›„ ì‹¤í–‰í•˜ì„¸ìš”.", vbInformation
       Exit Sub
     ElseIf rngTemp.Areas.Count > 1 Then
-      MsgBox "´ÙÁß¹üÀ§¿¡¼­´Â ½ÇÇàÇÒ ¼ö ¾ø´Â ¸í·ÉÀÔ´Ï´Ù.", vbInformation
+      MsgBox "ë‹¤ì¤‘ë²”ìœ„ì—ì„œëŠ” ì‹¤í–‰í•  ìˆ˜ ì—†ëŠ” ëª…ë ¹ì…ë‹ˆë‹¤.", vbInformation
       Exit Sub
     End If
     Numtext_Sort.show
@@ -2734,8 +2734,8 @@ Err_Step:
 End Sub
 
 Private Sub Randomize_Sort()
- '´ÜÃàÅ° Ctrl+Alt+R
- '¹«ÀÛÀ§ Á¤·ÄÀ» ½ÇÇàÇÕ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Alt+R
+ 'ë¬´ì‘ìœ„ ì •ë ¬ì„ ì‹¤í–‰í•©ë‹ˆë‹¤.
 Dim rngTemp As Range, rngTmp As Range
 Dim strAddress As String
 Dim varInputdata As Variant, varTemp1() As Variant, varTemp2() As Variant
@@ -2746,11 +2746,11 @@ Dim lngI As Long, lngJ As Long, lngK As Long, lngL As Long
     Set rngTemp = Intersect(ActiveSheet.UsedRange, _
       Selection.SpecialCells(xlCellTypeVisible))
     If rngTemp.Areas.Count > 1 Then
-      MsgBox "´ÙÁß¿µ¿ª(¼û±è) »óÅÂ¿¡¼­´Â ½ÇÇàÇÒ ¼ö ¾ø´Â ¸í·ÉÀÔ´Ï´Ù.", vbInformation
+      MsgBox "ë‹¤ì¤‘ì˜ì—­(ìˆ¨ê¹€) ìƒíƒœì—ì„œëŠ” ì‹¤í–‰í•  ìˆ˜ ì—†ëŠ” ëª…ë ¹ì…ë‹ˆë‹¤.", vbInformation
       Exit Sub
     Else
-      lngChk = MsgBox("¹«ÀÛÀ§ Á¤·ÄÀ» ½ÇÇàÇÕ´Ï´Ù.(Çà´ÜÀ§´Â ¿¹¸¦, " & _
-        "¿ÏÀü¹«ÀÛÀ§´Â ¾Æ´Ï¿À¸¦ Å¬¸¯)", vbInformation + vbYesNoCancel)
+      lngChk = MsgBox("ë¬´ì‘ìœ„ ì •ë ¬ì„ ì‹¤í–‰í•©ë‹ˆë‹¤.(í–‰ë‹¨ìœ„ëŠ” ì˜ˆë¥¼, " & _
+        "ì™„ì „ë¬´ì‘ìœ„ëŠ” ì•„ë‹ˆì˜¤ë¥¼ í´ë¦­)", vbInformation + vbYesNoCancel)
       If lngChk = vbCancel Then
         Exit Sub
       End If
@@ -2766,7 +2766,7 @@ Dim lngI As Long, lngJ As Long, lngK As Long, lngL As Long
     rngTemp.Sort Key1:=rngTemp(1), _
       Header:=xlNo, Orientation:=xlTopToBottom
     If Err > 0 Then
-      MsgBox "¹è¿­¼ö½ÄÀÌ³ª º´ÇÕ¼¿ÀÌ ÀÖ´Â °æ¿ì ½ÇÇàÇÒ ¼ö ¾ø½À´Ï´Ù.", vbInformation
+      MsgBox "ë°°ì—´ìˆ˜ì‹ì´ë‚˜ ë³‘í•©ì…€ì´ ìˆëŠ” ê²½ìš° ì‹¤í–‰í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", vbInformation
       Exit Sub
     End If
     On Error GoTo Err_Step
@@ -2822,8 +2822,8 @@ Err_Step:
 End Sub
 
 Private Sub Filter_Reverse()
- '´ÜÃàÅ° Alt+L
- 'ÇÊÅÍ¸µµÈ ÇàÀº ¼û±â°í, ¹İ´ë·Î ¼û°ÜÁøÇàÀº º¸ÀÌµµ·Ï ÇÕ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Alt+L
+ 'í•„í„°ë§ëœ í–‰ì€ ìˆ¨ê¸°ê³ , ë°˜ëŒ€ë¡œ ìˆ¨ê²¨ì§„í–‰ì€ ë³´ì´ë„ë¡ í•©ë‹ˆë‹¤.
 Dim strFilter As String
 Dim rngVisible As Range, rngHide As Range, lngCount As Long
     On Error GoTo Err_Step
@@ -2832,7 +2832,7 @@ Dim rngVisible As Range, rngHide As Range, lngCount As Long
       On Error Resume Next
       Set rngVisible = ActiveCell.EntireColumn.SpecialCells(xlCellTypeVisible)
       If Err > 0 Then
-        MsgBox "´ÙÁß¿µ¿ªÀÌ ³Ê¹« Å®´Ï´Ù.(8,192¿µ¿ª ÃÊ°ú)", vbInformation
+        MsgBox "ë‹¤ì¤‘ì˜ì—­ì´ ë„ˆë¬´ í½ë‹ˆë‹¤.(8,192ì˜ì—­ ì´ˆê³¼)", vbInformation
         Exit Sub
       Else
         On Error GoTo Err_Step
@@ -2853,18 +2853,18 @@ Dim rngVisible As Range, rngHide As Range, lngCount As Long
           Cells.Count)).EntireRow.Hidden = True
       rngHide.EntireRow.Hidden = False
     Else
-      MsgBox "ÇÊÅÍ¹İÀüÀº µ¥ÀÌÅÍ°¡ ÇÊÅÍµÈ »óÅÂ¿¡¼­¸¸ ÀÛµ¿µË´Ï´Ù.", vbInformation
+      MsgBox "í•„í„°ë°˜ì „ì€ ë°ì´í„°ê°€ í•„í„°ëœ ìƒíƒœì—ì„œë§Œ ì‘ë™ë©ë‹ˆë‹¤.", vbInformation
     End If
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Color_Filter()
- '´ÜÃàÅ° Ctrl+Alt+L
- '»ö»óº°·Î ÇÊÅÍ¸µÀ» ÇÕ´Ï´Ù.
+ 'ë‹¨ì¶•í‚¤ Ctrl+Alt+L
+ 'ìƒ‰ìƒë³„ë¡œ í•„í„°ë§ì„ í•©ë‹ˆë‹¤.
 Dim ftTemp As AutoFilter
 Dim rngFilter As Range, rngTemp As Range
 Dim rngEach As Range, rngUnion As Range
@@ -2874,7 +2874,7 @@ Dim lngColor As Long, lngI As Long
     Application.EnableCancelKey = xlErrorHandler
     Set ftTemp = ActiveSheet.AutoFilter
     If ftTemp Is Nothing Then
-      MsgBox "ÀÌ ±â´ÉÀº ÀÚµ¿ÇÊÅÍ »óÅÂ¿¡¼­ ½ÇÇàÇÒ ¼ö ÀÖ½À´Ï´Ù.", vbInformation
+      MsgBox "ì´ ê¸°ëŠ¥ì€ ìë™í•„í„° ìƒíƒœì—ì„œ ì‹¤í–‰í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.", vbInformation
       Exit Sub
     End If
     Set rngFilter = ftTemp.Range
@@ -2882,8 +2882,8 @@ Dim lngColor As Long, lngI As Long
       rngFilter.Columns.Count))
     Set rngTemp = Intersect(rngFilter, ActiveCell)
     If Not rngTemp Is Nothing Then
-      Select Case MsgBox("¸é»ö»óÀ¸·Î ÇÊÅÍÇÒ·Á¸é ""¿¹""¸¦," & vbCr & _
-        "±Û²Ã»öÀ¸·Î ÇÊÅÍÇÒ·Á¸é ""¾Æ´Ï¿À""¸¦ Å¬¸¯ÇÏ¼¼¿ä.", vbYesNoCancel + vbInformation)
+      Select Case MsgBox("ë©´ìƒ‰ìƒìœ¼ë¡œ í•„í„°í• ë ¤ë©´ ""ì˜ˆ""ë¥¼," & vbCr & _
+        "ê¸€ê¼´ìƒ‰ìœ¼ë¡œ í•„í„°í• ë ¤ë©´ ""ì•„ë‹ˆì˜¤""ë¥¼ í´ë¦­í•˜ì„¸ìš”.", vbYesNoCancel + vbInformation)
       Case vbYes
         blnChk = True
         lngColor = ActiveCell.Interior.ColorIndex
@@ -2936,14 +2936,14 @@ Dim lngColor As Long, lngI As Long
     End If
 Err_Step:
     If Err.Number = 18 Then
-      MsgBox "»ç¿ëÀÚ¿¡ ÀÇÇØ Ãë¼ÒµÇ¾ú½À´Ï´Ù.", vbInformation
+      MsgBox "ì‚¬ìš©ìì— ì˜í•´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.", vbInformation
     End If
     Application.OnRepeat "", ""
 End Sub
 
 Private Sub Print_SelectPage()
- '´ÜÃàÅ° Ctrl+Shift+P
- '¼±ÅÃµÈ ÆäÀÌÁö¸¦ ÀÎ¼âÇÕ´Ï´Ù.(ÆäÀÌÁö´ÜÀ§ ÀÎ¼â)
+ 'ë‹¨ì¶•í‚¤ Ctrl+Shift+P
+ 'ì„ íƒëœ í˜ì´ì§€ë¥¼ ì¸ì‡„í•©ë‹ˆë‹¤.(í˜ì´ì§€ë‹¨ìœ„ ì¸ì‡„)
 Dim shtActive As Worksheet, rngUsed As Range, rngSelection As Range
 Dim lngStartpage As Long, lngLastpage As Long
 Dim lngR As Long, lngC As Long, lngHeight As Long, lngWidth As Long
@@ -2957,22 +2957,22 @@ Dim strAddress As String, strTemp As String
         If IsEmpty(.Cells(1)) Then GoTo Err_Step
       End If
     End With
-    'ÀÎ¼â ¿µ¿ªÀÌ ¼³Á¤µÈ °æ¿ì¿Í ±×·¸Áö ¾ÊÀº °æ¿ì¸¦ ±¸ºĞ
+    'ì¸ì‡„ ì˜ì—­ì´ ì„¤ì •ëœ ê²½ìš°ì™€ ê·¸ë ‡ì§€ ì•Šì€ ê²½ìš°ë¥¼ êµ¬ë¶„
     strTemp = shtActive.PageSetup.PrintArea
     If strTemp = vbNullString Then
       Set rngUsed = Range(Cells(1, 1), shtActive.UsedRange)
     Else
       Set rngUsed = Range(strTemp)
     End If
-    'È°¼º¼¿ÀÇ À§Ä¡°¡ ÀÎ¼â ¹üÀ§¿Í °ãÄ¡´Â °ÍÀÎÁö È®ÀÎ
+    'í™œì„±ì…€ì˜ ìœ„ì¹˜ê°€ ì¸ì‡„ ë²”ìœ„ì™€ ê²¹ì¹˜ëŠ” ê²ƒì¸ì§€ í™•ì¸
     Set rngSelection = Intersect(Selection.Areas(1), rngUsed)
     If rngSelection Is Nothing Then
-      MsgBox "¼±ÅÃ¼¿ÀÌ ÀÎ¼â¿µ¿ª ¾È¿¡ ÀÖÁö ¾Ê½À´Ï´Ù!", vbInformation
+      MsgBox "ì„ íƒì…€ì´ ì¸ì‡„ì˜ì—­ ì•ˆì— ìˆì§€ ì•ŠìŠµë‹ˆë‹¤!", vbInformation
       Exit Sub
     End If
 
     With rngUsed
-      'Çà °Ë»ç
+      'í–‰ ê²€ì‚¬
       lngR = .Row
       lngHeight = Get_RowBreaks(lngR + .Rows.Count - 1) + 1
       lngDownstart = Get_RowBreaks(rngSelection(1).Row) + 1
@@ -2984,7 +2984,7 @@ Dim strAddress As String, strTemp As String
         lngDownstart = lngDownstart - lngOutSide
         lngDownstartend = lngDownstartend - lngOutSide
       End If
-      '¿­°Ë»ç
+      'ì—´ê²€ì‚¬
       lngC = .Column
       lngWidth = Get_ColBreaks(lngC + .Columns.Count - 1) + 1
       lngAcrossstart = Get_ColBreaks(rngSelection(1).Column) + 1
@@ -2996,7 +2996,7 @@ Dim strAddress As String, strTemp As String
         lngAcrossstart = lngAcrossstart - lngOutSide
         lngAcrossstartend = lngAcrossstartend - lngOutSide
       End If
-      'ÀÎ¼â ¼ø¼­
+      'ì¸ì‡„ ìˆœì„œ
       If shtActive.PageSetup.Order = xlDownThenOver Then
         lngStartpage = lngHeight * (lngAcrossstart - 1) + lngDownstart
         lngLastpage = lngHeight * (lngAcrossstartend - 1) + lngDownstartend
@@ -3006,8 +3006,8 @@ Dim strAddress As String, strTemp As String
       End If
     End With
     If lngStartpage > 0 Then
-      lngQues = MsgBox("¼±ÅÃ¼¿ÀÎ " & lngStartpage & " ÂÊ ~ " & _
-        lngLastpage & "ÂÊÀ» ÀÎ¼âÇÒ±î¿ä?", vbYesNo + vbInformation)
+      lngQues = MsgBox("ì„ íƒì…€ì¸ " & lngStartpage & " ìª½ ~ " & _
+        lngLastpage & "ìª½ì„ ì¸ì‡„í• ê¹Œìš”?", vbYesNo + vbInformation)
       If lngQues = vbYes Then
         shtActive.PrintOut From:=lngStartpage, To:=lngLastpage
       End If
@@ -3018,7 +3018,7 @@ End Sub
 
 Private Function Get_ColBreaks(ColNum As Long) As Long
 Dim strTemp As String
-    '¼öµ¿ ¶Ç´Â ÀÚµ¿ ÂÊ ±¸ºĞÀÇ ¹Ù·Î ¾Æ·¡ Çàµé¿¡ ÇØ´çÇÏ´Â ¿­ ¹øÈ£ ¹è¿­À» µ¹·ÁÁØ´Ù.
+    'ìˆ˜ë™ ë˜ëŠ” ìë™ ìª½ êµ¬ë¶„ì˜ ë°”ë¡œ ì•„ë˜ í–‰ë“¤ì— í•´ë‹¹í•˜ëŠ” ì—´ ë²ˆí˜¸ ë°°ì—´ì„ ëŒë ¤ì¤€ë‹¤.
     On Error Resume Next
     strTemp = "MATCH(" & ColNum & ",GET.DOCUMENT(65),1)"
       Get_ColBreaks = ExecuteExcel4Macro(strTemp)
@@ -3026,30 +3026,30 @@ End Function
 
 Private Function Get_RowBreaks(RowNum As Long) As Long
 Dim strTemp As String
-    '¼öµ¿ ¶Ç´Â ÀÚµ¿ ÂÊ ±¸ºĞÀÇ ¹Ù·Î ¾Æ·¡ Çàµé¿¡ ÇØ´çÇÏ´Â Çà ¹øÈ£ ¹è¿­À» µ¹·ÁÁØ´Ù.
+    'ìˆ˜ë™ ë˜ëŠ” ìë™ ìª½ êµ¬ë¶„ì˜ ë°”ë¡œ ì•„ë˜ í–‰ë“¤ì— í•´ë‹¹í•˜ëŠ” í–‰ ë²ˆí˜¸ ë°°ì—´ì„ ëŒë ¤ì¤€ë‹¤.
     On Error Resume Next
     strTemp = "MATCH(" & RowNum & ",GET.DOCUMENT(64),1)"
         Get_RowBreaks = ExecuteExcel4Macro(strTemp)
 End Function
 
 Private Sub Help_Text()
- 'My_Addin2015¿¡ ´ëÇÏ¿©
+ 'My_Addin2015ì— ëŒ€í•˜ì—¬
     Help_Msg.show vbModeless
 End Sub
 
 Private Sub Safe_Save()
- '´ÜÃàÅ° Ctrl+S
- 'ÀúÀåÅ°¸¦ ´©¸¦ °æ¿ì ´Ù½ÃÇÑ¹ø ÀúÀå¿©ºÎ¸¦ ¹¯µµ·Ï ÇÔÀ¸·Î½á Áß´ë½Ç¼ö ¹æÁö
+ 'ë‹¨ì¶•í‚¤ Ctrl+S
+ 'ì €ì¥í‚¤ë¥¼ ëˆ„ë¥¼ ê²½ìš° ë‹¤ì‹œí•œë²ˆ ì €ì¥ì—¬ë¶€ë¥¼ ë¬»ë„ë¡ í•¨ìœ¼ë¡œì¨ ì¤‘ëŒ€ì‹¤ìˆ˜ ë°©ì§€
 Dim wkbAct As Workbook
     On Error GoTo Err_Step
     Set wkbAct = ActiveWorkbook
-    If wkbAct.path = "" Then '½Å±Ô¹®¼­ÀÎ °æ¿ì
+    If wkbAct.path = "" Then 'ì‹ ê·œë¬¸ì„œì¸ ê²½ìš°
       Application.Dialogs(xlDialogSaveAs).show
     Else
-      If wkbAct.Saved Then 'ÀÌ¹Ì ÀúÀåµÈ ¹®¼­ÀÎ °æ¿ì
+      If wkbAct.Saved Then 'ì´ë¯¸ ì €ì¥ëœ ë¬¸ì„œì¸ ê²½ìš°
         wkbAct.Save
       Else
-        If MsgBox("'" & wkbAct.Name & "'ÀÇ º¯°æ ³»¿ëÀ» ÀúÀåÇÏ½Ã°Ú½À´Ï±î?", _
+        If MsgBox("'" & wkbAct.Name & "'ì˜ ë³€ê²½ ë‚´ìš©ì„ ì €ì¥í•˜ì‹œê² ìŠµë‹ˆê¹Œ?", _
           vbYesNo + vbInformation) = vbYes Then
           Application.EnableEvents = False
             wkbAct.Save

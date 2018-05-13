@@ -1,65 +1,65 @@
 Attribute VB_Name = "getFileList"
 Option Explicit
 '============================================================
-' µğ·ºÅä¸® ÆÄÀÏ ¸®½ºÆ® °¡Á®¿À±â
+' ë””ë ‰í† ë¦¬ íŒŒì¼ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
 '============================================================
 '
 Sub getFileList()
-'// [µµ±¸] - [ÂüÁ¶] ¿¡¼­ Microsoft Scripting Runtime ¶óÀÌºê·¯¸® Ã¼Å©ÇØ¾ß ÇÔ
+'// [ë„êµ¬] - [ì°¸ì¡°] ì—ì„œ Microsoft Scripting Runtime ë¼ì´ë¸ŒëŸ¬ë¦¬ ì²´í¬í•´ì•¼ í•¨
     Dim FSO As New FileSystemObject
-    Dim sDir As Folder      '// Ã£À» Æú´õ º¯¼ö ¼±¾ğ
-    Dim fPath As Variant    '// °æ·Î(Path) º¯¼ö ¼±¾ğ
-    Dim fileExt As String   '// ÆÄÀÏÈ®ÀåÀÚ º¯¼ö ¼±¾ğ
+    Dim sDir As Folder      '// ì°¾ì„ í´ë” ë³€ìˆ˜ ì„ ì–¸
+    Dim fPath As Variant    '// ê²½ë¡œ(Path) ë³€ìˆ˜ ì„ ì–¸
+    Dim fileExt As String   '// íŒŒì¼í™•ì¥ì ë³€ìˆ˜ ì„ ì–¸
     Dim i, n As Long
     Dim openMsg As String
-    
-    On Error Resume Next     '// ¿¡·¯°¡ ¹ß»ıÇØµµ °è¼Ó ¼öÇàÇÏ¶ó
-    openMsg = "ÆÄÀÏÀ» °¡Á®¿Ã °æ·Î¸¦ Á÷Á¢ ÁöÁ¤ÇÏ·Á¸é Yes¸¦ ´­·¯ÁÖ¼¼¿ä " & vbCr & vbCr
-    openMsg = openMsg & "ÇöÀç °æ·Î¸¦ ¼±ÅÃÇÏ·Á¸é No¸¦ ´­·¯ÁÖ¼¼¿ä" & vbCr
-    openMsg = openMsg & "ÇöÀç Path : " & ThisWorkbook.path + "\"
+
+    On Error Resume Next     '// ì—ëŸ¬ê°€ ë°œìƒí•´ë„ ê³„ì† ìˆ˜í–‰í•˜ë¼
+    openMsg = "íŒŒì¼ì„ ê°€ì ¸ì˜¬ ê²½ë¡œë¥¼ ì§ì ‘ ì§€ì •í•˜ë ¤ë©´ Yesë¥¼ ëˆŒëŸ¬ì£¼ì„¸ìš” " & vbCr & vbCr
+    openMsg = openMsg & "í˜„ì¬ ê²½ë¡œë¥¼ ì„ íƒí•˜ë ¤ë©´ Noë¥¼ ëˆŒëŸ¬ì£¼ì„¸ìš”" & vbCr
+    openMsg = openMsg & "í˜„ì¬ Path : " & ThisWorkbook.path + "\"
     If MsgBox(openMsg, vbYesNo) = vbYes Then
         With Application.FileDialog(msoFileDialogFolderPicker)
             .show
-            fPath = .SelectedItems(1)   '// ¼±ÅÃµÉ Æú´õ¸¦ °æ·Î º¯¼ö¿¡ ÀúÀå
+            fPath = .SelectedItems(1)   '// ì„ íƒë  í´ë”ë¥¼ ê²½ë¡œ ë³€ìˆ˜ì— ì €ì¥
         End With
     Else
-        fPath = ThisWorkbook.path + "\"     '// ¿¢¼¿ VBA ÆÄÀÏÀÌ À§Ä¡ÇÑ ÇöÀç°æ·Î
+        fPath = ThisWorkbook.path + "\"     '// ì—‘ì…€ VBA íŒŒì¼ì´ ìœ„ì¹˜í•œ í˜„ì¬ê²½ë¡œ
     End If
     If Err.Number <> 0 Or fPath = False Then Exit Sub
     On Error GoTo 0
-    
-    fileExt = "*.*"   '// Ã£°íÀÚ ÇÏ´Â ÆÄÀÏ È®ÀåÀÚ
-    Worksheets("°Ë»ö°á°ú").Select     '// ´Ù¸¥ ½ÃÆ®°¡ ¼±ÅÃµÇ¾î ÀÖ¾î Àß¸ø ±â·ÏµÇ´Â °æ¿ì ¹æÁö ¸ñÀû
+
+    fileExt = "*.*"   '// ì°¾ê³ ì í•˜ëŠ” íŒŒì¼ í™•ì¥ì
+    Worksheets("ê²€ìƒ‰ê²°ê³¼").Select     '// ë‹¤ë¥¸ ì‹œíŠ¸ê°€ ì„ íƒë˜ì–´ ìˆì–´ ì˜ëª» ê¸°ë¡ë˜ëŠ” ê²½ìš° ë°©ì§€ ëª©ì 
     With Range("A1:C1")
-        .Value = Array("µğ·ºÅä¸®", "ÆÄÀÏ¸í", "Áßº¹°Ë»ç")
+        .Value = Array("ë””ë ‰í† ë¦¬", "íŒŒì¼ëª…", "ì¤‘ë³µê²€ì‚¬")
         .HorizontalAlignment = xlCenter
     End With
-    
+
     Range([A1], Cells(Rows.Count, "A").End(3)).Offset(1).Resize(, 3).ClearContents
-    '// È­¸é¿¡ »Ñ¸± ¿µ¿ª ÃÊ±âÈ­
-    
-   
-    Call makeFileList(fPath, fileExt)   '// ÆÄÀÏ¸ñ·Ï ¸¸µé±â È£Ãâ
+    '// í™”ë©´ì— ë¿Œë¦´ ì˜ì—­ ì´ˆê¸°í™”
+
+
+    Call makeFileList(fPath, fileExt)   '// íŒŒì¼ëª©ë¡ ë§Œë“¤ê¸° í˜¸ì¶œ
     Set sDir = FSO.GetFolder(fPath)
-    Call subFolderFind(sDir, fileExt)   '// ¼­ºêÆú´õ Ã£±â
-    
+    Call subFolderFind(sDir, fileExt)   '// ì„œë¸Œí´ë” ì°¾ê¸°
+
     n = Cells(Rows.Count, "B").End(3).Row - 1
     If n = 0 Then
-        MsgBox "ÆÄÀÏÀÌ ¾ø½À´Ï´Ù"
+        MsgBox "íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤"
     Else
-        MsgBox n & " °³ ÆÄÀÏ¸®½ºÆ® °Ë»ö¿Ï·á"
+        MsgBox n & " ê°œ íŒŒì¼ë¦¬ìŠ¤íŠ¸ ê²€ìƒ‰ì™„ë£Œ"
     End If
 End Sub
 
 Sub subFolderFind(sDir As Folder, getExt As String)
     Dim subFolder As Folder
-    
+
     On Error Resume Next
     For Each subFolder In sDir.SubFolders
         If subFolder.Files.Count > 0 Then
             Call makeFileList(subFolder.path, getExt)
         End If
-            
+
         If subFolder.SubFolders.Count > 0 Then
             Call subFolderFind(subFolder, getExt)
         End If
@@ -69,17 +69,16 @@ End Sub
 Sub makeFileList(fPath As Variant, getExt As String)
     Dim fName As String
     Dim SaveDir As Range
-    
+
     fName = Dir(fPath & "\" & getExt)
     If fName <> "" Then
         Do
             Set SaveDir = Cells(Rows.Count, "A").End(3)(2)
             SaveDir.Value = fPath
             SaveDir.Offset(0, 1).Value = fName
-            
+
             fName = Dir()
         Loop While fName <> ""
         Columns("A:B").AutoFit
     End If
 End Sub
-

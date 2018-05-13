@@ -29,92 +29,92 @@ End Sub
 
 Sub copy2Works()
 '
-' ¸ÅÅ©·Î3 ¸ÅÅ©·Î
+' ë§¤í¬ë¡œ3 ë§¤í¬ë¡œ
 '
 
 '
     Dim wd, ws As Object
     Dim rs As Range
-    
+
     Set ws = ActiveWindow
-    Set wd = Windows("¼ººĞÇ¥±âÀÛ¼º5.0.xlsm")
-    
+    Set wd = Windows("ì„±ë¶„í‘œê¸°ì‘ì„±5.0.xlsm")
+
     'Windows("20150828100214.CDVSK.xls").Activate
     Range("E2").Select
     Range(Selection, Selection.End(xlDown)).Select
     Application.CutCopyMode = False
     Selection.Copy
-    
+
     wd.Activate
     Range("A6").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-    
+
     ws.Activate
     Range("I2").Select
     Range(Selection, Selection.End(xlDown)).Select
     Application.CutCopyMode = False
     Selection.Copy
-    
-    Windows("¼ººĞÇ¥±âÀÛ¼º5.0.xlsm").Activate
+
+    Windows("ì„±ë¶„í‘œê¸°ì‘ì„±5.0.xlsm").Activate
     Range("B6").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-    
+
     Range("A6").Select
     Range(Selection, Selection.End(xlDown)).Select
     Selection.Replace What:="JU", Replacement:="JU-", LookAt:=xlPart, _
         SearchOrder:=xlByColumns, MatchCase:=True, SearchFormat:=False, _
         ReplaceFormat:=False
-    
+
     Range("B6").Select
     Range(Selection, Selection.End(xlDown)).Select
 End Sub
 
 Sub copy2form()
 '
-' ¼­½Ä¿¡ ºÙ¿©³Ö±â
+' ì„œì‹ì— ë¶™ì—¬ë„£ê¸°
 '
 
 '
     Dim wd, ws As Object
     Dim rs, rd As Range
-    
-    Set ws = Windows("¼ººĞÇ¥±âÀÛ¼º5.0.xlsm")
+
+    Set ws = Windows("ì„±ë¶„í‘œê¸°ì‘ì„±5.0.xlsm")
     Set wd = ActiveWindow
-    
+
     ws.Activate
     Range("E6").Select
     Range(Selection, Selection.End(xlDown)).Select
     Selection.Copy
-    
+
     wd.Activate
     Range("B9").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-        
+
     'ActiveWindow.SmallScroll Down:=9
-    
+
     ws.Activate
     Range("G6").Select
     Range(Selection, Selection.End(xlDown)).Select
     Selection.Copy
-    
+
     wd.Activate
     Range("C9").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-    
+
     ws.Activate
     Range("B6").Select
     Range(Selection, Selection.End(xlDown)).Select
     Selection.Copy
-    
+
     wd.Activate
     Range("E9").Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-    
+
 
 End Sub
 
@@ -139,33 +139,31 @@ Sub CDO_Mail_Small_Text()
             .Update
         End With
 
-    strbody = "¾È³çÇÏ¼¼¿ä." & _
+    strbody = "ì•ˆë…•í•˜ì„¸ìš”." & _
               vbNewLine & vbNewLine & _
-              "±â¼ú°³¹ß¿¬±¸¿ø ¸ŞÀÌÅ©¾÷ 3ÆÀ ÀÌÁø¼ºÀÔ´Ï´Ù." & vbNewLine & _
-              "Á¦Á¶°èÈ¹Ç¥ º¸³»µå¸®°í Ã·ºÎ ÆÄÀÏÀ» È®ÀÎÇØÁÖ½Ã±â ¹Ù¶ø´Ï´Ù~" & vbNewLine & _
-              "¼ö°íÇÏ¼¼¿ä" & vbNewLine & _
-              "ÀÌ ¸ŞÀÏÀº ÀÚµ¿À¸·Î ¹ß¼ÛµÇ´Â ¸ŞÀÏÀÔ´Ï´Ù."
-    
+              "ê¸°ìˆ ê°œë°œì—°êµ¬ì› ë©”ì´í¬ì—… 3íŒ€ ì´ì§„ì„±ì…ë‹ˆë‹¤." & vbNewLine & _
+              "ì œì¡°ê³„íší‘œ ë³´ë‚´ë“œë¦¬ê³  ì²¨ë¶€ íŒŒì¼ì„ í™•ì¸í•´ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤~" & vbNewLine & _
+              "ìˆ˜ê³ í•˜ì„¸ìš”" & vbNewLine & _
+              "ì´ ë©”ì¼ì€ ìë™ìœ¼ë¡œ ë°œì†¡ë˜ëŠ” ë©”ì¼ì…ë‹ˆë‹¤."
+
     strdate = Format(Date, "yy-mm-dd")
-    att1 = "D:\RND.ºĞ¿ø\½ÃÀÛÇ°Á¦Á¶\SCH\" & strdate & " ±âÁØ¼­.xls"
-    att2 = "D:\RND.ºĞ¿ø\½ÃÀÛÇ°Á¦Á¶\SCH\" & strdate & " Á¦Á¶°èÈ¹Ç¥.xls"
-    att3 = "D:\RND.ºĞ¿ø\½ÃÀÛÇ°Á¦Á¶\SCH\" & strdate & " Áß°£°øÁ¤ °èÈ¹.xlsx"
-    
+    att1 = "D:\RND.ë¶„ì›\ì‹œì‘í’ˆì œì¡°\SCH\" & strdate & " ê¸°ì¤€ì„œ.xls"
+    att2 = "D:\RND.ë¶„ì›\ì‹œì‘í’ˆì œì¡°\SCH\" & strdate & " ì œì¡°ê³„íší‘œ.xls"
+    att3 = "D:\RND.ë¶„ì›\ì‹œì‘í’ˆì œì¡°\SCH\" & strdate & " ì¤‘ê°„ê³µì • ê³„íš.xlsx"
+
     With iMsg
         Set .Configuration = iConf
-        .To = """ÀÌÁø¼º"" <jinsi@ihkcos.com>"
+        .To = """ì´ì§„ì„±"" <jinsi@ihkcos.com>"
         .cc = ""
         .BCC = ""
-        .From = """ÀÌÁø¼º"" <jinsi@ihkcos.com>"
+        .From = """ì´ì§„ì„±"" <jinsi@ihkcos.com>"
         .Subject = "Mail Testing"
         .TextBody = strbody
         .AddAttachment (att1)
         .AddAttachment (att2)
         .AddAttachment (att3)
         .Send
-        
+
     End With
 
 End Sub
-
-
